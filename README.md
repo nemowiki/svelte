@@ -1,1 +1,1 @@
-# NemoWiki - Svelte Component Library
+# NemoWiki Sveltekit Template

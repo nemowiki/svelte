@@ -1,0 +1,28 @@
+@import './base.scss';
+@import './components.scss';
+
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
+@font-face {
+	font-family: 'Arial';
+	src: local('Arial');
+	unicode-range: U+005C;
+}
+
+/* // @font-face {
+// 	font-family: 'NanumGothic';
+//     src: url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
+// 	unicode-range: U+AC00-D7A3, U+0021-007E;
+// } */
+
+:root {
+	--color-primary-1: rgb(100, 50, 250);
+	--color-primary-2: rgb(50, 100, 200);
+	--color-primary-3: rgb(100, 200, 250);
+	--color-error: rgb(255, 50, 50);
+	--color-warning: rgb(255, 200, 50);
+	--color-success: rgb(50, 255, 50);
+	--color-info: rgb(50, 255, 255);
+	--color-gray-1: rgb(245, 245, 245);
+	--color-gray-2: rgb(230, 230, 230);
+	--color-gray-3: rgb(220, 220, 220);
+}

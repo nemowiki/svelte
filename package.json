@@ -29,19 +29,30 @@
 	"sideEffects": [
 		"**/*.css"
 	],
-	"svelte": "./dist/index.js",
-	"types": "./dist/index.d.ts",
 	"type": "module",
 	"exports": {
-		".": {
-			"types": "./dist/index.d.ts",
-			"svelte": "./dist/index.js"
+		"./components/*": {
+			"types": "./dist/components/*.svelte.d.ts",
+			"svelte": "./dist/components/*.svelte"
+		},
+		"./utils/*": {
+			"types": "./dist/utils/*.d.ts",
+			"default": "./dist/utils/*.js"
+		},
+		"./types/*": {
+			"types": "./dist/types/*.d.ts",
+			"default": "./dist/types/*.js"
+		},
+		"./style/*": {
+			"default": "./dist/style/*.scss"
 		}
 	},
 	"peerDependencies": {
+		"@sveltejs/kit": "^2.22.2",
 		"svelte": "^5.0.0"
 	},
 	"devDependencies": {
+		"@auth/sveltekit": "^1.10.0",
 		"@eslint/compat": "^1.2.5",
 		"@eslint/js": "^9.18.0",
 		"@sveltejs/adapter-auto": "^6.0.1",
@@ -49,6 +60,8 @@
 		"@sveltejs/kit": "^2.22.2",
 		"@sveltejs/package": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
+		"@vercel/analytics": "^1.5.0",
+		"@vercel/speed-insights": "^1.2.0",
 		"eslint": "^9.18.0",
 		"eslint-config-prettier": "^10.0.1",
 		"eslint-plugin-svelte": "^3.0.0",
@@ -56,6 +69,7 @@
 		"prettier": "^3.4.2",
 		"prettier-plugin-svelte": "^3.3.3",
 		"publint": "^0.3.2",
+		"sass": "^1.89.2",
 		"svelte": "^5.35.2",
 		"svelte-check": "^4.2.2",
 		"typescript": "^5.8.3",
@@ -64,6 +78,11 @@
 	},
 	"keywords": [
 		"svelte",
-		"nemowiki"
-	]
+		"wiki"
+	],
+	"dependencies": {
+		"@nemowiki/core": "^0.1.0",
+		"@sentry/sveltekit": "^9.35.0",
+		"hangul-searcher": "^2.0.1"
+	}
 }
