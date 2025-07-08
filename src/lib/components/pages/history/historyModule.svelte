@@ -47,7 +47,7 @@
 {/snippet}
 
 <div id="history-div">
-	<LogList {logArr} pageType={'hist'} />
+	<LogList {logArr} pageType="hist" />
 	{@render PrevBtn()}
 	{@render NextBtn()}
 </div>

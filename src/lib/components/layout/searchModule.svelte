@@ -76,7 +76,7 @@
 		{@render SearchInput()}
 		{@render SearchButton()}
 
-		{#each suggestionArr as suggestion, i}
+		{#each suggestionArr as suggestion, i (suggestion)}
 			{#if i <= 8}
 				{@render SuggestionBtn(suggestion, i)}
 			{/if}

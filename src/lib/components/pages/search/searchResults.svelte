@@ -24,7 +24,7 @@
 {/snippet}
 
 {#snippet ResultBtns()}
-	{#each resultArr as result}
+	{#each resultArr as result (result.original)}
 		<button onclick={() => readDoc(result.original)}>
 			{result.original}
 		</button>

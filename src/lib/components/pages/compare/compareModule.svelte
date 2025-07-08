@@ -12,7 +12,7 @@
 		<p>존재하지 않는 문서입니다.</p>
 	{:else}
 		<p>
-			{#each diff as part}
+			{#each diff as part, i (i)}
 				{#if part.added}
 					<span class="added">{part.value}</span>
 				{:else if part.removed}

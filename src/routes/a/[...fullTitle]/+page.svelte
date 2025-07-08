@@ -15,7 +15,7 @@
 	{#if !info || reason}
 		<p>{reason}</p>
 	{:else}
-		{#each docActionArr as docAction}
+		{#each docActionArr as docAction (docAction)}
 			<AuthorityGroupList {docAction} {info} />
 		{/each}
 	{/if}

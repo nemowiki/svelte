@@ -70,7 +70,7 @@
 	</div>
 {/snippet}
 
-{#each logArr as log}
+{#each logArr as log (log._id)}
 	{@render LogDiv(log)}
 	{@render CommentDiv(log.comment, log.systemLog)}
 {/each}

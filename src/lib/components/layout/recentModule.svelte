@@ -44,7 +44,7 @@
 	{#if !page.data.user}
 		<p>로그인 후 사용 가능합니다.</p>
 	{:else}
-		{#each recentChangedLogs as log, i}
+		{#each recentChangedLogs as log, i (i)}
 			{#if i <= 10}
 				{@render RecentLog(log)}
 			{/if}

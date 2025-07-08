@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/sveltekit';
 import type { Handle, HandleServerError, ServerInit } from '@sveltejs/kit';
 
-import { redirect, error, isRedirect } from '@sveltejs/kit';
+import { redirect, error } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
 import { WIKI_MONGO_URI, AWS_BUCKET_NAME, AWS_ID, AWS_SECRET } from '$env/static/private';
@@ -11,7 +11,7 @@ import {
 	activateWiki,
 	backupWiki,
 	getUserByEmail,
-	signinUserByEmail,
+	// signinUserByEmail,
 	signupUserByEmailAndName
 } from '@nemowiki/core';
 
@@ -92,7 +92,7 @@ const authorizationHandle: Handle = async ({ event, resolve }) => {
 };
 
 export const handleError: HandleServerError = Sentry.handleErrorWithSentry(
-	async ({ error, event, status, message }) => {
+	async ({ error, event }) => {
 		let fullTitle = event.params.fullTitle || event.url.pathname;
 		if (event.url.pathname.startsWith('/u')) fullTitle = '사용자:' + event.params.userName;
 		if (event.url.pathname.startsWith('/s')) fullTitle = '검색:' + event.params.query;

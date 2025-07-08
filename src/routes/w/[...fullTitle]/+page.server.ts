@@ -41,7 +41,7 @@ export const actions = {
 		const markup = (data.get('markup') || '').toString();
 		const comment = (data.get('comment') || '').toString();
 
-		let info = await getInfoByFullTitle(fullTitle);
+		const info = await getInfoByFullTitle(fullTitle);
 		let res: WikiResponse;
 
 		if (info === null || info.state === 'deleted' || info.state === 'hidden') {

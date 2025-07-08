@@ -48,7 +48,7 @@
 	{#if logArr.length === 0}
 		<p>기여 내역이 없습니다.</p>
 	{:else}
-		<LogList {logArr} pageType={'user'} />
+		<LogList {logArr} pageType="user" />
 		{@render PrevBtn()}
 		{@render NextBtn()}
 	{/if}

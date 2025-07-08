@@ -36,7 +36,7 @@
 	{#if penaltyArr.length === 0}
 		<p>받은 경고 및 차단 사항이 없습니다.</p>
 	{:else}
-		{#each penaltyArr as penalty, i}
+		{#each penaltyArr as penalty (penalty._id)}
 			<div class="penalty-div">
 				{@render PenaltyHeader(penalty)}
 				{@render PenaltyDate(penalty)}

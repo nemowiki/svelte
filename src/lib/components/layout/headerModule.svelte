@@ -4,7 +4,7 @@
 </script>
 
 <header>
-	<h1><a href="/" style:font-weight={'bold'}><span>WIKI</span></a></h1>
+	<h1><a href="/" style:font-weight="bold"><span>WIKI</span></a></h1>
 	<SearchModule />
 	<UploadModule />
 </header>
