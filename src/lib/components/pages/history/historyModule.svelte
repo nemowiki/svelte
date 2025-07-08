@@ -5,7 +5,9 @@
 	import type { DocLogDoc, WikiResponseWithData } from '@nemowiki/core/types';
 	import { encodeFullTitle } from '@nemowiki/core/client';
 
-	let { fullTitle, initial_logArr } = $props();
+	const fullTitle = $derived<string>(page.params.fullTitle);
+
+	let { initial_logArr } = $props();
 
 	let pageIdx = $state<number>(Number(page.url.searchParams.get('page')) || 1);
 	let logArr = $state<DocLogDoc[]>(initial_logArr);

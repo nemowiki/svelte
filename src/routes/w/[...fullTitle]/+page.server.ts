@@ -1,4 +1,4 @@
-import { redirect, error, fail } from '@sveltejs/kit';
+import { redirect, fail } from '@sveltejs/kit';
 import {
 	createDocByFullTitle,
 	editDocByFullTitle,
@@ -13,22 +13,23 @@ export async function load({ params, locals }) {
 	const fullTitle = params.fullTitle;
 
 	let doc = await getDocByFullTitle(fullTitle, -1);
+	let res: WikiResponse;
 
 	if (doc === null) {
 		// New document
-		const res_create = canCreate(null, fullTitle, locals.user.group);
-		if (!res_create.ok) return error(403, { message: res_create.reason, fullTitle });
+		res = canCreate(null, fullTitle, locals.user.group);
+		if (!res.ok) return res;
 		doc = getEmptyDocByFullTitle(fullTitle);
 	} else if (doc.state === 'deleted' || doc.state === 'hidden') {
-		const res_create = canCreate(doc, fullTitle, locals.user.group);
-		if (!res_create.ok) return error(403, { message: res_create.reason, fullTitle });
+		res = canCreate(doc, fullTitle, locals.user.group);
+		if (!res.ok) return res;
 	} else {
-		const res_edit = canEdit(doc, locals.user.group);
-		if (!res_edit.ok) return error(403, { message: res_edit.reason, fullTitle });
+		res = canEdit(doc, locals.user.group);
+		if (!res.ok) return res;
 	}
 
 	return {
-		fullTitle,
+		...res,
 		doc: JSON.stringify(doc)
 	};
 }

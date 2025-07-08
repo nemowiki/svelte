@@ -6,7 +6,7 @@
 	import MoveBtn from '$lib/components/common/btns/moveBtn.svelte';
 	import DeleteBtn from '$lib/components/common/btns/deleteBtn.svelte';
 
-	let { fullTitle, info }: { fullTitle: string; info: Info | null } = $props();
+	let { info }: { info: Info | null } = $props();
 
 	const description = (info?.revision ?? 0) + 1 + '번째 수정판';
 </script>
@@ -18,4 +18,4 @@
 	<DeleteBtn {info} />
 {/snippet}
 
-<DocHeader {fullTitle} {description} {Btns} />
+<DocHeader {description} {Btns} />

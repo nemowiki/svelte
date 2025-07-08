@@ -3,8 +3,7 @@
 	import { docActionArr, translatedDocActionArr } from '$lib/utils/general.js';
 	import ChangeAuthorityBtn from './changeAuthorityBtn.svelte';
 
-	let { fullTitle, docAction, info }: { fullTitle: string; docAction: DocAction; info: Info } =
-		$props();
+	let { docAction, info }: { docAction: DocAction; info: Info } = $props();
 </script>
 
 <div class="action-div">
@@ -18,7 +17,7 @@
 			{/if}
 		</span>
 	</div>
-	<ChangeAuthorityBtn {fullTitle} {docAction} {info} />
+	<ChangeAuthorityBtn {docAction} {info} />
 </div>
 <hr />
 

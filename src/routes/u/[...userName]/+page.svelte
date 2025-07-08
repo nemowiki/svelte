@@ -17,14 +17,19 @@
 	let penaltyArr = $derived<PenaltyDoc[]>(JSON.parse(data.penaltyArr));
 </script>
 
-<UserHeader />
-
 <article>
+	<UserHeader />
 	{#if !queriedUser || !ok}
 		<p>{reason}</p>
 	{:else}
-		<UserGroup {queriedUser} />
-		<UserContribute {queriedUser} initial_logArr={logArr} />
-		<UserPenalty {penaltyArr} />
+		<section>
+			<UserGroup {queriedUser} />
+		</section>
+		<section>
+			<UserContribute {queriedUser} initial_logArr={logArr} />
+		</section>
+		<section>
+			<UserPenalty {penaltyArr} />
+		</section>
 	{/if}
 </article>

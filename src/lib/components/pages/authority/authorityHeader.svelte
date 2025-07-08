@@ -7,7 +7,7 @@
 	import RestateBtn from '$lib/components/common/btns/restateBtn.svelte';
 	import { type Info } from '@nemowiki/core/types';
 
-	let { fullTitle, info }: { fullTitle: string; info: Info | null } = $props();
+	let { info }: { info: Info | null } = $props();
 
 	const description = '(권한 목록)';
 </script>
@@ -17,7 +17,7 @@
 	<WriteBtn />
 	<HistoryBtn />
 	<BacklinkBtn />
-	<RestateBtn {fullTitle} {info} />
+	<RestateBtn {info} />
 {/snippet}
 
-<DocHeader {fullTitle} {description} {Btns} />
+<DocHeader {description} {Btns} />

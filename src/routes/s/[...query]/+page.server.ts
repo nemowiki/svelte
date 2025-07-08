@@ -9,7 +9,6 @@ export async function load({ params }) {
 		redirect(303, `/r/${encodeFullTitle(data.result[0] as string)}`);
 	} else {
 		return {
-			query,
 			result: JSON.stringify(data.result)
 		};
 	}

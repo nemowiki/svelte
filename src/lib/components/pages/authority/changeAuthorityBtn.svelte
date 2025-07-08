@@ -4,8 +4,9 @@
 	import { canChangeAuthority } from '@nemowiki/core/client';
 	import { page } from '$app/state';
 
-	let { fullTitle, docAction, info }: { fullTitle: string; docAction: DocAction; info: Info } =
-		$props();
+	const fullTitle = $derived<string>(page.params.fullTitle);
+
+	let { docAction, info }: { docAction: DocAction; info: Info } = $props();
 
 	async function reauthorizeDoc(): Promise<void> {
 		const groupPrompt = prompt(docAction + '을(를) 허용할 권한들을 쉼표로 구분하여 입력하세요.');

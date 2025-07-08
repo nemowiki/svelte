@@ -7,19 +7,18 @@
 
 	let { data } = $props();
 
-	let fullTitle = $derived<string>(data.fullTitle as string);
 	let rev = $derived<number>(data.rev as number);
 	let doc = $derived<Doc | null>(JSON.parse(data.doc || 'null'));
 
-	let ok = $derived<boolean>(data.ok as boolean);
-	let reason = $derived<string>(data.reason as string);
-
-	let html = $derived.by<string>(() => {
-		if (reason) return reason;
-		return doc?.html || '';
-	});
+	let html = $derived<string>(doc?.html || '');
 </script>
 
-<ReadHeader {fullTitle} info={doc} />
-<ReadCaution {ok} {rev} />
-<HtmlContent content={html} />
+<article>
+	<ReadHeader info={doc} />
+	{#if !data.ok}
+		<p>{data.reason}</p>
+	{:else}
+		<ReadCaution ok={data.ok} {rev} />
+		<HtmlContent content={html} />
+	{/if}
+</article>

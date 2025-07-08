@@ -6,7 +6,7 @@
 	import BacklinkBtn from '$lib/components/common/btns/backlinkBtn.svelte';
 	import AuthorityBtn from '$lib/components/common/btns/authorityBtn.svelte';
 
-	let { fullTitle, info }: { fullTitle: string; info: Info | null } = $props();
+	let { info }: { info: Info | null } = $props();
 
 	const description = info === null ? '0번째 수정판' : info.revision + '번째 수정판';
 </script>
@@ -18,4 +18,4 @@
 	<AuthorityBtn />
 {/snippet}
 
-<DocHeader {fullTitle} {description} {Btns} />
+<DocHeader {description} {Btns} />

@@ -13,8 +13,7 @@
 	});
 </script>
 
-<CommonHeader description="파일 업로드" />
-
-<article id="main-article">
+<article>
+	<CommonHeader title="파일 업로드" />
 	<FileForm initial_markup={data.boilerplate} />
 </article>

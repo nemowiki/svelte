@@ -5,9 +5,14 @@
 
 	let { data } = $props();
 
-	let fullTitle = $derived<string>(data.fullTitle as string);
 	let doc = $derived<Doc | null>(JSON.parse(data.doc || 'null'));
 </script>
 
-<WriteHeader {fullTitle} info={doc} />
-<WriteForm {doc} />
+<article>
+	<WriteHeader info={doc} />
+	{#if !data.ok}
+		<p>{data.reason}</p>
+	{:else}
+		<WriteForm {doc} />
+	{/if}
+</article>

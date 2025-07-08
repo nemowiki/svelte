@@ -1,15 +1,17 @@
 <script lang="ts">
+	import { page } from '$app/state';
 	import { encodeFullTitle } from '@nemowiki/core/client';
 	import type { Snippet } from 'svelte';
+
 	let {
-		fullTitle,
 		Btns,
 		description
 	}: {
-		fullTitle: string;
 		Btns: Snippet;
 		description?: string;
 	} = $props();
+
+	const fullTitle = $derived(page.params.fullTitle);
 </script>
 
 {#snippet TitleDiv()}

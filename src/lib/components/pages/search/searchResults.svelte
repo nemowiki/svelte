@@ -2,8 +2,11 @@
 	import { goto } from '$app/navigation';
 	import { encodeFullTitle } from '@nemowiki/core/client';
 	import type { SearchResult } from '@nemowiki/core/types';
+	import { page } from '$app/state';
 
-	let { searchWord, resultArr }: { searchWord: string; resultArr: Array<SearchResult> } = $props();
+	let { resultArr }: { resultArr: Array<SearchResult> } = $props();
+
+	const query = $derived<string>(page.params.query);
 
 	function readDoc(_fullTitle: string): void {
 		goto(`/r/${encodeFullTitle(_fullTitle)}`);
@@ -15,8 +18,8 @@
 </script>
 
 {#snippet newDocBtn()}
-	<button onclick={() => writeDoc(searchWord)}>
-		"{searchWord}" 문서를 생성하시겠습니까?
+	<button onclick={() => writeDoc(query)}>
+		"{query}" 문서를 생성하시겠습니까?
 	</button>
 {/snippet}
 

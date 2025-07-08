@@ -6,7 +6,7 @@
 	const fullTitle = $derived(page.error?.fullTitle || '');
 </script>
 
-<CommonHeader description={`오류 또는 권한 부족: ${fullTitle}`} />
+<CommonHeader title={`오류: ${fullTitle}`} />
 <article>
 	<p>{page.error?.message || ''}</p>
 </article>

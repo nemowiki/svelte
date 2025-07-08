@@ -1,5 +1,5 @@
 <script lang="ts">
-	import '../lib/style/main.css';
+	import '$lib/style/main.css';
 
 	import { injectAnalytics } from '@vercel/analytics/sveltekit';
 	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';

@@ -6,18 +6,17 @@
 
 	let { data } = $props();
 
-	let info = $derived<Info | null>(JSON.parse(data.info!));
-
-	let fullTitle = $derived<string>(data.fullTitle);
 	let reason = $derived<string>(data.reason);
+	let info = $derived<Info | null>(JSON.parse(data.info!));
 </script>
 
-<AuthorityHeader {fullTitle} {info} />
-
-{#if !info || reason}
-	<p>{reason}</p>
-{:else}
-	{#each docActionArr as docAction}
-		<AuthorityGroupList {fullTitle} {docAction} {info} />
-	{/each}
-{/if}
+<article>
+	<AuthorityHeader {info} />
+	{#if !info || reason}
+		<p>{reason}</p>
+	{:else}
+		{#each docActionArr as docAction}
+			<AuthorityGroupList {docAction} {info} />
+		{/each}
+	{/if}
+</article>

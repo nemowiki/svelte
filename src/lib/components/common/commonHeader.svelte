@@ -1,11 +1,30 @@
 <script lang="ts">
-	let { description }: { description: string } = $props();
+	import type { Snippet } from 'svelte';
+
+	let { title, description, Btns }: { title: string; description?: string; Btns?: Snippet } =
+		$props();
 </script>
 
+{#snippet TitleDiv()}
+	<div id="title-div">
+		<h1 id="doc-title">{title}</h1>
+		{#if description}
+			<span id="doc-description">{description}</span>
+		{/if}
+	</div>
+{/snippet}
+
+{#snippet BtnDiv()}
+	<div id="btn-div">
+		{#if Btns}
+			{@render Btns()}
+		{/if}
+	</div>
+{/snippet}
+
 <header>
-	<h1 id="doc-title">
-		{description}
-	</h1>
+	{@render TitleDiv()}
+	{@render BtnDiv()}
 </header>
 
 <style lang="scss">

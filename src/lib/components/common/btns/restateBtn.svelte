@@ -5,7 +5,9 @@
 	import { type Info, type Group } from '@nemowiki/core/types';
 	import { encodeFullTitle, canShow, canHide } from '@nemowiki/core/client';
 
-	let { fullTitle, info }: { fullTitle: string; info: Info | null } = $props();
+	let { info }: { info: Info | null } = $props();
+
+	const fullTitle = $derived(page.params.fullTitle);
 
 	let userGroup: Group = $derived(JSON.parse(page.data.user).group);
 

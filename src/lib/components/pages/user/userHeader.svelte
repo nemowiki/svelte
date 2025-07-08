@@ -1,11 +1,11 @@
 <script lang="ts">
-	import DocHeader from '$lib/components/common/docHeader.svelte';
+	import CommonHeader from '$lib/components/common/commonHeader.svelte';
 	import RenameBtn from '$lib/components/common/btns/renameBtn.svelte';
 	import RegroupBtn from '$lib/components/common/btns/regroupBtn.svelte';
 	import PenaltyBtn from '$lib/components/common/btns/penaltyBtn.svelte';
 	import { page } from '$app/state';
 
-	const fullTitle = `사용자:${page.params.title}`;
+	const fullTitle = `사용자:${page.params.userName}`;
 	const description = '(사용자 정보)';
 </script>
 
@@ -15,4 +15,4 @@
 	<PenaltyBtn {fullTitle} />
 {/snippet}
 
-<DocHeader {fullTitle} {description} {Btns} />
+<CommonHeader title={fullTitle} {description} {Btns} />

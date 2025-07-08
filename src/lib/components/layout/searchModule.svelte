@@ -57,6 +57,7 @@
 		onkeydown={checkEnter}
 		bind:value={searchWord}
 		autocomplete="off"
+		aria-label="search input"
 	/>
 {/snippet}
 

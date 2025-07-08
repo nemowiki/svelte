@@ -8,7 +8,6 @@ export async function load({ params, url }) {
 		return {
 			ok: false,
 			reason: '사용자가 존재하지 않습니다.',
-			userName,
 			queriedUser: 'null',
 			logArr: '[]',
 			penaltyArr: '[]'
@@ -19,7 +18,6 @@ export async function load({ params, url }) {
 	return {
 		ok: res_penalty.ok && res_docLog.ok,
 		reason: res_penalty.reason || res_docLog.reason,
-		userName,
 		queriedUser: JSON.stringify(queriedUser),
 		logArr: JSON.stringify(res_docLog.data || []),
 		penaltyArr: JSON.stringify(res_penalty.data || [])

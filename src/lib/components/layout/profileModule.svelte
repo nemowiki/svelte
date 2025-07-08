@@ -8,12 +8,12 @@
 </script>
 
 {#snippet GuestProfile()}
-	<h3>GUEST</h3>
+	<h2>GUEST</h2>
 	<p>Please sign in to explore the wiki</p>
 {/snippet}
 
 {#snippet UserProfile(user: User)}
-	<h3><a href="/u/{encodeFullTitle(user.name)}">{user.name}</a></h3>
+	<h2><a href="/u/{encodeFullTitle(user.name)}">{user.name}</a></h2>
 	<p>권한: {user.group}</p>
 	<button onclick={() => signOut()}>로그아웃</button>
 {/snippet}
@@ -27,8 +27,9 @@
 </section>
 
 <style lang="scss">
-	h3 {
+	h2 {
 		text-align: center;
+		font-size: 1.2rem;
 		// font-weight: normal;
 	}
 </style>

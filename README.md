@@ -1,1 +1,1 @@
-# NemoWiki Sveltekit Template
+# NemoWiki SvelteKit Template

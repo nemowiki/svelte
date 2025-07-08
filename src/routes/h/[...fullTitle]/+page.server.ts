@@ -7,7 +7,6 @@ export async function load({ url, params, locals }) {
 	return {
 		ok,
 		reason,
-		fullTitle,
 		pageIdx,
 		logArr: JSON.stringify(data || [])
 	};

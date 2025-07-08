@@ -7,20 +7,19 @@ export async function load({ params, locals, url, parent }) {
 	let rev = Number(url.searchParams.get('rev'));
 	if (rev === 0) rev = -1;
 
-	const res_read = await readDocByFullTitle(fullTitle, locals.user, rev);
+	const { ok, reason, data } = await readDocByFullTitle(fullTitle, locals.user, rev);
 
-	if (res_read.data) {
-		res_read.data.html = modifyHtmlByExistenceOfLinks(
-			res_read.data.html || '',
+	if (data) {
+		data.html = modifyHtmlByExistenceOfLinks(
+			data.html || '',
 			JSON.parse((await parent()).fullTitles)
 		);
 	}
 
 	return {
-		fullTitle,
+		ok,
+		reason,
 		rev,
-		ok: res_read.ok,
-		reason: res_read.reason,
-		doc: JSON.stringify(res_read.data)
+		doc: JSON.stringify(data)
 	};
 }

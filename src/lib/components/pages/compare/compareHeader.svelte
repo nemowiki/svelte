@@ -6,8 +6,7 @@
 	import ReadBtn from '$lib/components/common/btns/readBtn.svelte';
 	import HistoryBtn from '$lib/components/common/btns/historyBtn.svelte';
 
-	let { fullTitle, oldRev, newRev }: { fullTitle: string; oldRev: number; newRev: number } =
-		$props();
+	let { oldRev, newRev }: { oldRev: number; newRev: number } = $props();
 
 	const description = `(역사 비교 ${oldRev}&${newRev}번째 수정판)`;
 </script>
@@ -20,4 +19,4 @@
 	<AuthorityBtn />
 {/snippet}
 
-<DocHeader {fullTitle} {description} {Btns} />
+<DocHeader {description} {Btns} />

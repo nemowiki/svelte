@@ -5,8 +5,6 @@
 	import AuthorityBtn from '$lib/components/common/btns/authorityBtn.svelte';
 	import ReadBtn from '$lib/components/common/btns/readBtn.svelte';
 
-	let { fullTitle }: { fullTitle: string } = $props();
-
 	const description = '(역사 목록)';
 </script>
 
@@ -17,4 +15,4 @@
 	<AuthorityBtn />
 {/snippet}
 
-<DocHeader {fullTitle} {description} {Btns} />
+<DocHeader {description} {Btns} />
