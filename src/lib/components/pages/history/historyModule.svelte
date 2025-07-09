@@ -4,6 +4,7 @@
 	import postReq from '$lib/utils/postReq.js';
 	import type { DocLogDoc, WikiResponse } from '@nemowiki/core/types';
 	import { encodeFullTitle } from '@nemowiki/core/client';
+	import { pushState } from '$app/navigation';
 
 	const fullTitle = $derived<string>(page.params.fullTitle);
 
@@ -20,7 +21,7 @@
 			pageIdx += 1;
 		}
 
-		window.history.pushState({}, '', `/h/${encodeFullTitle(fullTitle)}?page=${pageIdx}`);
+		pushState(`/h/${encodeFullTitle(fullTitle)}?page=${pageIdx}`, {});
 
 		const res = (await postReq('/api/log/doc', {
 			fullTitle,

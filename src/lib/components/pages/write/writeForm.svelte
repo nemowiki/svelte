@@ -19,23 +19,26 @@
 	let errorMsg = $state<string>('');
 
 	async function previewDoc() {
-		removePopupListener();
 
 		if (doc !== null) doc.markup = markup || '';
 
 		const res = (await postReq('/api/preview', {
 			doc
 		})) as WikiResponse<string>;
-		if (res.ok)
+		if (res.ok) {
 			previewHTML = modifyHtmlByExistenceOfLinks(res.value, JSON.parse(page.data.fullTitles));
-		else alert(res.reason);
+		} else alert(res.reason);
 	}
 
 	$effect(() => {
 		markup = markup === undefined ? doc?.markup || '' : markup;
-
-		if (previewHTML) addPopupListener();
 	});
+
+	$effect(() => {
+		removePopupListener();
+		previewHTML;
+		addPopupListener();
+	})
 
 	onNavigate(() => {
 		previewHTML = '';
@@ -99,7 +102,9 @@
 		</div>
 	</form>
 
-	<CommonCaution caution={errorMsg} />
+	{#if errorMsg}
+		<CommonCaution>{errorMsg}</CommonCaution>
+	{/if}
 	<hr />
 	<HtmlContent content={previewHTML} />
 </div>

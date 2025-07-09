@@ -70,9 +70,12 @@ const authorizationHandle: Handle = async ({ event, resolve }) => {
 
 		let user: User | null = await getUserByEmail(session.user.email);
 		if (user === null) {
-			user = await signupUserByEmailAndName(session.user.email, session.user.email.split('@')[0]);
+			const res = await signupUserByEmailAndName(session.user.email, session.user.email.split('@')[0]);
+			if (!res.ok) throw new Error(res.reason);
+			user = res.value;
 		}
-		event.locals.user = user!;
+
+		event.locals.user = user;
 
 		// console.log(user);
 		return await resolve(event);

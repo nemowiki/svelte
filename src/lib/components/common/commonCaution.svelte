@@ -1,9 +1,9 @@
 <script lang="ts">
-	let { caution }: { caution: string } = $props();
+	let { children } = $props();
 </script>
 
-{#if caution}
-	<p class="caution">{caution}</p>
+{#if children}
+	<p class="caution">{@render children()}</p>
 {/if}
 
 <style lang="scss">

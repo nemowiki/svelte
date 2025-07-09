@@ -74,7 +74,9 @@
 		{@render SubmitBtn()}
 	</form>
 
-	<CommonCaution caution={errorMsg} />
+	{#if errorMsg}
+		<CommonCaution>{errorMsg}</CommonCaution>
+	{/if}
 </div>
 
 <style lang="scss">

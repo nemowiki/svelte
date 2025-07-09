@@ -4,7 +4,7 @@
 </script>
 
 <header>
-	<h1><a href="/" style:font-weight="bold"><span>WIKI</span></a></h1>
+	<h1><a href="/r/위키:대문" style:font-weight="bold"><span>WIKI</span></a></h1>
 	<SearchModule />
 	<UploadModule />
 </header>

@@ -5,5 +5,5 @@
 </script>
 
 {#if ok && rev !== -1}
-	<CommonCaution caution="이 문서는 <b>{rev}</b>번째 수정판임에 유의하세요." />
+	<CommonCaution>이 문서는 <b>{rev}</b>번째 수정판임에 유의하세요.</CommonCaution>
 {/if}

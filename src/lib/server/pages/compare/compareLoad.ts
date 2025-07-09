@@ -29,8 +29,8 @@ export async function compareLoad({
 	const oldDoc = await getDocByFullTitle(fullTitle, oldRev);
 	const newDoc = await getDocByFullTitle(fullTitle, newRev);
 
-	if (oldDoc.state === 'new') oldDoc.markup = '';
-	if (newDoc.state === 'new') newDoc.markup = '';
+	if (oldDoc?.state === 'new') oldDoc.markup = '';
+	if (newDoc?.state === 'new') newDoc.markup = '';
 
 	const res_compare = await compareDocByDoc(oldDoc, newDoc);
 	const value = {

@@ -4,6 +4,7 @@
 	import postReq from '$lib/utils/postReq.js';
 	import { encodeFullTitle } from '@nemowiki/core/client';
 	import LogList from '$lib/components/common/logList.svelte';
+	import { pushState } from '$app/navigation';
 
 	let pageIdx = $state<number>(Number(page.url.searchParams.get('page')) || 1);
 
@@ -18,7 +19,7 @@
 			pageIdx += 1;
 		}
 
-		window.history.pushState({}, '', `/u/${encodeFullTitle(queriedUser.name)}?page=${pageIdx}`);
+		pushState(`/u/${encodeFullTitle(queriedUser.name)}?page=${pageIdx}`, {});
 
 		const res = (await postReq('/api/log/user', {
 			userName: queriedUser.name,
