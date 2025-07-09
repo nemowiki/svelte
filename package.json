@@ -19,8 +19,7 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
-		"lint": "prettier --check . && eslint .",
-		"fix": "prettier --check . && eslint . --fix"
+		"lint": "eslint . --fix"
 	},
 	"files": [
 		"dist",
@@ -82,7 +81,7 @@
 		"wiki"
 	],
 	"dependencies": {
-		"@nemowiki/core": "^0.1.0",
+		"@nemowiki/core": "file:../core",
 		"@sentry/sveltekit": "^9.35.0",
 		"hangul-searcher": "^2.0.1"
 	}

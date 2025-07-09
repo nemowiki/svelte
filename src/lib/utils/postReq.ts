@@ -1,9 +1,6 @@
-import type { WikiResponse, WikiResponseWithData } from '@nemowiki/core/types';
+import type { WikiResponse } from '@nemowiki/core/types';
 
-export default function postReq(
-	url: string,
-	data: any
-): Promise<WikiResponse | WikiResponseWithData<any>> {
+export default function postReq(url: string, data: any): Promise<WikiResponse<any>> {
 	return new Promise((resolve, reject) => {
 		fetch(url, {
 			method: 'POST',
@@ -21,8 +18,7 @@ export default function postReq(
 					// });
 				} else {
 					const response = await res.json();
-					if (response.reason !== undefined) resolve(response);
-					else resolve({ ok: true, reason: '', data: response });
+					resolve(response);
 				}
 			})
 			.catch((e) => {

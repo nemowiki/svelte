@@ -4,7 +4,7 @@
 	import postReq from '$lib/utils/postReq.js';
 	import modifyHtmlByExistenceOfLinks from '$lib/utils/modifyHtml.js';
 	import { addPopupListener, removePopupListener } from '$lib/utils/footnotePopup.js';
-	import type { Doc, WikiResponseWithData } from '@nemowiki/core/types';
+	import type { Doc, WikiResponse } from '@nemowiki/core/types';
 	import { onNavigate } from '$app/navigation';
 	import type { ActionResult } from '@sveltejs/kit';
 	import HtmlContent from '$lib/components/common/htmlContent.svelte';
@@ -25,17 +25,16 @@
 
 		const res = (await postReq('/api/preview', {
 			doc
-		})) as WikiResponseWithData<string>;
+		})) as WikiResponse<string>;
 		if (res.ok)
-			previewHTML = modifyHtmlByExistenceOfLinks(res.data, JSON.parse(page.data.fullTitles));
+			previewHTML = modifyHtmlByExistenceOfLinks(res.value, JSON.parse(page.data.fullTitles));
 		else alert(res.reason);
 	}
 
 	$effect(() => {
 		markup = markup === undefined ? doc?.markup || '' : markup;
 
-		previewHTML;
-		addPopupListener();
+		if (previewHTML) addPopupListener();
 	});
 
 	onNavigate(() => {

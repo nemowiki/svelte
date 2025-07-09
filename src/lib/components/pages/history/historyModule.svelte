@@ -2,7 +2,7 @@
 	import { page } from '$app/state';
 	import LogList from '$lib/components/common/logList.svelte';
 	import postReq from '$lib/utils/postReq.js';
-	import type { DocLogDoc, WikiResponseWithData } from '@nemowiki/core/types';
+	import type { DocLogDoc, WikiResponse } from '@nemowiki/core/types';
 	import { encodeFullTitle } from '@nemowiki/core/client';
 
 	const fullTitle = $derived<string>(page.params.fullTitle);
@@ -25,10 +25,10 @@
 		const res = (await postReq('/api/log/doc', {
 			fullTitle,
 			pageIdx
-		})) as WikiResponseWithData<DocLogDoc[]>;
+		})) as WikiResponse<DocLogDoc[]>;
 
 		if (res.ok) {
-			logArr = res.data;
+			logArr = res.value;
 		} else {
 			alert(res.reason);
 		}

@@ -5,7 +5,7 @@
 
 	let { data } = $props();
 
-	let doc = $derived<Doc | null>(JSON.parse(data.doc || 'null'));
+	let doc = $derived<Doc | null>(JSON.parse(data?.value?.doc || 'null'));
 </script>
 
 <article>

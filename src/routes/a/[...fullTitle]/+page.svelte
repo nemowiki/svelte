@@ -6,17 +6,18 @@
 
 	let { data } = $props();
 
-	let reason = $derived<string>(data.reason);
-	let info = $derived<Info | null>(JSON.parse(data.info!));
+	let info = $derived<Info | null>(JSON.parse(data?.value?.info || 'null'));
 </script>
 
 <article>
 	<AuthorityHeader {info} />
-	{#if !info || reason}
-		<p>{reason}</p>
-	{:else}
+	{#if !data.ok}
+		<p>{data.reason}</p>
+	{:else if info}
 		{#each docActionArr as docAction (docAction)}
 			<AuthorityGroupList {docAction} {info} />
 		{/each}
+	{:else}
+		<p>문서가 존재하지 않습니다?!</p>
 	{/if}
 </article>

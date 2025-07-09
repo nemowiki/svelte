@@ -7,20 +7,15 @@
 
 	let { data } = $props();
 
-	let ok = $derived<boolean>(data.ok as boolean);
-	let reason = $derived<string>(data.reason as string);
-
-	let queriedUser = $derived<User | null>(JSON.parse(data.queriedUser));
-
-	let logArr = $derived<DocLogDoc[]>(JSON.parse(data.logArr));
-
-	let penaltyArr = $derived<PenaltyDoc[]>(JSON.parse(data.penaltyArr));
+	let queriedUser = $derived<User | null>(JSON.parse(data?.value?.queriedUser || 'null'));
+	let logArr = $derived<DocLogDoc[]>(JSON.parse(data?.value?.logArr || '[]'));
+	let penaltyArr = $derived<PenaltyDoc[]>(JSON.parse(data?.value?.penaltyArr || '[]'));
 </script>
 
 <article>
 	<UserHeader />
-	{#if !queriedUser || !ok}
-		<p>{reason}</p>
+	{#if !data.ok}
+		<p>{data.reason}</p>
 	{:else}
 		<section>
 			<UserGroup {queriedUser} />

@@ -4,13 +4,13 @@
 
 	let { data } = $props();
 
-	let html = $derived<string | null>(data.html);
+	let html = $derived<string>(data?.value?.html || '');
 </script>
 
 <article>
 	<BacklinkHeader />
-	{#if !html}
-		<p>역링크가 존재하지 않습니다.</p>
+	{#if !data.ok}
+		<p>{data.reason}</p>
 	{:else}
 		<HtmlContent content={html} />
 	{/if}

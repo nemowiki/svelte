@@ -5,15 +5,13 @@
 
 	let { data } = $props();
 
-	let logArr = $derived<DocLogDoc[]>(JSON.parse(data.logArr || '[]'));
+	let logArr = $derived<DocLogDoc[]>(JSON.parse(data?.value?.logArr || '[]'));
 </script>
 
 <article>
 	<HistoryHeader />
 	{#if !data.ok}
 		<p>{data.reason}</p>
-	{:else if logArr.length === 0}
-		<p>역사가 존재하지 않습니다.</p>
 	{:else}
 		<HistoryModule initial_logArr={logArr} />
 	{/if}

@@ -7,8 +7,8 @@
 
 	let { data } = $props();
 
-	let rev = $derived<number>(data.rev as number);
-	let doc = $derived<Doc | null>(JSON.parse(data.doc || 'null'));
+	let rev = $derived<number>(data?.value?.rev as number);
+	let doc = $derived<Doc | null>(JSON.parse(data?.value?.doc || 'null'));
 
 	let html = $derived<string>(doc?.html || '');
 </script>

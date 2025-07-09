@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { DocLogDoc, WikiResponseWithData } from '@nemowiki/core/types';
+	import type { DocLogDoc, WikiResponse } from '@nemowiki/core/types';
 	import { page } from '$app/state';
 	import postReq from '$lib/utils/postReq.js';
 	import { encodeFullTitle } from '@nemowiki/core/client';
@@ -23,10 +23,10 @@
 		const res = (await postReq('/api/log/user', {
 			userName: queriedUser.name,
 			pageIdx
-		})) as WikiResponseWithData<DocLogDoc[]>;
+		})) as WikiResponse<DocLogDoc[]>;
 
 		if (res.ok) {
-			logArr = res.data;
+			logArr = res.value;
 		} else {
 			alert(res.reason);
 		}
