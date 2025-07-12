@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { type Info } from '@nemowiki/core/types';
-	import { docActionArr } from '$lib/utils/general.js';
 	import AuthorityHeader from '$lib/components/pages/authority/authorityHeader.svelte';
-	import AuthorityGroupList from '$lib/components/pages/authority/actionModule.svelte';
+	import AuthorityForm from '$lib/components/pages/authority/authorityForm.svelte';
+	import AuthorityList from '$lib/components/pages/authority/authorityList.svelte';
 
 	let { data } = $props();
 
@@ -10,14 +10,15 @@
 </script>
 
 <article>
-	<AuthorityHeader {info} />
+	<AuthorityHeader />
 	{#if !data.ok}
 		<p>{data.reason}</p>
 	{:else if info}
-		{#each docActionArr as docAction (docAction)}
-			<AuthorityGroupList {docAction} {info} />
-		{/each}
-	{:else}
-		<p>문서가 존재하지 않습니다?!</p>
+		<section>
+			<AuthorityList {info} />
+		</section>
+		<section>
+			<AuthorityForm {info} />
+		</section>
 	{/if}
 </article>

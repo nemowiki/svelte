@@ -3,10 +3,12 @@
 	import CommonHeader from '$lib/components/common/commonHeader.svelte';
 	// import DocHeader from '$lib/components/common/docHeader.svelte';
 
-	const fullTitle = $derived(page.error?.fullTitle || '');
+	const fullTitle = $derived(
+		page.params.fullTitle || '사용자:' + page.params.userName || '검색:' + page.params.query || ''
+	);
 </script>
 
-<CommonHeader title={`오류: ${fullTitle}`} />
+<CommonHeader title={`오류:${fullTitle}`} />
 <article>
 	<p>{page.error?.message || ''}</p>
 </article>

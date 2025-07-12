@@ -1,46 +1,38 @@
 <script lang="ts">
-	import type { DocLogDoc, WikiResponse } from '@nemowiki/core/types';
 	import { page } from '$app/state';
-	import postReq from '$lib/utils/postReq.js';
 	import { encodeFullTitle } from '@nemowiki/core/client';
 	import LogList from '$lib/components/common/logList.svelte';
-	import { pushState } from '$app/navigation';
+	import { goto } from '$app/navigation';
+
+	const cntPerPage = 10;
 
 	let pageIdx = $state<number>(Number(page.url.searchParams.get('page')) || 1);
 
-	let { queriedUser, initial_logArr } = $props();
+	let { queriedUser, logArr } = $props();
 
-	let logArr = $state<DocLogDoc[]>(initial_logArr);
-
-	async function loadMoreLogs(loadType: 'prev' | 'next') {
-		if (loadType === 'prev') {
+	async function gotoOtherPage(loadType: 'prev' | 'next') {
+		if (loadType === 'prev' && pageIdx > 1) {
 			pageIdx -= 1;
-		} else if (loadType === 'next') {
+		} else if (loadType === 'next' && pageIdx * cntPerPage < queriedUser.contribCnt) {
 			pageIdx += 1;
 		}
 
-		pushState(`/u/${encodeFullTitle(queriedUser.name)}?page=${pageIdx}`, {});
+		if (pageIdx < 1) pageIdx = 1;
+		if (pageIdx * cntPerPage > queriedUser.contribCnt)
+			pageIdx = Math.ceil(queriedUser.contribCnt / cntPerPage);
 
-		const res = (await postReq('/api/log/user', {
-			userName: queriedUser.name,
-			pageIdx
-		})) as WikiResponse<DocLogDoc[]>;
-
-		if (res.ok) {
-			logArr = res.value;
-		} else {
-			alert(res.reason);
-		}
+		goto(`/u/${encodeFullTitle(queriedUser.name)}?page=${pageIdx}`);
 	}
 </script>
 
-{#snippet PrevBtn()}
-	<button disabled={pageIdx === 1} onclick={() => loadMoreLogs('prev')}>이전</button>
+{#snippet PrevPageBtn()}
+	<button disabled={pageIdx === 1} onclick={() => gotoOtherPage('prev')}>이전</button>
 {/snippet}
 
-{#snippet NextBtn()}
-	<button disabled={pageIdx * 10 >= queriedUser.contribCnt} onclick={() => loadMoreLogs('next')}
-		>다음</button
+{#snippet NextPageBtn()}
+	<button
+		disabled={pageIdx * cntPerPage >= queriedUser.contribCnt}
+		onclick={() => gotoOtherPage('next')}>다음</button
 	>
 {/snippet}
 
@@ -50,8 +42,8 @@
 		<p>기여 내역이 없습니다.</p>
 	{:else}
 		<LogList {logArr} pageType="user" />
-		{@render PrevBtn()}
-		{@render NextBtn()}
+		{@render PrevPageBtn()}
+		{@render NextPageBtn()}
 	{/if}
 </div>
 

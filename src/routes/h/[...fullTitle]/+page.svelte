@@ -13,6 +13,6 @@
 	{#if !data.ok}
 		<p>{data.reason}</p>
 	{:else}
-		<HistoryModule initial_logArr={logArr} />
+		<HistoryModule {logArr} />
 	{/if}
 </article>

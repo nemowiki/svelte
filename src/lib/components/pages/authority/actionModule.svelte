@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { DocAction, Info } from '@nemowiki/core/types';
 	import { docActionArr, translatedDocActionArr } from '$lib/utils/general.js';
-	import ChangeAuthorityBtn from './changeAuthorityBtn.svelte';
 
 	let { docAction, info }: { docAction: DocAction; info: Info } = $props();
 </script>
@@ -17,7 +16,6 @@
 			{/if}
 		</span>
 	</div>
-	<ChangeAuthorityBtn {docAction} {info} />
 </div>
 <hr />
 

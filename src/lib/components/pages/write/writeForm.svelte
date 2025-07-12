@@ -1,113 +1,64 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
-	import { page } from '$app/state';
-	import postReq from '$lib/utils/postReq.js';
-	import modifyHtmlByExistenceOfLinks from '$lib/utils/modifyHtml.js';
 	import { addPopupListener, removePopupListener } from '$lib/utils/footnotePopup.js';
 	import type { Doc, WikiResponse } from '@nemowiki/core/types';
-	import { onNavigate } from '$app/navigation';
-	import type { ActionResult } from '@sveltejs/kit';
 	import HtmlContent from '$lib/components/common/htmlContent.svelte';
-	import CommonCaution from '$lib/components/common/commonCaution.svelte';
+	import CommonForm from '$lib/components/common/commonForm.svelte';
+	import { beforeNavigate } from '$app/navigation';
+	import type { ActionResult } from '@sveltejs/kit';
 
-	let { doc }: { doc: Doc | null } = $props();
+	let { doc }: { doc: Doc } = $props();
 
-	let loading = $state<boolean>(false);
-	let markup = $state<string>();
-	let comment = $state<string>('');
-	let previewHTML = $state<string>('');
-	let errorMsg = $state<string>('');
-
-	async function previewDoc() {
-
-		if (doc !== null) doc.markup = markup || '';
-
-		const res = (await postReq('/api/preview', {
-			doc
-		})) as WikiResponse<string>;
-		if (res.ok) {
-			previewHTML = modifyHtmlByExistenceOfLinks(res.value, JSON.parse(page.data.fullTitles));
-		} else alert(res.reason);
-	}
-
-	$effect(() => {
-		markup = markup === undefined ? doc?.markup || '' : markup;
+	let markup = $state<string>(doc?.markup || '');
+	let previewDoc = $derived<Doc>({
+		...doc,
+		markup
 	});
+	let previewResult = $state<ActionResult<WikiResponse<string>> | null>(null);
+	let saveResult = $state<ActionResult | null>(null);
 
 	$effect(() => {
 		removePopupListener();
-		previewHTML;
+		previewResult;
 		addPopupListener();
-	})
-
-	onNavigate(() => {
-		previewHTML = '';
 	});
 
-	function formHandle() {
-		loading = true;
-		return async ({ update, result }: { update: () => Promise<void>; result: ActionResult }) => {
-			if (result.type !== 'failure') {
-				await update();
-				errorMsg = '';
-			} else {
-				errorMsg = result.data?.message || '알 수 없는 오류가 발생했습니다.';
-			}
-			loading = false;
-		};
-	}
+	beforeNavigate((navigation) => {
+		if (saveResult?.type !== 'redirect') {
+			if (confirm('저장하지 않았습니다. 정말 나가시겠습니까?')) return;
+			navigation.cancel();
+		}
+	});
 </script>
 
 {#snippet ContentTextarea()}
 	<!-- svelte-ignore a11y_autofocus -->
-	<textarea
-		id="content-textarea"
-		contenteditable="true"
-		bind:value={markup}
-		autofocus
-		name="markup"
-		disabled={loading}
+	<textarea id="content-textarea" contenteditable="true" bind:value={markup} autofocus name="markup"
 	></textarea>
 {/snippet}
 
 {#snippet CommentInput()}
-	<input
-		id="comment-input"
-		placeholder="comment"
-		bind:value={comment}
-		name="comment"
-		disabled={loading}
-	/>
+	<input id="comment-input" placeholder="comment" name="comment" />
 {/snippet}
 
-{#snippet PreviewBtn()}
-	<button id="preview-btn" type="button" onclick={previewDoc}>미리보기</button>
-{/snippet}
-
-{#snippet SubmitBtn()}
-	{#if !loading}
-		<button class="button" id="submit-btn" type="submit" disabled={loading}>저장</button>
-	{:else}
-		<button class="button" type="button" disabled>저장 중...</button>
+{#snippet PreviewForm()}
+	<CommonForm actionName="preview" btnName="미리보기" bind:formResult={previewResult}>
+		<input type="hidden" value={JSON.stringify(previewDoc)} name="doc" />
+	</CommonForm>
+	{#if previewResult && previewResult.type === 'success' && previewResult.data?.ok}
+		<HtmlContent content={previewResult.data.value} />
 	{/if}
 {/snippet}
 
-<div id="write-form-div">
-	<form method="POST" use:enhance={formHandle}>
+{#snippet SaveForm()}
+	<CommonForm actionName="save" btnName="저장" bind:formResult={saveResult}>
 		{@render ContentTextarea()}
 		{@render CommentInput()}
-		<div id="btn-div">
-			{@render PreviewBtn()}
-			{@render SubmitBtn()}
-		</div>
-	</form>
+	</CommonForm>
+{/snippet}
 
-	{#if errorMsg}
-		<CommonCaution>{errorMsg}</CommonCaution>
-	{/if}
-	<hr />
-	<HtmlContent content={previewHTML} />
-</div>
+{@render SaveForm()}
+<hr />
+{@render PreviewForm()}
 
 <style lang="scss">
 	#content-textarea {
@@ -122,12 +73,6 @@
 		width: stretch;
 		font-size: 0.75rem;
 		padding: 0.25rem 0.5rem;
-	}
-
-	#btn-div {
-		display: flex;
-		justify-content: space-between;
-		margin-top: 0.5rem;
 	}
 
 	hr {

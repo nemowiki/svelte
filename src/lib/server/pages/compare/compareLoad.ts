@@ -9,11 +9,7 @@ export async function compareLoad({
 	locals
 }: ServerLoadEvent): Promise<WikiResponse<{ diff: string; oldRev: number; newRev: number }>> {
 	const fullTitle = params.fullTitle;
-	if (!fullTitle)
-		return {
-			ok: false,
-			reason: 'fullTitle is undefined'
-		};
+	if (!fullTitle) return { ok: false, reason: 'fullTitle is undefined' };
 
 	const oldRev = Number(url.searchParams.get('old'));
 	const newRev = Number(url.searchParams.get('new'));
@@ -21,7 +17,6 @@ export async function compareLoad({
 	if (oldRev < 0 || newRev <= 0) return { ok: false, reason: 'oldRev or newRev is invalid' };
 
 	const info = await getInfoByFullTitle(fullTitle);
-	if (!info) return { ok: false, reason: '문서가 존재하지 않습니다.' };
 
 	const res_read = canRead(info, locals.user.group);
 	if (!res_read.ok) return res_read;
@@ -39,8 +34,5 @@ export async function compareLoad({
 		newRev
 	};
 
-	return {
-		ok: true,
-		value
-	};
+	return { ok: true, value };
 }

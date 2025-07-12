@@ -24,13 +24,23 @@
 {/snippet}
 
 {#snippet LogTitle(log: DocLogDoc)}
-	<a href="/r/{encodeFullTitle(log.fullTitle)}?rev={log.revision}">
-		{#if pageType === 'user'}
-			{log.fullTitle}(r{log.revision})
-		{:else if pageType === 'hist'}
-			{log.revision}번째 수정판
-		{/if}
-	</a>
+	{#if ['create', 'edit', 'delete'].includes(log.action)}
+		<a href="/r/{encodeFullTitle(log.fullTitle)}?rev={log.revision}">
+			{#if pageType === 'user'}
+				{log.fullTitle}(r{log.revision})
+			{:else if pageType === 'hist'}
+				{log.revision}번째 수정판
+			{/if}
+		</a>
+	{:else}
+		<span>
+			{#if pageType === 'user'}
+				{log.fullTitle}(r{log.revision})
+			{:else if pageType === 'hist'}
+				{log.revision}번째 수정판
+			{/if}
+		</span>
+	{/if}
 {/snippet}
 
 {#snippet LogDelta(log: DocLogDoc)}

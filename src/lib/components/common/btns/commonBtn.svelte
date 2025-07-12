@@ -5,10 +5,10 @@
 
 	let { pageName, btnName }: { pageName: string; btnName: string } = $props();
 
-	let fullTitle = $derived(page.params.fullTitle);
+	let slug = $derived(page.params.fullTitle || page.params.userName || page.params.query);
 
 	function gotoPage(): void {
-		goto(`/${pageName}/${encodeFullTitle(fullTitle)}`);
+		goto(`/${pageName}/${encodeFullTitle(slug)}`);
 	}
 </script>
 

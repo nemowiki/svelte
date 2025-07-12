@@ -11,7 +11,6 @@ export async function authorityLoad({
 	if (!fullTitle) return { ok: false, reason: 'fullTitle is undefined' };
 
 	const info = await getInfoByFullTitle(fullTitle);
-	if (!info) return { ok: false, reason: '문서가 존재하지 않습니다.' };
 
 	const res_read = canRead(info, locals.user.group);
 	if (!res_read.ok) return res_read;

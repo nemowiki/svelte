@@ -1,48 +1,38 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import LogList from '$lib/components/common/logList.svelte';
-	import postReq from '$lib/utils/postReq.js';
-	import type { DocLogDoc, WikiResponse } from '@nemowiki/core/types';
 	import { encodeFullTitle } from '@nemowiki/core/client';
-	import { pushState } from '$app/navigation';
+	import { goto } from '$app/navigation';
 
 	const fullTitle = $derived<string>(page.params.fullTitle);
 
-	let { initial_logArr } = $props();
+	let { logArr } = $props();
 
 	let pageIdx = $state<number>(Number(page.url.searchParams.get('page')) || 1);
-	let logArr = $state<DocLogDoc[]>(initial_logArr);
-	// let logArr = $derived<DocLogDoc[]>(updatedLogArr || initial_logArr);
+	let loading = $state<boolean>(false);
 
 	async function loadMoreLogs(loadType: 'prev' | 'next') {
+		loading = true;
+
 		if (loadType === 'prev') {
 			pageIdx -= 1;
 		} else if (loadType === 'next') {
 			pageIdx += 1;
 		}
 
-		pushState(`/h/${encodeFullTitle(fullTitle)}?page=${pageIdx}`, {});
+		await goto(`/h/${encodeFullTitle(fullTitle)}?page=${pageIdx}`);
 
-		const res = (await postReq('/api/log/doc', {
-			fullTitle,
-			pageIdx
-		})) as WikiResponse<DocLogDoc[]>;
-
-		if (res.ok) {
-			logArr = res.value;
-		} else {
-			alert(res.reason);
-		}
+		loading = false;
 	}
 </script>
 
 {#snippet PrevBtn()}
-	<button disabled={pageIdx === 1} onclick={() => loadMoreLogs('prev')}>이전</button>
+	<button disabled={loading || pageIdx === 1} onclick={() => loadMoreLogs('prev')}>이전</button>
 {/snippet}
 
 {#snippet NextBtn()}
 	<button
-		disabled={logArr.at(-1)?.revision === 1 && logArr.at(-1)?.action === 'create'}
+		disabled={loading || (logArr.at(-1)?.revision === 1 && logArr.at(-1)?.action === 'create')}
 		onclick={() => loadMoreLogs('next')}>다음</button
 	>
 {/snippet}

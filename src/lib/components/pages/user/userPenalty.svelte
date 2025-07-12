@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { PenaltyDoc, PenaltyType } from '@nemowiki/core/types';
 	import { parseDateTime } from '$lib/utils/general.js';
-	import RemovePenaltyBtn from '$lib/components/pages/user/removePenaltyBtn.svelte';
 
 	let { penaltyArr } = $props();
 
@@ -17,8 +16,9 @@
 	}
 </script>
 
-{#snippet PenaltyHeader(penalty: PenaltyDoc)}
+{#snippet PenaltyHeader(penalty: PenaltyDoc, idx: number)}
 	<span>
+		<b>{idx + 1}.</b>
 		{@html parseType(penalty.type)} <i>{penalty.comment}</i>
 		<!-- {@html getType(penalty.type)} <span style:color={'grey'}>{penalty.comment}</span> -->
 	</span>
@@ -27,7 +27,6 @@
 {#snippet PenaltyDate(penalty: PenaltyDoc)}
 	<span>
 		{@html parseUntil(penalty.until, penalty.duration)}
-		<RemovePenaltyBtn penaltyId={penalty._id} />
 	</span>
 {/snippet}
 
@@ -36,9 +35,9 @@
 	{#if penaltyArr.length === 0}
 		<p>받은 경고 및 차단 사항이 없습니다.</p>
 	{:else}
-		{#each penaltyArr as penalty (penalty._id)}
+		{#each penaltyArr as penalty, idx (penalty._id)}
 			<div class="penalty-div">
-				{@render PenaltyHeader(penalty)}
+				{@render PenaltyHeader(penalty, idx)}
 				{@render PenaltyDate(penalty)}
 			</div>
 		{/each}

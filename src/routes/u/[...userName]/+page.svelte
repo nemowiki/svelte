@@ -21,7 +21,7 @@
 			<UserGroup {queriedUser} />
 		</section>
 		<section>
-			<UserContribute {queriedUser} initial_logArr={logArr} />
+			<UserContribute {queriedUser} {logArr} />
 		</section>
 		<section>
 			<UserPenalty {penaltyArr} />

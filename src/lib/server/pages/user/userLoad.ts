@@ -10,20 +10,13 @@ export async function userLoad({
 > {
 	const userName = params.userName;
 	if (!userName) {
-		return {
-			ok: false,
-			reason: 'userName is undefined'
-		};
+		return { ok: false, reason: 'userName is undefined' };
 	}
 
 	const pageIdx = Number(url.searchParams.get('page')) || 1;
 
 	const queriedUser = await getUserByName(userName);
-	if (!queriedUser)
-		return {
-			ok: false,
-			reason: '사용자가 존재하지 않습니다.'
-		};
+	if (!queriedUser) return { ok: false, reason: '사용자가 존재하지 않습니다.' };
 
 	const res_penalty = await refreshAndGetPenaltiesByName(userName);
 	if (!res_penalty.ok) return res_penalty;
@@ -37,8 +30,5 @@ export async function userLoad({
 		penaltyArr: JSON.stringify(res_penalty.value)
 	};
 
-	return {
-		ok: true,
-		value
-	};
+	return { ok: true, value };
 }

@@ -14,10 +14,10 @@
 </script>
 
 <article>
-	<ReadHeader info={doc} />
 	{#if !data.ok}
 		<p>{data.reason}</p>
 	{:else}
+		<ReadHeader revision={doc?.revision || 0} />
 		<ReadCaution ok={data.ok} {rev} />
 		<HtmlContent content={html} />
 	{/if}

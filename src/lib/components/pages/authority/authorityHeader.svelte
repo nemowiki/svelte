@@ -4,10 +4,7 @@
 	import ReadBtn from '$lib/components/common/btns/readBtn.svelte';
 	import HistoryBtn from '$lib/components/common/btns/historyBtn.svelte';
 	import BacklinkBtn from '$lib/components/common/btns/backlinkBtn.svelte';
-	import RestateBtn from '$lib/components/common/btns/restateBtn.svelte';
-	import { type Info } from '@nemowiki/core/types';
-
-	let { info }: { info: Info | null } = $props();
+	import StateBtn from '$lib/components/common/btns/stateBtn.svelte';
 
 	const description = '(권한 목록)';
 </script>
@@ -17,7 +14,7 @@
 	<WriteBtn />
 	<HistoryBtn />
 	<BacklinkBtn />
-	<RestateBtn {info} />
+	<StateBtn />
 {/snippet}
 
 <DocHeader {description} {Btns} />

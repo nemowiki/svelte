@@ -70,9 +70,12 @@ const authorizationHandle: Handle = async ({ event, resolve }) => {
 
 		let user: User | null = await getUserByEmail(session.user.email);
 		if (user === null) {
-			const res = await signupUserByEmailAndName(session.user.email, session.user.email.split('@')[0]);
+			const res = await signupUserByEmailAndName(
+				session.user.email,
+				session.user.email.split('@')[0]
+			);
 			if (!res.ok) throw new Error(res.reason);
-			user = res.value;
+			user = res.value as User;
 		}
 
 		event.locals.user = user;
@@ -83,8 +86,7 @@ const authorizationHandle: Handle = async ({ event, resolve }) => {
 		// Unauthorized
 		if (event.url.pathname.startsWith('/api')) {
 			error(401, {
-				message: 'Unauthorized',
-				fullTitle: event.params.fullTitle || event.url.pathname
+				message: 'Unauthorized'
 			});
 		} else if (event.url.pathname.startsWith('/signin')) {
 			return await resolve(event);

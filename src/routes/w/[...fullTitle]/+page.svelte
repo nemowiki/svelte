@@ -9,7 +9,7 @@
 </script>
 
 <article>
-	<WriteHeader info={doc} />
+	<WriteHeader revision={doc?.revision || 0} />
 	{#if !data.ok}
 		<p>{data.reason}</p>
 	{:else}
