@@ -1,8 +1,8 @@
 <script lang="ts">
-	import FileForm from '$lib/components/pages/file/fileForm.svelte';
+	import FileForm from '$lib/wiki/components/pages/file/fileForm.svelte';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import CommonHeader from '$lib/components/common/commonHeader.svelte';
+	import CommonHeader from '$lib/wiki/components/common/commonHeader.svelte';
 
 	let { data } = $props();
 

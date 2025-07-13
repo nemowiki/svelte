@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { DocLogDoc, PenaltyDoc, User } from '@nemowiki/core/types';
-	import UserGroup from '$lib/components/pages/user/userGroup.svelte';
-	import UserContribute from '$lib/components/pages/user/userContribute.svelte';
-	import UserPenalty from '$lib/components/pages/user/userPenalty.svelte';
-	import UserHeader from '$lib/components/pages/user/userHeader.svelte';
+	import UserGroup from '$lib/wiki/components/pages/user/userGroup.svelte';
+	import UserContribute from '$lib/wiki/components/pages/user/userContribute.svelte';
+	import UserPenalty from '$lib/wiki/components/pages/user/userPenalty.svelte';
+	import UserHeader from '$lib/wiki/components/pages/user/userHeader.svelte';
 
 	let { data } = $props();
 

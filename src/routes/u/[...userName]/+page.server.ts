@@ -1,1 +1,1 @@
-export { userLoad as load } from '$lib/server/pages/user/userLoad.js';
+export { userLoad as load } from '$lib/wiki/server/pages/user/userLoad.js';

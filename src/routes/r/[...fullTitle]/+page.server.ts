@@ -1,1 +1,1 @@
-export { readLoad as load } from '$lib/server/pages/read/readLoad.js';
+export { readLoad as load } from '$lib/wiki/server/pages/read/readLoad.js';

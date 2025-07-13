@@ -1,1 +1,1 @@
-export { backlinkLoad as load } from '$lib/server/pages/backlink/backlinkLoad.js';
+export { backlinkLoad as load } from '$lib/wiki/server/pages/backlink/backlinkLoad.js';

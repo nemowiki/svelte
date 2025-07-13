@@ -1,9 +1,9 @@
 <script lang="ts">
-	import PenaltyHeader from '$lib/components/pages/penalty/penaltyHeader.svelte';
-	import UserPenalty from '$lib/components/pages/user/userPenalty.svelte';
+	import PenaltyHeader from '$lib/wiki/components/pages/penalty/penaltyHeader.svelte';
+	import UserPenalty from '$lib/wiki/components/pages/user/userPenalty.svelte';
 	import type { PenaltyDoc } from '@nemowiki/core/types';
-	import ApplyPenaltyForm from '$lib/components/pages/penalty/applyPenaltyForm.svelte';
-	import RemovePenaltyForm from '$lib/components/pages/penalty/removePenaltyForm.svelte';
+	import ApplyPenaltyForm from '$lib/wiki/components/pages/penalty/applyPenaltyForm.svelte';
+	import RemovePenaltyForm from '$lib/wiki/components/pages/penalty/removePenaltyForm.svelte';
 
 	let { data } = $props();
 

@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { type Info } from '@nemowiki/core/types';
-	import AuthorityHeader from '$lib/components/pages/authority/authorityHeader.svelte';
-	import AuthorityForm from '$lib/components/pages/authority/authorityForm.svelte';
-	import AuthorityList from '$lib/components/pages/authority/authorityList.svelte';
+	import AuthorityHeader from '$lib/wiki/components/pages/authority/authorityHeader.svelte';
+	import AuthorityForm from '$lib/wiki/components/pages/authority/authorityForm.svelte';
+	import AuthorityList from '$lib/wiki/components/pages/authority/authorityList.svelte';
 
 	let { data } = $props();
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import CommonHeader from '$lib/components/common/commonHeader.svelte';
+	import CommonHeader from '$lib/wiki/components/common/commonHeader.svelte';
 	import { signIn } from '@auth/sveltekit/client';
 </script>
 

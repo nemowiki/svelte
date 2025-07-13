@@ -1,6 +1,6 @@
 <script lang="ts">
-	import StateHeader from '$lib/components/pages/state/stateHeader.svelte';
-	import StateForm from '$lib/components/pages/state/stateForm.svelte';
+	import StateHeader from '$lib/wiki/components/pages/state/stateHeader.svelte';
+	import StateForm from '$lib/wiki/components/pages/state/stateForm.svelte';
 
 	let { data } = $props();
 </script>

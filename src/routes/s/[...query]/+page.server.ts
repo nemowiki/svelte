@@ -1,1 +1,1 @@
-export { searchLoad as load } from '$lib/server/pages/search/searchLoad.js';
+export { searchLoad as load } from '$lib/wiki/server/pages/search/searchLoad.js';

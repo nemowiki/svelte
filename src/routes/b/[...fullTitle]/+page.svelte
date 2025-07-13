@@ -1,6 +1,6 @@
 <script lang="ts">
-	import BacklinkHeader from '$lib/components/pages/backlink/backlinkHeader.svelte';
-	import HtmlContent from '$lib/components/common/htmlContent.svelte';
+	import BacklinkHeader from '$lib/wiki/components/pages/backlink/backlinkHeader.svelte';
+	import HtmlContent from '$lib/wiki/components/common/htmlContent.svelte';
 
 	let { data } = $props();
 

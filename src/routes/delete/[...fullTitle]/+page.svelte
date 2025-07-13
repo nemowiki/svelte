@@ -1,6 +1,6 @@
 <script lang="ts">
-	import DeleteHeader from '$lib/components/pages/delete/deleteHeader.svelte';
-	import DeleteForm from '$lib/components/pages/delete/deleteForm.svelte';
+	import DeleteHeader from '$lib/wiki/components/pages/delete/deleteHeader.svelte';
+	import DeleteForm from '$lib/wiki/components/pages/delete/deleteForm.svelte';
 
 	let { data } = $props();
 </script>

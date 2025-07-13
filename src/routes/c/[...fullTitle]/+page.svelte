@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Change } from '@nemowiki/core/types';
-	import CompareModule from '$lib/components/pages/compare/compareModule.svelte';
-	import CompareHeader from '$lib/components/pages/compare/compareHeader.svelte';
+	import CompareModule from '$lib/wiki/components/pages/compare/compareModule.svelte';
+	import CompareHeader from '$lib/wiki/components/pages/compare/compareHeader.svelte';
 
 	let { data } = $props();
 

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { DocLogDoc } from '@nemowiki/core/types';
-	import HistoryModule from '$lib/components/pages/history/historyModule.svelte';
-	import HistoryHeader from '$lib/components/pages/history/historyHeader.svelte';
+	import HistoryModule from '$lib/wiki/components/pages/history/historyModule.svelte';
+	import HistoryHeader from '$lib/wiki/components/pages/history/historyHeader.svelte';
 
 	let { data } = $props();
 
