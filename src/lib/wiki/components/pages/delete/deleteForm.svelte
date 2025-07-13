@@ -1,20 +1,31 @@
 <script lang="ts">
 	import CommonForm from '$lib/wiki/components/common/commonForm.svelte';
-	import CommonCaution from '$lib/wiki/components/common/commonCaution.svelte';
 </script>
 
 {#snippet CommentInput()}
-	<input id="comment-input" placeholder="삭제하는 이유를 입력해 주세요." name="comment" />
+	<input
+		id="comment-input"
+		placeholder="삭제하는 이유를 입력해 주세요."
+		name="comment"
+		autocomplete="off"
+	/>
 {/snippet}
 
-<CommonForm btnName="삭제">
-	<CommonCaution>파일 문서 삭제 시, 파일도 함께 삭제됩니다.</CommonCaution>
-	{@render CommentInput()}
+<CommonForm formName="delete-form">
+	<div id="delete-form-div" class="container">
+		{@render CommentInput()}
+		<button form="delete-form" type="submit" class="warn-btn">삭제</button>
+	</div>
 </CommonForm>
 
 <style lang="scss">
+	#delete-form-div {
+		justify-content: space-between;
+	}
+
 	#comment-input {
-		width: stretch;
+		height: stretch;
+		width: 90%;
 		font-size: 0.75rem;
 		padding: 0.25rem 0.5rem;
 	}

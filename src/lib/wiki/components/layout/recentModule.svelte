@@ -38,11 +38,11 @@
 	<hr />
 {/snippet}
 
-<section>
+<section class="module">
 	<h3>수정된 문서</h3>
 	<hr />
 	{#if !page.data.user}
-		<p>로그인 후 사용 가능합니다.</p>
+		<p>로그인 필요</p>
 	{:else}
 		{#each recentChangedLogs as log, i (i)}
 			{#if i <= 10}
@@ -54,6 +54,10 @@
 
 <style lang="scss">
 	section {
+		margin-left: 0;
+		min-width: 15vw;
+		width: 15vw;
+		padding: 1rem;
 		div {
 			display: flex;
 			justify-content: space-between;
@@ -63,10 +67,13 @@
 				word-break: break-all;
 			}
 		}
+		p {
+			text-align: center;
+		}
 	}
 
-	:global(hr) {
-		margin: 0.2rem 0;
+	hr {
+		margin: 0.25rem 0;
 		border: gray 0.05em solid;
 	}
 

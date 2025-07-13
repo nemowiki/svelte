@@ -1,9 +1,10 @@
 * {
-	// font-family: 'Arial', 'NanumBarunpen';
+	// font-family: 'NanumBarunpen';
 	font-family: 'NanumGothic', '맑은고딕';
 	padding: 0;
 	margin: 0;
 	line-height: 1.4;
+	box-sizing: border-box;
 }
 
 html {
@@ -31,7 +32,7 @@ html {
 }
 
 body {
-	background-color: var(--color-gray-1);
+	background-color: var(--color-gray-2);
 }
 
 a {
@@ -72,8 +73,8 @@ td {
 
 button,
 label.button {
-	padding: 0.3rem 0.8rem;
-	border: solid black 0.1rem;
+	padding: 0.25rem 0.75rem;
+	border: solid gray 0.05rem;
 	background-color: white;
 	font-size: 1rem;
 	font-weight: bold;

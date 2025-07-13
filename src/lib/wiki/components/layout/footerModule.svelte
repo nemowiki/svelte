@@ -5,18 +5,20 @@
 <style lang="scss">
 	footer {
 		position: relative;
-		padding: 0.3rem;
 		right: 0rem;
-		display: flex;
-		width: stretch;
-		background-color: white;
 		bottom: 0rem;
+
+		display: flex;
 		justify-content: flex-end;
-		border-top: 0.1rem solid black;
+		width: stretch;
+
+		background-color: white;
+		border-top: 0.15rem solid black;
 
 		p {
-			font-size: 0.6rem;
-			margin: 0.2rem;
+			color: gray;
+			font-size: 0.75rem;
+			margin: 0.5rem;
 		}
 	}
 </style>

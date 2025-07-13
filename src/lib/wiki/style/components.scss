@@ -9,3 +9,23 @@
 .nonexistent-link {
 	color: red;
 }
+
+.container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.module {
+	margin: 1rem;
+	padding: 1rem;
+	border: solid grey 0.1rem;
+	background-color: white;
+}
+
+.warn-btn {
+	background-color: rgb(255, 200, 200);
+	&:hover {
+		background-color: rgb(255, 150, 150);
+	}
+}

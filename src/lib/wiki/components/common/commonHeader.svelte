@@ -14,17 +14,17 @@
 	</div>
 {/snippet}
 
-{#snippet BtnDiv()}
-	<div id="btn-div">
+{#snippet BtnNav()}
+	<nav>
 		{#if Btns}
 			{@render Btns()}
 		{/if}
-	</div>
+	</nav>
 {/snippet}
 
 <header>
 	{@render TitleDiv()}
-	{@render BtnDiv()}
+	{@render BtnNav()}
 </header>
 
 <style lang="scss">

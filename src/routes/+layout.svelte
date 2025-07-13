@@ -30,7 +30,7 @@
 <HeaderModule />
 
 <div>
-	<main>
+	<main class="module">
 		{@render children()}
 	</main>
 
@@ -48,25 +48,10 @@
 		justify-content: center;
 	}
 
-	@mixin default {
-		margin: 1rem;
-		height: stretch;
-		padding: 1rem 2rem;
-		border: solid grey 0.1rem;
-		background-color: white;
-	}
-
 	main {
-		@include default;
-		max-width: 45rem;
+		padding: 1rem 2rem;
+		max-width: 50rem;
 		width: stretch;
-	}
-
-	aside > :global(*) {
-		@include default;
-		margin-left: 0;
-		min-width: 15vw;
-		width: 15vw;
-		padding: 1rem;
+		height: stretch;
 	}
 </style>

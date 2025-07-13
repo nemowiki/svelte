@@ -17,7 +17,7 @@
 {#snippet TitleDiv()}
 	<div id="title-div">
 		<h1 id="user-title">
-			<a href="/u/{encodeFullTitle(fullTitle)}">{fullTitle}</a>
+			<a href="/u/{encodeFullTitle(page.params.userName)}">{fullTitle}</a>
 		</h1>
 		<span id="user-description">{description}</span>
 	</div>

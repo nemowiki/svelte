@@ -5,7 +5,7 @@
 
 	let {
 		children,
-		btnName = '저장',
+		formName,
 		actionName = '',
 		isFile = false,
 		formResult = $bindable(null)
@@ -32,36 +32,16 @@
 	}
 </script>
 
-<!-- 
-{#snippet CommentInput()}
-	<input
-		id="comment-input"
-		placeholder="comment"
-		bind:value={comment}
-		name="comment"
-		disabled={loading}
-	/>
-{/snippet} -->
-
-{#snippet SubmitBtn()}
-	{#if btnName}
-		<button class="button" id="submit-btn" type="submit"
-			>{btnName}{#if loading}
-				중...{/if}</button
-		>
-	{/if}
-{/snippet}
-
 <div id="common-form-div">
 	<form
 		method="POST"
+		{...formName ? { id: formName } : {}}
 		{...actionName ? { action: `?/${actionName}` } : {}}
 		{...isFile ? { enctype: 'multipart/form-data' } : {}}
 		use:enhance={formHandle}
 	>
-		<fieldset disabled={loading}>
+		<fieldset disabled={loading} id="common-form-content">
 			{@render children()}
-			{@render SubmitBtn()}
 		</fieldset>
 	</form>
 

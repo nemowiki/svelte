@@ -13,5 +13,5 @@ export async function regroupLoad({
 	const queriedUser = await getUserByName(userName);
 	if (!queriedUser) return { ok: false, reason: 'user is undefined' };
 
-	return canChangeGroup(queriedUser, locals.user);
+	return canChangeGroup(queriedUser, locals.user.group);
 }

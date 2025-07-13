@@ -37,28 +37,49 @@
 {/snippet}
 
 {#snippet CommentInput()}
-	<input id="comment-input" placeholder="comment" name="comment" />
+	<input
+		id="comment-input"
+		placeholder="편집한 내용에 대해 간단한 설명을 입력해 주세요."
+		name="comment"
+		autocomplete="off"
+	/>
 {/snippet}
 
 {#snippet PreviewForm()}
-	<CommonForm actionName="preview" btnName="미리보기" bind:formResult={previewResult}>
+	<CommonForm actionName="preview" formName="preview-form" bind:formResult={previewResult}>
 		<input type="hidden" value={JSON.stringify(previewDoc)} name="doc" />
 	</CommonForm>
+{/snippet}
+
+{#snippet SaveForm()}
+	<CommonForm actionName="save" formName="save-form" bind:formResult={saveResult}>
+		<div id="save-form-div" class="container">
+			{@render ContentTextarea()}
+			{@render CommentInput()}
+		</div>
+	</CommonForm>
+{/snippet}
+
+{#snippet BtnDiv()}
+	<div id="btn-div" class="container">
+		<button form="preview-form" type="submit">미리보기</button>
+		<button form="save-form" type="submit">저장하기</button>
+	</div>
+{/snippet}
+
+{#snippet PreviewHtml()}
 	{#if previewResult && previewResult.type === 'success' && previewResult.data?.ok}
+		<hr />
 		<HtmlContent content={previewResult.data.value} />
 	{/if}
 {/snippet}
 
-{#snippet SaveForm()}
-	<CommonForm actionName="save" btnName="저장" bind:formResult={saveResult}>
-		{@render ContentTextarea()}
-		{@render CommentInput()}
-	</CommonForm>
-{/snippet}
-
-{@render SaveForm()}
-<hr />
-{@render PreviewForm()}
+<div id="write-form-div">
+	{@render SaveForm()}
+	{@render PreviewForm()}
+	{@render BtnDiv()}
+	{@render PreviewHtml()}
+</div>
 
 <style lang="scss">
 	#content-textarea {
@@ -69,14 +90,24 @@
 		resize: vertical;
 	}
 
+	#save-form-div {
+		flex-direction: column;
+	}
+
 	#comment-input {
 		width: stretch;
 		font-size: 0.75rem;
 		padding: 0.25rem 0.5rem;
+		margin-top: 0.5rem;
+	}
+
+	#btn-div {
+		margin-top: 0.5rem;
+		justify-content: space-between;
 	}
 
 	hr {
-		margin: 1rem 0;
-		border: black 0.1rem solid;
+		margin: 0.5rem 0;
+		border: black 0.05rem solid;
 	}
 </style>

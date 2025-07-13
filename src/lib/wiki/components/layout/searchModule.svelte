@@ -3,6 +3,7 @@
 	import { page } from '$app/state';
 	import HangulSearcher from 'hangul-searcher';
 	import { encodeFullTitle } from '@nemowiki/core/client';
+	import Search from '@lucide/svelte/icons/search';
 
 	let searchWord = $state<string>('');
 
@@ -62,47 +63,76 @@
 {/snippet}
 
 {#snippet SearchButton()}
-	<button onclick={() => search(searchWord)}>검색</button>
+	<button id="search-btn" class="container" onclick={() => search(searchWord)}>
+		<Search size="1.25rem" />
+	</button>
 {/snippet}
 
 {#snippet SuggestionBtn(suggestion: string, i: number)}
-	<button onclick={() => readDoc(suggestion)} class="suggestion-btn" style="top: {(i + 1) * 3}rem">
+	<button
+		onclick={() => readDoc(suggestion)}
+		class="suggestion-btn"
+		style="top: {(i + 1) * 2.5}rem"
+	>
 		{suggestion}</button
 	>
 {/snippet}
 
-<div id="search-div">
-	{#if page.data.user}
-		{@render SearchInput()}
-		{@render SearchButton()}
+<div id="search-div" class="container">
+	{@render SearchInput()}
+	{@render SearchButton()}
 
-		{#each suggestionArr as suggestion, i (suggestion)}
-			{#if i <= 8}
-				{@render SuggestionBtn(suggestion, i)}
-			{/if}
-		{/each}
-	{/if}
+	{#each suggestionArr as suggestion, i (suggestion)}
+		{#if i <= 8}
+			{@render SuggestionBtn(suggestion, i)}
+		{/if}
+	{/each}
 </div>
 
 <style lang="scss">
+	@mixin format {
+		font-size: 1rem;
+		height: 2.5rem;
+		padding: 0.5rem 0.75rem;
+		border: solid 0.1rem gray;
+		font-weight: bold;
+		text-align: left;
+	}
+
 	#search-div {
 		position: relative;
-		display: flex;
+		width: fit-content;
 		z-index: 999;
-		margin-left: 2rem;
 	}
 
 	#keyword-input {
-		font-size: 1.2rem;
-		padding: 0.2rem 0.6rem;
-		width: 20rem;
+		@include format;
+
+		width: 15rem;
+		border-right: none;
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	#search-btn {
+		@include format;
+
+		border-left: none;
+		width: fit-content;
 	}
 
 	.suggestion-btn {
+		@include format;
+
 		position: absolute;
-		height: 3rem;
-		padding: 0.5rem 1rem;
-		font-size: 1.2rem;
+		left: 0;
+
+		width: stretch;
+
+		border-top: none;
+
 		word-break: keep-all;
 		white-space: nowrap;
 	}

@@ -24,14 +24,26 @@
 	<input id="comment-input" placeholder="comment" name="comment" />
 {/snippet}
 
-<CommonForm btnName="업로드" isFile>
-	{@render FileInput()}
-	{@render TitleInput()}
-	{@render ContentTextarea()}
-	{@render CommentInput()}
+<CommonForm formName="file-form" isFile>
+	<div id="file-form-div" class="container">
+		{@render FileInput()}
+		{@render TitleInput()}
+		{@render ContentTextarea()}
+		{@render CommentInput()}
+		<button form="file-form" type="submit">업로드</button>
+	</div>
 </CommonForm>
 
 <style lang="scss">
+	#file-form-div {
+		flex-direction: column;
+		align-items: flex-start;
+
+		* {
+			margin-bottom: 0.5rem;
+		}
+	}
+
 	#doc-markup {
 		width: stretch;
 		height: 50vh;

@@ -81,6 +81,7 @@
 		"wiki"
 	],
 	"dependencies": {
+		"@lucide/svelte": "^0.525.0",
 		"@nemowiki/core": "file:../core",
 		"@sentry/sveltekit": "^9.35.0",
 		"hangul-searcher": "^2.0.1"

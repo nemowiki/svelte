@@ -19,15 +19,39 @@
 {/snippet}
 
 {#snippet GroupInput()}
-	<input id="group-input" name="group" placeholder="허용할 권한들을 쉼표로 구분하여 입력하세요." />
+	<input
+		id="group-input"
+		name="group"
+		placeholder="허용할 권한들을 쉼표로 구분하여 입력하세요."
+		autocomplete="off"
+	/>
 {/snippet}
 
 {#if info.authority['change_authority']?.includes(userGroup)}
-	<CommonForm btnName="적용">
-		{@render DocActionSelect()}
-		{@render GroupInput()}
+	<CommonForm formName="authority-form">
+		<div id="authority-form-div" class="container">
+			{@render DocActionSelect()}
+			{@render GroupInput()}
+			<button form="authority-form" type="submit">적용</button>
+		</div>
 	</CommonForm>
 {/if}
 
 <style lang="scss">
+	#authority-form-div {
+		justify-content: space-between;
+
+		select {
+			width: 10%;
+			height: stretch;
+			padding: 0.25rem;
+			font-weight: bold;
+		}
+
+		input {
+			height: stretch;
+			padding: 0.25rem 0.5rem;
+			width: 75%;
+		}
+	}
 </style>
