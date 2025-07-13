@@ -1,6 +1,6 @@
 {
 	"name": "@nemowiki/svelte",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/nemowiki/svelte.git"
@@ -10,6 +10,10 @@
 	"bugs": {
 		"url": "https://github.com/nemowiki/svelte/issues"
 	},
+	"keywords": [
+		"svelte",
+		"wiki"
+	],
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run prepack",
@@ -47,10 +51,6 @@
 			"default": "./dist/style/*.scss"
 		}
 	},
-	"peerDependencies": {
-		"@sveltejs/kit": "^2.22.2",
-		"svelte": "^5.0.0"
-	},
 	"devDependencies": {
 		"@auth/sveltekit": "^1.10.0",
 		"@eslint/compat": "^1.2.5",
@@ -58,7 +58,6 @@
 		"@sveltejs/adapter-auto": "^6.0.1",
 		"@sveltejs/adapter-vercel": "^5.7.2",
 		"@sveltejs/kit": "^2.22.2",
-		"@sveltejs/package": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
 		"@vercel/analytics": "^1.5.0",
 		"@vercel/speed-insights": "^1.2.0",
@@ -76,13 +75,9 @@
 		"typescript-eslint": "^8.20.0",
 		"vite": "^6.2.6"
 	},
-	"keywords": [
-		"svelte",
-		"wiki"
-	],
 	"dependencies": {
 		"@lucide/svelte": "^0.525.0",
-		"@nemowiki/core": "file:../core",
+		"@nemowiki/core": "^0.1.2",
 		"@sentry/sveltekit": "^9.35.0",
 		"hangul-searcher": "^2.0.1"
 	}
