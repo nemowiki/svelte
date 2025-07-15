@@ -5,6 +5,7 @@
 		"type": "git",
 		"url": "git+https://github.com/nemowiki/svelte.git"
 	},
+	"type": "module",
 	"author": "nemovim",
 	"license": "Apache-2.0",
 	"bugs": {
