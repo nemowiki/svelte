@@ -16,40 +16,13 @@
 	],
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build && npm run prepack",
+		"build": "vite build",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
-		"prepack": "svelte-kit sync && svelte-package && publint",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
 		"lint": "eslint . --fix"
-	},
-	"files": [
-		"dist",
-		"!dist/**/*.test.*",
-		"!dist/**/*.spec.*"
-	],
-	"sideEffects": [
-		"**/*.css"
-	],
-	"type": "module",
-	"exports": {
-		"./components/*": {
-			"types": "./dist/components/*.svelte.d.ts",
-			"svelte": "./dist/components/*.svelte"
-		},
-		"./utils/*": {
-			"types": "./dist/utils/*.d.ts",
-			"default": "./dist/utils/*.js"
-		},
-		"./types/*": {
-			"types": "./dist/types/*.d.ts",
-			"default": "./dist/types/*.js"
-		},
-		"./style/*": {
-			"default": "./dist/style/*.scss"
-		}
 	},
 	"devDependencies": {
 		"@auth/sveltekit": "^1.10.0",
