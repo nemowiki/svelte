@@ -1,5 +1,5 @@
 <script lang="ts">
-	import UserHeader from '$lib/wiki/components/common/userHeader.svelte';
+	import UserHeader from '$lib/wiki/components/common/headers/userHeader.svelte';
 	import RenameBtn from '$lib/wiki/components/common/btns/renameBtn.svelte';
 	import RegroupBtn from '$lib/wiki/components/common/btns/regroupBtn.svelte';
 	import PenaltyBtn from '$lib/wiki/components/common/btns/penaltyBtn.svelte';

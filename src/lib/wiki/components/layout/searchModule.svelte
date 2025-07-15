@@ -45,6 +45,7 @@
 
 	onNavigate(() => {
 		suggestionArr = [];
+		searchWord = '';
 	});
 </script>
 
@@ -90,50 +91,5 @@
 </div>
 
 <style lang="scss">
-	@mixin format {
-		font-size: 1rem;
-		height: 2.5rem;
-		padding: 0.5rem 0.75rem;
-		border: solid 0.1rem gray;
-		font-weight: bold;
-		text-align: left;
-	}
-
-	#search-div {
-		position: relative;
-		width: fit-content;
-		z-index: 999;
-	}
-
-	#keyword-input {
-		@include format;
-
-		width: 15rem;
-		border-right: none;
-
-		&:focus {
-			outline: none;
-		}
-	}
-
-	#search-btn {
-		@include format;
-
-		border-left: none;
-		width: fit-content;
-	}
-
-	.suggestion-btn {
-		@include format;
-
-		position: absolute;
-		left: 0;
-
-		width: stretch;
-
-		border-top: none;
-
-		word-break: keep-all;
-		white-space: nowrap;
-	}
+	@use '../../style/layout/searchModule.scss';
 </style>

@@ -45,8 +45,11 @@
 
 {#snippet LogDelta(log: DocLogDoc)}
 	{#if ['create', 'edit', 'delete'].includes(log.action)}
-		(<a href="/c/{encodeFullTitle(log.fullTitle)}?old={log.revision - 1}&new={log.revision}">비교</a
-		>|{@html createDeltaSpan(log.delta)})
+		<span>
+			(<a href="/c/{encodeFullTitle(log.fullTitle)}?old={log.revision - 1}&new={log.revision}"
+				>비교</a
+			>|{@html createDeltaSpan(log.delta)})
+		</span>
 	{/if}
 {/snippet}
 
@@ -86,17 +89,5 @@
 {/each}
 
 <style lang="scss">
-	.log-div {
-		display: flex;
-		justify-content: space-between;
-	}
-
-	.comment-div {
-		justify-content: center !important;
-		color: grey;
-	}
-
-	.doc-action-span {
-		font-weight: bold;
-	}
+	@use '../../style/common/logList.scss';
 </style>

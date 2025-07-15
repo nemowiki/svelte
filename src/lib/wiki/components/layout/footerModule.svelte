@@ -3,22 +3,5 @@
 </footer>
 
 <style lang="scss">
-	footer {
-		position: relative;
-		right: 0rem;
-		bottom: 0rem;
-
-		display: flex;
-		justify-content: flex-end;
-		width: stretch;
-
-		background-color: white;
-		border-top: 0.15rem solid black;
-
-		p {
-			color: gray;
-			font-size: 0.75rem;
-			margin: 0.5rem;
-		}
-	}
+	@use '../../style/layout/footerModule.scss';
 </style>

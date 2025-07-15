@@ -1,5 +1,5 @@
 <script lang="ts">
-	import DocHeader from '$lib/wiki/components/common/docHeader.svelte';
+	import DocHeader from '$lib/wiki/components/common/headers/docHeader.svelte';
 	import WriteBtn from '$lib/wiki/components/common/btns/writeBtn.svelte';
 	import BacklinkBtn from '$lib/wiki/components/common/btns/backlinkBtn.svelte';
 	import AuthorityBtn from '$lib/wiki/components/common/btns/authorityBtn.svelte';

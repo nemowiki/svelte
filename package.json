@@ -1,6 +1,6 @@
 {
 	"name": "@nemowiki/svelte",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/nemowiki/svelte.git"
@@ -77,7 +77,7 @@
 	},
 	"dependencies": {
 		"@lucide/svelte": "^0.525.0",
-		"@nemowiki/core": "^0.1.2",
+		"@nemowiki/core": "file:../core",
 		"@sentry/sveltekit": "^9.35.0",
 		"hangul-searcher": "^2.0.1"
 	}

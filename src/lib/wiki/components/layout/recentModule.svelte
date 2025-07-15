@@ -53,33 +53,5 @@
 </section>
 
 <style lang="scss">
-	section {
-		margin-left: 0;
-		min-width: 15vw;
-		width: 15vw;
-		padding: 1rem;
-		div {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			padding: 0 0.25rem;
-			a {
-				word-break: break-all;
-			}
-		}
-		p {
-			text-align: center;
-		}
-	}
-
-	hr {
-		margin: 0.25rem 0;
-		border: gray 0.05em solid;
-	}
-
-	h3 {
-		text-align: center;
-		margin-top: 0.5rem;
-		margin-bottom: 1rem;
-	}
+	@use '../../style/layout/recentModule.scss';
 </style>

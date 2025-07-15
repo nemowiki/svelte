@@ -17,15 +17,5 @@
 </CommonForm>
 
 <style lang="scss">
-	#regroup-form-div {
-		justify-content: flex-start;
-
-		#new-group-select {
-			width: 15%;
-			height: stretch;
-			padding: 0.25rem 0.5rem;
-			font-weight: bold;
-			margin-right: 0.5rem;
-		}
-	}
+	@use '../../../style/pages/regroup/regroupForm.scss';
 </style>

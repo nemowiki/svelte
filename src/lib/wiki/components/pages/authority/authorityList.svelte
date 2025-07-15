@@ -9,3 +9,7 @@
 {#each docActionArr as docAction (docAction)}
 	<AuthorityGroupList {docAction} {info} />
 {/each}
+
+<style lang="scss">
+	@use '../../../style/pages/authority/authorityList.scss';
+</style>

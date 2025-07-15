@@ -35,27 +35,5 @@
 </CommonForm>
 
 <style lang="scss">
-	#file-form-div {
-		flex-direction: column;
-		align-items: flex-start;
-
-		* {
-			margin-bottom: 0.5rem;
-		}
-	}
-
-	#doc-markup {
-		width: stretch;
-		height: 50vh;
-		font-size: 1rem;
-		padding: 0.8rem 1rem;
-		resize: vertical;
-	}
-
-	#comment-input,
-	#title-input {
-		width: stretch;
-		font-size: 0.8rem;
-		padding: 0.2rem 0.5rem;
-	}
+	@use '../../../style/pages/file/fileForm.scss';
 </style>

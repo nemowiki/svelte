@@ -3,10 +3,10 @@
 </script>
 
 {#snippet NewFullTitleInput()}
-	<label for="new-full-title-input"><h3>이동할 문서의 전체 제목</h3></label>
+	<label for="new-full-title-input"><h3>이동할 전체 제목</h3></label>
 	<input
 		id="new-full-title-input"
-		placeholder="이동할 문서의 전체 제목을 입력해 주세요."
+		placeholder="본 문서가 이동할 전체 제목을 입력해 주세요."
 		name="new-full-title"
 	/>
 {/snippet}
@@ -30,29 +30,5 @@
 </CommonForm>
 
 <style lang="scss">
-	#move-form-div {
-		flex-direction: column;
-		align-items: flex-start;
-
-		label {
-			margin-top: 1rem;
-			margin-bottom: 0.5rem;
-		}
-
-		button {
-			margin-top: 1rem;
-		}
-	}
-
-	#comment-input {
-		width: stretch;
-		font-size: 0.75rem;
-		padding: 0.25rem 0.5rem;
-	}
-
-	#new-full-title-input {
-		width: stretch;
-		font-size: 0.75rem;
-		padding: 0.25rem 0.5rem;
-	}
+	@use '../../../style/pages/move/moveForm.scss';
 </style>

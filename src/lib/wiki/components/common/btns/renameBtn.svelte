@@ -1,5 +1,5 @@
 <script lang="ts">
-	import CommonBtn from './commonBtn.svelte';
+	import CommonBtn from '../commonBtn.svelte';
 	import { page } from '$app/state';
 	const userName = $derived(JSON.parse(page.data.user).name);
 </script>

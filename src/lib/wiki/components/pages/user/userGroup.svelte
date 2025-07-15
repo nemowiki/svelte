@@ -8,9 +8,5 @@
 </div>
 
 <style lang="scss">
-	h3 {
-		font-size: 2rem;
-		margin-top: 2rem;
-		margin-bottom: 0.5rem;
-	}
+	@use '../../../style/pages/user/userGroup.scss';
 </style>

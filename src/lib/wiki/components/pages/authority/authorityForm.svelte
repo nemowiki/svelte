@@ -38,20 +38,5 @@
 {/if}
 
 <style lang="scss">
-	#authority-form-div {
-		justify-content: space-between;
-
-		select {
-			width: 10%;
-			height: stretch;
-			padding: 0.25rem;
-			font-weight: bold;
-		}
-
-		input {
-			height: stretch;
-			padding: 0.25rem 0.5rem;
-			width: 75%;
-		}
-	}
+	@use '../../../style/pages/authority/authorityForm.scss';
 </style>

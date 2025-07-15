@@ -15,5 +15,5 @@
 <button class="{pageName}-btn" onclick={gotoPage}>{btnName}</button>
 
 <style lang="scss">
-	// @use '../../../style/btns.scss';
+	@use '../../style/common/commonBtn.scss';
 </style>

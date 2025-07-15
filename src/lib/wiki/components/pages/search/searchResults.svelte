@@ -18,7 +18,7 @@
 </script>
 
 {#snippet newDocBtn()}
-	<button onclick={() => writeDoc(query)}>
+	<button id="new-doc-btn" onclick={() => writeDoc(query)}>
 		"{query}" 문서를 생성하시겠습니까?
 	</button>
 {/snippet}
@@ -37,13 +37,5 @@
 </div>
 
 <style lang="scss">
-	button {
-		width: stretch;
-		margin: 1rem;
-		border: 0.2rem black solid;
-		padding: 1rem;
-		font-weight: bold;
-		font-size: 1rem;
-		text-align: left;
-	}
+	@use '../../../style/pages/search/searchResults.scss';
 </style>

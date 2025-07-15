@@ -24,8 +24,8 @@
 }
 
 .warn-btn {
-	background-color: rgb(255, 200, 200);
+	background-color: var(--color-error-back);
 	&:hover {
-		background-color: rgb(255, 150, 150);
+		background-color: var(--color-error-hover);
 	}
 }

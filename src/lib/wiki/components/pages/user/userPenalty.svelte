@@ -45,15 +45,5 @@
 </div>
 
 <style lang="scss">
-	.penalty-div {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-	}
-
-	h3 {
-		font-size: 2rem;
-		margin-top: 2rem;
-		margin-bottom: 0.5rem;
-	}
+	@use '../../../style/pages/user/userPenalty.scss';
 </style>

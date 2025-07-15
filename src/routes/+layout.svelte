@@ -50,7 +50,7 @@
 
 	main {
 		padding: 1rem 2rem;
-		max-width: 50rem;
+		max-width: 55rem;
 		width: stretch;
 		height: stretch;
 	}

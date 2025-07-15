@@ -22,4 +22,5 @@ __밑줄__
 <button onclick={showGrammar}>문법</button>
 
 <style lang="scss">
+	@use '../../../style/common/commonBtn.scss';
 </style>

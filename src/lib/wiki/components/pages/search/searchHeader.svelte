@@ -5,4 +5,4 @@
 	const query = $derived<string>(page.params.query);
 </script>
 
-<CommonHeader title={`검색:${query}`} />
+<CommonHeader>{`검색:${query}`}</CommonHeader>

@@ -37,8 +37,12 @@
 	>
 {/snippet}
 
-<div id="history-div">
+<div id="history-list-div">
 	<LogList {logArr} pageType="hist" />
 	{@render PrevBtn()}
 	{@render NextBtn()}
 </div>
+
+<style lang="scss">
+	@use '../../../style/pages/history/historyList.scss';
+</style>

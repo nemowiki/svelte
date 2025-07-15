@@ -8,21 +8,19 @@ export async function searchLoad({
 	params
 }: ServerLoadEvent): Promise<WikiResponse<{ result: string }>> {
 	const query = params.query;
-	if (!query)
-		return {
-			ok: false,
-			reason: 'query is undefined'
-		};
+	if (!query) return { ok: false, reason: 'query is undefined' };
 
-	const data = await searchDoc(query);
+	const res = await searchDoc(query);
 
-	if (data.status === 'exact') {
-		redirect(303, `/r/${encodeFullTitle(data.result[0] as string)}`);
+	if (!res.ok) return res;
+
+	if (res.value.status === 'exact') {
+		redirect(303, `/r/${encodeFullTitle(res.value.result[0] as string)}`);
 	} else {
 		return {
 			ok: true,
 			value: {
-				result: JSON.stringify(data.result)
+				result: JSON.stringify(res.value.result)
 			}
 		};
 	}

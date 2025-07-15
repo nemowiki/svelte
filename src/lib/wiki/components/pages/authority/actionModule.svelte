@@ -20,14 +20,5 @@
 <hr />
 
 <style lang="scss">
-	.action-span {
-		font-weight: bold;
-	}
-
-	.action-div {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin: 0.5rem;
-	}
+	@use '../../../style/pages/authority/actionModule.scss';
 </style>

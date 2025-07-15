@@ -19,14 +19,5 @@
 </CommonForm>
 
 <style lang="scss">
-	#rename-form-div {
-		justify-content: flex-start;
-
-		#new-name-input {
-			width: 50%;
-			height: stretch;
-			padding: 0.25rem 0.5rem;
-			margin-right: 0.5rem;
-		}
-	}
+	@use '../../../style/pages/rename/renameForm.scss';
 </style>

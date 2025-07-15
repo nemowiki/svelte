@@ -36,26 +36,5 @@
 {/if}
 
 <style lang="scss">
-	h3 {
-		font-size: 2rem;
-		margin-top: 2rem;
-		margin-bottom: 0.5rem;
-	}
-
-	#remove-penalty-form-div {
-		justify-content: space-between;
-
-		#penalty-id-select {
-			width: 10%;
-			height: stretch;
-			padding: 0.25rem 0.5rem;
-			font-weight: bold;
-		}
-
-		#reason-input {
-			width: 80%;
-			height: stretch;
-			padding: 0.25rem 0.5rem;
-		}
-	}
+	@use '../../../style/pages/penalty/removePenaltyForm.scss';
 </style>

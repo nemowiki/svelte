@@ -14,7 +14,7 @@
 </script>
 
 <article>
-	<CommonHeader title="파일 업로드" />
+	<CommonHeader>파일 업로드</CommonHeader>
 	{#if !data.ok}
 		<p>{data.reason}</p>
 	{:else}

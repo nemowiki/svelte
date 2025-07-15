@@ -1,5 +1,5 @@
 <script lang="ts">
-	import DocHeader from '$lib/wiki/components/common/docHeader.svelte';
+	import DocHeader from '$lib/wiki/components/common/headers/docHeader.svelte';
 	import GrammarBtn from '$lib/wiki/components/common/btns/grammarBtn.svelte';
 	import ReadBtn from '$lib/wiki/components/common/btns/readBtn.svelte';
 	import MoveBtn from '$lib/wiki/components/common/btns/moveBtn.svelte';

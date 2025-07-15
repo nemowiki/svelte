@@ -82,32 +82,5 @@
 </div>
 
 <style lang="scss">
-	#content-textarea {
-		width: stretch;
-		height: 50vh;
-		font-size: 1rem;
-		padding: 0.75rem 1rem;
-		resize: vertical;
-	}
-
-	#save-form-div {
-		flex-direction: column;
-	}
-
-	#comment-input {
-		width: stretch;
-		font-size: 0.75rem;
-		padding: 0.25rem 0.5rem;
-		margin-top: 0.5rem;
-	}
-
-	#btn-div {
-		margin-top: 0.5rem;
-		justify-content: space-between;
-	}
-
-	hr {
-		margin: 0.5rem 0;
-		border: black 0.05rem solid;
-	}
+	@use '../../../style/pages/write/writeForm.scss';
 </style>

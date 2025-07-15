@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { DocLogDoc } from '@nemowiki/core/types';
-	import HistoryModule from '$lib/wiki/components/pages/history/historyModule.svelte';
+	import HistoryList from '$lib/wiki/components/pages/history/historyList.svelte';
 	import HistoryHeader from '$lib/wiki/components/pages/history/historyHeader.svelte';
 
 	let { data } = $props();
@@ -13,6 +13,6 @@
 	{#if !data.ok}
 		<p>{data.reason}</p>
 	{:else}
-		<HistoryModule {logArr} />
+		<HistoryList {logArr} />
 	{/if}
 </article>

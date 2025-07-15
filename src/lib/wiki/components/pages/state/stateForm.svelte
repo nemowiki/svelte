@@ -37,19 +37,5 @@
 {/if}
 
 <style lang="scss">
-	h3 {
-		margin-bottom: 0.5rem;
-	}
-
-	#comment-input {
-		width: 90%;
-		font-size: 0.75rem;
-		padding: 0.25rem 0.5rem;
-		height: stretch;
-	}
-
-	#hide-form-div,
-	#show-form-div {
-		justify-content: space-between;
-	}
+	@use '../../../style/pages/state/stateForm.scss';
 </style>

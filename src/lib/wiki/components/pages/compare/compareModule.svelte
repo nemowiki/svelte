@@ -26,26 +26,5 @@
 </div>
 
 <style lang="scss">
-	p {
-		white-space: pre-wrap;
-		padding: 1rem;
-		border: 0.1rem black solid;
-	}
-
-	@mixin changed {
-		// padding: .2rem;
-	}
-
-	.added {
-		@include changed;
-		background-color: rgba(0, 255, 0, 0.2);
-		color: darkgreen;
-	}
-
-	.removed {
-		@include changed;
-		text-decoration-line: line-through;
-		background-color: rgba(255, 0, 0, 0.2);
-		color: maroon;
-	}
+	@use '../../../style/pages/compare/compareModule.scss';
 </style>

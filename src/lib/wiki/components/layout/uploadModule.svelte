@@ -14,9 +14,5 @@
 </div>
 
 <style lang="scss">
-	#upload-btn {
-		border: none;
-		font-size: 1.25rem;
-		padding: 0.25rem;
-	}
+	@use '../../style/layout/uploadModule.scss';
 </style>
