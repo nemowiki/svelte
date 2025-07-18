@@ -1,7 +1,15 @@
 <script lang="ts">
 	import CommonHeader from '$lib/wiki/components/common/commonHeader.svelte';
-	import { signIn } from '@auth/sveltekit/client';
+	import GoogleModule from '$lib/wiki/components/layout/googleModule.svelte';
 </script>
 
-<CommonHeader>위키에 오신 것을 환영합니다.</CommonHeader>
-<button onclick={() => signIn('google')}>Google로 로그인</button>
+<CommonHeader>로그인</CommonHeader>
+<p>로그인하면 문서 편집 및 다양한 기능의 사용이 가능합니다!</p>
+<hr />
+<GoogleModule />
+
+<style>
+	hr {
+		margin-bottom: 1rem;
+	}
+</style>

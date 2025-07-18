@@ -118,7 +118,7 @@
 
 	hr {
 		border: gray 0.05em solid;
-		margin-bottom: 0.5rem;
+		margin-bottom: 0.5em;
 	}
 
 	img {
@@ -144,7 +144,7 @@
 	}
 
 	#content-footnote {
-		margin: 0.5rem 0;
+		margin: 0.5em 0;
 	}
 
 	#index {
@@ -165,13 +165,13 @@
 	[id^='popup-'] {
 		position: absolute;
 		background-color: white;
-		border: solid black 0.1rem;
-		padding: 0.3rem 0.4rem 0.1rem 0.4rem;
+		border: solid black 0.1em;
+		padding: 0.3em 0.4em 0.1em 0.4em;
 		z-index: 999;
 		line-height: 1.2;
 		word-break: keep-all;
 		white-space: nowrap;
-		top: -2.2rem;
+		top: -2.2em;
 		left: 0;
 		display: flex;
 		width: fit-content;

@@ -4,14 +4,18 @@
 	import type { User } from '@nemowiki/core/types';
 	import { encodeFullTitle } from '@nemowiki/core/client';
 	import LogOut from '@lucide/svelte/icons/log-out';
+	import LogIn from '@lucide/svelte/icons/log-in';
+	import { goto } from '$app/navigation';
 
-	let user: User | null = $derived(JSON.parse(page.data.user || null));
+	let user: User = $derived(JSON.parse(page.data.user));
 </script>
 
 {#snippet GuestProfile()}
-	<h2>GUEST</h2>
+	<h2>비회원</h2>
 	<hr />
-	<p>로그인 필요</p>
+	<button id="login-btn" class="container" onclick={() => goto('/signin')}
+		><LogIn size="1rem" color="green" /><span>&nbsp;로그인</span></button
+	>
 {/snippet}
 
 {#snippet UserProfile(user: User)}
@@ -31,7 +35,7 @@
 
 <!-- <section class="container"> -->
 <section class="module">
-	{#if user === null}
+	{#if user.email === null}
 		{@render GuestProfile()}
 	{:else}
 		{@render UserProfile(user)}
