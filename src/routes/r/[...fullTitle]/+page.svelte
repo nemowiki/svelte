@@ -8,6 +8,7 @@
 	let { data } = $props();
 
 	let rev = $derived<number>(data?.value?.rev as number);
+	let from = $derived<string | null>(data?.value?.from || null);
 	let doc = $derived<Doc | null>(JSON.parse(data?.value?.doc || 'null'));
 
 	let html = $derived<string>(doc?.html || '');
@@ -18,7 +19,7 @@
 	{#if !data.ok}
 		<p>{data.reason}</p>
 	{:else}
-		<ReadCaution ok={data.ok} {rev} />
+		<ReadCaution ok={data.ok} {rev} {from} />
 		<HtmlContent content={html} />
 	{/if}
 </article>
