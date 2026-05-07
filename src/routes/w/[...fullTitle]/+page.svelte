@@ -5,14 +5,10 @@
 
 	let { data } = $props();
 
-	let doc = $derived<Doc | null>(JSON.parse(data?.value?.doc || 'null'));
+	let doc = $derived<Doc | null>(JSON.parse(data?.doc || 'null'));
 </script>
 
 <article>
 	<WriteHeader revision={doc?.revision || 0} />
-	{#if !data.ok}
-		<p>{data.reason}</p>
-	{:else}
-		<WriteForm {doc} />
-	{/if}
+	<WriteForm {doc} />
 </article>

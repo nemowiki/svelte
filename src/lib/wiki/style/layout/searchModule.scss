@@ -7,13 +7,13 @@
 	text-align: left;
 }
 
-#search-div {
+.search-div {
 	position: relative;
 	width: fit-content;
 	z-index: 999;
 }
 
-#keyword-input {
+.keyword-input {
 	@include format;
 
 	width: 15rem;
@@ -24,7 +24,7 @@
 	}
 }
 
-#search-btn {
+.search-btn {
 	@include format;
 
 	border-left: none;

@@ -1,12 +1,17 @@
-import { getInfoByFullTitle, previewDoc } from '@nemowiki/core';
-import type { WikiResponse } from '@nemowiki/core/types';
-import { createDocByFullTitle, editDocByFullTitle } from '@nemowiki/core';
+import {
+	readDocByFullTitle,
+	previewDoc,
+	WikiError,
+	createDocByFullTitle,
+	editDocByFullTitle
+} from '@nemowiki/core';
+import { DocStates } from '@nemowiki/core/types';
 import { encodeFullTitle } from '@nemowiki/core/client';
-import type { Actions } from '@sveltejs/kit';
-import { fail, redirect } from '@sveltejs/kit';
+import { fail, redirect, type Actions } from '@sveltejs/kit';
 import modifyHtmlByExistenceOfLinks from '$lib/wiki/utils/modifyHtml.js';
 
 export const writeActions = {
+	// ... (save action same as before)
 	save: async ({ request, locals, params }) => {
 		const fullTitle = params.fullTitle;
 		if (!fullTitle)
@@ -18,26 +23,33 @@ export const writeActions = {
 		const markup = (data.get('markup') || '').toString();
 		const comment = (data.get('comment') || '').toString();
 
-		const info = await getInfoByFullTitle(fullTitle);
-		let res: WikiResponse<void>;
+		const doc = await readDocByFullTitle(fullTitle, locals.user);
 
-		if (info === null || info.state === 'deleted' || info.state === 'hidden') {
-			res = await createDocByFullTitle(fullTitle, locals.user, markup, comment);
-		} else {
-			res = await editDocByFullTitle(fullTitle, locals.user, markup, comment);
+		try {
+			if (doc === null || doc.state === DocStates.Deleted || doc.state === DocStates.Hidden) {
+				await createDocByFullTitle(fullTitle, locals.user, markup, comment);
+			} else {
+				await editDocByFullTitle(fullTitle, locals.user, markup, comment);
+			}
+		} catch (e: unknown) {
+			if (e instanceof WikiError) return fail(400, { message: e.message });
+			throw e;
 		}
 
-		if (res.ok) redirect(303, `/r/${encodeFullTitle(fullTitle)}`);
-		else return fail(400, { message: res.reason });
+		redirect(303, `/r/${encodeFullTitle(fullTitle)}`);
 	},
 	preview: async ({ request, locals }) => {
 		const data = await request.formData();
 		const doc = JSON.parse((data.get('doc') || '').toString());
-		const res_html = await previewDoc(doc, locals.user);
-		if (!res_html.ok) return res_html;
-		return {
-			ok: true,
-			value: modifyHtmlByExistenceOfLinks(res_html.value, locals.fullTitles)
-		};
+		try {
+			const html = await previewDoc(doc, locals.user);
+			return {
+				html: modifyHtmlByExistenceOfLinks(html, locals.fullTitles)
+			};
+		} catch (e: unknown) {
+			return fail(400, {
+				message: e instanceof Error ? e.message : '알 수 없는 에러'
+			});
+		}
 	}
 } satisfies Actions;

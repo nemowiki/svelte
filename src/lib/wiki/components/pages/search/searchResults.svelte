@@ -4,7 +4,7 @@
 	import type { SearchResult } from '@nemowiki/core/types';
 	import { page } from '$app/state';
 
-	let { resultArr }: { resultArr: Array<SearchResult> } = $props();
+	let { results }: { results: Array<SearchResult> } = $props();
 
 	const query = $derived<string>(page.params.query);
 
@@ -18,20 +18,20 @@
 </script>
 
 {#snippet newDocBtn()}
-	<button id="new-doc-btn" onclick={() => writeDoc(query)}>
+	<button class="new-doc-btn" onclick={() => writeDoc(query)}>
 		"{query}" 문서를 생성하시겠습니까?
 	</button>
 {/snippet}
 
 {#snippet ResultBtns()}
-	{#each resultArr as result (result.original)}
+	{#each results as result (result.original)}
 		<button onclick={() => readDoc(result.original)}>
 			{result.original}
 		</button>
 	{/each}
 {/snippet}
 
-<div id="search-results-div">
+<div class="search-results-div">
 	{@render newDocBtn()}
 	{@render ResultBtns()}
 </div>

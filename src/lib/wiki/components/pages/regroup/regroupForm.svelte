@@ -1,16 +1,18 @@
 <script lang="ts">
+	import { Groups } from '@nemowiki/core/types';
 	import CommonForm from '$lib/wiki/components/common/commonForm.svelte';
 </script>
 
 {#snippet NewGroupSelect()}
-	<select id="new-group-select" name="new-group">
-		<option value="user">User</option>
-		<option value="manager">Manager</option>
+	<select class="new-group-select" name="new-group">
+		{#each Object.values(Groups) as group, idx (idx)}
+			<option value={group}>{group}</option>
+		{/each}
 	</select>
 {/snippet}
 
 <CommonForm formName="regroup-form">
-	<div id="regroup-form-div" class="container">
+	<div class="regroup-form-div container">
 		{@render NewGroupSelect()}
 		<button form="regroup-form" type="submit">변경</button>
 	</div>

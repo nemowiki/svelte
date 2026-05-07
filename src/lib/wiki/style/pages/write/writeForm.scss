@@ -1,4 +1,4 @@
-#content-textarea {
+.content-textarea {
 	width: stretch;
 	height: 50vh;
 	font-size: 1rem;
@@ -6,16 +6,16 @@
 	resize: vertical;
 }
 
-#save-form-div {
+.save-form-div {
 	flex-direction: column;
 }
 
-#comment-input {
+.comment-input {
 	width: stretch;
 	margin-top: 0.5rem;
 }
 
-#btn-div {
+.btn-div {
 	margin-top: 0.5rem;
 	justify-content: space-between;
 }

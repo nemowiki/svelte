@@ -1,53 +1,54 @@
 <script lang="ts">
-	import { encodeFullTitle } from '@nemowiki/core/client';
-	import type { DocLog } from '@nemowiki/core/types';
 	import { page } from '$app/state';
-	import { parseTimeOnly } from '$lib/wiki/utils/general.js';
 	import { PUBLIC_REQUIRE_LOGIN } from '$env/static/public';
+	import { encodeFullTitle } from '@nemowiki/core/client';
+	import { Groups } from '@nemowiki/core/types';
+	import type { HistorySummary } from '@nemowiki/core/types';
+	import { parseTimeOnly } from '$lib/wiki/utils/general.js';
 
-	let recentChangedLogs: DocLog[] = $derived.by(() => {
-		return removeDeletedOrHidden(removeDuplication(JSON.parse(page.data.logs)));
+	let recentChangedHistorySummaries: HistorySummary[] = $derived.by(() => {
+		return removeDeletedOrHidden(removeDuplication(JSON.parse(page.data.historySummaries)));
 	});
 
-	function removeDeletedOrHidden(logArr: DocLog[]): DocLog[] {
-		const fullTitleArr = JSON.parse(page.data.fullTitles);
-		return logArr.filter((log) => {
-			return fullTitleArr.includes(log.fullTitle);
+	function removeDeletedOrHidden(historySummaries: HistorySummary[]): HistorySummary[] {
+		const fullTitles = JSON.parse(page.data.fullTitles);
+		return historySummaries.filter((historySummary) => {
+			return fullTitles.includes(historySummary.fullTitle);
 		});
 	}
 
-	function removeDuplication(logArr: DocLog[]): DocLog[] {
-		const fullTitleSet = new Set<string>();
-		return logArr.filter((log) => {
-			if (fullTitleSet.has(log.fullTitle)) {
+	function removeDuplication(historySummaries: HistorySummary[]): HistorySummary[] {
+		const seenFullTitles = new Set<string>();
+		return historySummaries.filter((historySummary) => {
+			if (seenFullTitles.has(historySummary.fullTitle)) {
 				return false;
 			} else {
-				fullTitleSet.add(log.fullTitle);
+				seenFullTitles.add(historySummary.fullTitle);
 				return true;
 			}
 		});
 	}
 </script>
 
-{#snippet RecentLog(log: DocLog)}
+{#snippet RecentLog(historySummary: HistorySummary)}
 	<div>
-		<a title={log.fullTitle} href="/r/{encodeFullTitle(log.fullTitle)}">
-			{log.fullTitle}
+		<a title={historySummary.fullTitle} href="/r/{encodeFullTitle(historySummary.fullTitle)}">
+			{historySummary.fullTitle}
 		</a>
-		<span>{parseTimeOnly(log.time)}</span>
+		<span>{parseTimeOnly(historySummary.createdAt)}</span>
 	</div>
 	<hr />
 {/snippet}
 
 <section class="module">
-	<h2>수정된 문서</h2>
+	<h2>최근 변경 문서</h2>
 	<hr />
-	{#if page.data.user?.email === null && PUBLIC_REQUIRE_LOGIN === 'true'}
+	{#if JSON.parse(page.data.user).group === Groups.Guest && PUBLIC_REQUIRE_LOGIN === 'true'}
 		<p>로그인 필요</p>
 	{:else}
-		{#each recentChangedLogs as log, i (i)}
+		{#each recentChangedHistorySummaries as historySummary, i (i)}
 			{#if i <= 10}
-				{@render RecentLog(log)}
+				{@render RecentLog(historySummary)}
 			{/if}
 		{/each}
 	{/if}

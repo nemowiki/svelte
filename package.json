@@ -51,8 +51,9 @@
 	},
 	"dependencies": {
 		"@lucide/svelte": "^0.525.0",
-		"@nemowiki/core": "^0.1.5",
+		"@nemowiki/core": "file:../core",
 		"@sentry/sveltekit": "^9.35.0",
-		"hangul-searcher": "^2.0.1"
+		"hangul-searcher": "^2.0.1",
+		"isomorphic-dompurify": "^3.12.0"
 	}
 }

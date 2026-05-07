@@ -1,16 +1,20 @@
 <script lang="ts">
-	import type { DocAction, Info } from '@nemowiki/core/types';
-	import { docActionArr, translatedDocActionArr } from '$lib/wiki/utils/general.js';
+	import { docActions, translatedDocActions } from '$lib/wiki/utils/general.js';
+	import type { AuthorityTarget, Doc, DocAction } from '@nemowiki/core/types';
 
-	let { docAction, info }: { docAction: DocAction; info: Info } = $props();
+	let { docAction, doc }: { docAction: DocAction; doc: Doc } = $props();
 </script>
 
 <div class="action-div">
 	<div>
-		<span class="action-span">[{translatedDocActionArr[docActionArr.indexOf(docAction)]}]</span>
+		<span class="action-span">[{translatedDocActions[docActions.indexOf(docAction)]}]</span>
 		<span>
-			{#if info.authority?.[docAction]}
-				{info.authority[docAction]}
+			{#if doc.authority?.[docAction]}
+				{(doc.authority[docAction] as AuthorityTarget[])
+					?.map((target) =>
+						target.type === 'group' ? `[그룹] ${target.id}` : `[유저] ${target.id}`
+					)
+					.join(', ')}
 			{:else}
 				none
 			{/if}

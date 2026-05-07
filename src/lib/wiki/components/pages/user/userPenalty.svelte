@@ -1,41 +1,49 @@
 <script lang="ts">
-	import type { PenaltyDoc, PenaltyType } from '@nemowiki/core/types';
+	import type { Penalty, PenaltyType } from '@nemowiki/core/types';
 	import { parseDateTime } from '$lib/wiki/utils/general.js';
 
-	let { penaltyArr } = $props();
+	let { penalties } = $props();
 
-	function parseType(type: PenaltyType): string {
-		if (type === 'block') return '<span style="color:red"><b>[차단]</b></span>';
-		else if (type === 'warn') return '<span style="color:darkorange"><b>[경고]</b></span>';
-		else return '기타';
-	}
 
-	function parseUntil(until: Date, duration: number): string {
-		if (duration === 0) return '<span style="color:red"><b>(무기한)</b></span>';
-		else return parseDateTime(until) + ' 까지';
-	}
 </script>
 
-{#snippet PenaltyHeader(penalty: PenaltyDoc, idx: number)}
+{#snippet PenaltyTypeSpan(type: PenaltyType)}
+	{#if type === 'block'}
+		<span style="color: red"><b>[차단]</b></span>
+	{:else if type === 'warn'}
+		<span style="color: darkorange"><b>[경고]</b></span>
+	{:else}
+		<span>기타</span>
+	{/if}
+{/snippet}
+
+{#snippet PenaltyHeader(penalty: Penalty, idx: number)}
 	<span>
 		<b>{idx + 1}.</b>
-		{@html parseType(penalty.type)} <i>{penalty.comment}</i>
-		<!-- {@html getType(penalty.type)} <span style:color={'grey'}>{penalty.comment}</span> -->
+		{@render PenaltyTypeSpan(penalty.type)} <i>{penalty.comment}</i>
 	</span>
 {/snippet}
 
-{#snippet PenaltyDate(penalty: PenaltyDoc)}
+{#snippet PenaltyExpirySpan(expiresAt: Date | null)}
+	{#if expiresAt === null}
+		<span style="color: red"><b>(무기한)</b></span>
+	{:else}
+		{parseDateTime(expiresAt)} 까지
+	{/if}
+{/snippet}
+
+{#snippet PenaltyDate(penalty: Penalty)}
 	<span>
-		{@html parseUntil(penalty.until, penalty.duration)}
+		{@render PenaltyExpirySpan(penalty.expiresAt)}
 	</span>
 {/snippet}
 
-<div id="user-penalty-div">
+<div>
 	<h3>경고 및 차단</h3>
-	{#if penaltyArr.length === 0}
+	{#if penalties.length === 0}
 		<p>받은 경고 및 차단 사항이 없습니다.</p>
 	{:else}
-		{#each penaltyArr as penalty, idx (penalty._id)}
+		{#each penalties as penalty, idx (penalty._id)}
 			<div class="penalty-div">
 				{@render PenaltyHeader(penalty, idx)}
 				{@render PenaltyDate(penalty)}

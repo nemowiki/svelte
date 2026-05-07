@@ -1,4 +1,6 @@
 import * as Sentry from '@sentry/sveltekit';
+import { dev } from '$app/environment';
+import { WikiError } from '@nemowiki/core';
 import type { Handle, HandleServerError, ServerInit } from '@sveltejs/kit';
 import { redirect } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
@@ -11,14 +13,12 @@ import { handle as authenticationHandle } from './auth.js';
 import {
 	activateWiki,
 	backupWiki,
-	getUserByEmail,
-	// signinUserByEmail,
-	signupUserByEmailAndName,
-	// getRecentWriteLogs,
+	getUserByIdOrNull,
+	signupUserByIdAndName,
 	getAllFullTitles
 } from '@nemowiki/core';
 
-import type { User } from '@nemowiki/core/types';
+import { Groups, UserStates, DocPrefixes, type User } from '@nemowiki/core/types';
 import { encodeFullTitle } from '@nemowiki/core/client';
 
 Sentry.init({
@@ -26,7 +26,6 @@ Sentry.init({
 	tracesSampleRate: 1
 });
 
-// let logs: DocLog[] = [];
 let fullTitles: string[] = [];
 
 const ttl_backup = 1000 * 60 * 60 * 24 * 7; // 7일
@@ -48,14 +47,19 @@ async function checkTTL() {
 	}
 }
 
-async function getUser(email: string | null) {
-	if (!email) return { email: null, name: null, group: 'guest', contribCnt: 0 };
+async function getUser(id: string | null) {
+	if (!id)
+		return {
+			_id: Groups.Guest,
+			name: Groups.Guest,
+			group: Groups.Guest,
+			state: UserStates.Active,
+			contribCnt: 0
+		} as User;
 
-	let user: User | null = await getUserByEmail(email);
+	let user: User | null = await getUserByIdOrNull(id);
 	if (user === null) {
-		const res = await signupUserByEmailAndName(email, email.split('@')[0]);
-		if (!res.ok) throw new Error(res.reason);
-		user = res.value as User;
+		user = await signupUserByIdAndName(id, id.split('@')[0]);
 	}
 	return user;
 }
@@ -95,11 +99,11 @@ const authorizationHandle: Handle = async ({ event, resolve }) => {
 	if (session?.user?.email || PUBLIC_REQUIRE_LOGIN === 'false') {
 		// Authorized
 		if (event.url.pathname.startsWith('/signin') && session?.user?.email)
-			redirect(302, '/r/' + encodeFullTitle('위키:대문'));
+			redirect(302, '/r/' + encodeFullTitle(DocPrefixes.Wiki + ':대문'));
 
 		if (!event.params.fullTitle && !event.params.userName && !event.params.query) {
 			if (!event.url.pathname.startsWith('/signin') && !event.url.pathname.startsWith('/f'))
-				redirect(302, '/r/' + encodeFullTitle('위키:대문'));
+				redirect(302, '/r/' + encodeFullTitle(DocPrefixes.Wiki + ':대문'));
 		}
 
 		event.params.fullTitle = (event.params.fullTitle || '').trim();
@@ -133,8 +137,15 @@ export const handleError: HandleServerError = Sentry.handleErrorWithSentry(
 			'검색:' + event.params.query ||
 			event.url.pathname;
 
+		let message = '알 수 없는 에러가 발생했습니다.';
+		if (error instanceof WikiError) {
+			message = error.message;
+		} else if (dev && error instanceof Error) {
+			message = error.message;
+		}
+
 		return {
-			message: error instanceof Error ? error.message : '알 수 없는 에러',
+			message,
 			fullTitle
 		};
 	}

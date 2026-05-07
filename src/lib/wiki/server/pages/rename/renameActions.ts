@@ -1,4 +1,4 @@
-import { changeUserNameByName } from '@nemowiki/core';
+import { changeUserNameByName, WikiError } from '@nemowiki/core';
 import { encodeFullTitle } from '@nemowiki/core/client';
 import { fail, redirect, type Actions } from '@sveltejs/kit';
 
@@ -8,9 +8,13 @@ export const renameActions = {
 		const newName = (data.get('new-name') || '').toString();
 		if (!newName) return fail(400, { message: 'newName is undefined' });
 
-		const res = await changeUserNameByName(locals.user.name, newName, locals.user);
+		try {
+			await changeUserNameByName(locals.user.name, newName, locals.user);
+		} catch (e: unknown) {
+			if (e instanceof WikiError) return fail(400, { message: e.message });
+			throw e;
+		}
 
-		if (res.ok) redirect(303, '/u/' + encodeFullTitle(newName));
-		else return fail(400, { message: res.reason });
+		redirect(303, '/u/' + encodeFullTitle(newName));
 	}
 } satisfies Actions;

@@ -6,10 +6,10 @@
 </script>
 
 {#snippet TitleDiv()}
-	<div id="title-div">
-		<h1 id="doc-title">{@render children()}</h1>
+	<div class="title-div">
+		<h1 class="doc-title">{@render children()}</h1>
 		{#if description}
-			<span id="doc-description">{description}</span>
+			<span class="doc-description">{description}</span>
 		{/if}
 	</div>
 {/snippet}

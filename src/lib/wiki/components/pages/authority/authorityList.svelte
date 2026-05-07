@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { docActionArr } from '$lib/wiki/utils/general.js';
+	import { docActions } from '$lib/wiki/utils/general.js';
 	import AuthorityGroupList from './actionModule.svelte';
-	import type { Info } from '@nemowiki/core/types';
+	import type { Doc } from '@nemowiki/core/types';
 
-	let { info }: { info: Info } = $props();
+	let { doc }: { doc: Doc } = $props();
 </script>
 
-{#each docActionArr as docAction (docAction)}
-	<AuthorityGroupList {docAction} {info} />
+{#each docActions as docAction (docAction)}
+	<AuthorityGroupList {docAction} {doc} />
 {/each}
 
 <style lang="scss">

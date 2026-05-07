@@ -1,26 +1,38 @@
-import { getDocLogsByFullTitle, getInfoByFullTitle } from '@nemowiki/core';
-import type { ServerLoadEvent } from '@sveltejs/kit';
-import type { WikiResponse } from '@nemowiki/core/types';
-import { canRead } from '@nemowiki/core/client';
+import { getHistorySummariesByFullTitle, getHttpStatus, readDocByFullTitle, WikiError } from '@nemowiki/core';
+import { error, type ServerLoadEvent } from '@sveltejs/kit';
 
 export async function historyLoad({
 	url,
 	params,
 	locals
-}: ServerLoadEvent): Promise<WikiResponse<{ pageIdx: number; logArr: string }>> {
+}: ServerLoadEvent): Promise<{ pageIdx: number; historySummaries: string }> {
 	const fullTitle = params.fullTitle;
-	if (!fullTitle) return { ok: false, reason: 'fullTitle is undefined' };
+	if (!fullTitle) error(400, 'fullTitle is undefined');
 
 	const pageIdx = Number(url.searchParams.get('page')) || 1;
 
-	const info = await getInfoByFullTitle(fullTitle);
-	const res_read = await canRead(info, locals.user.group);
-	if (!res_read.ok) return res_read;
+	try {
+		const doc = await readDocByFullTitle(fullTitle, locals.user);
+		if (!doc) error(404, '문서가 존재하지 않습니다.');
 
-	const res_logs = await getDocLogsByFullTitle(fullTitle, pageIdx);
-	if (!res_logs.ok) return res_logs;
+		const limit = 50;
+		const skip = (pageIdx - 1) * limit;
+		const historySummaryResponse = await getHistorySummariesByFullTitle(
+			fullTitle,
+			locals.user,
+			limit,
+			skip
+		);
 
-	if (res_logs.value.length === 0) return { ok: false, reason: '역사가 존재하지 않습니다.' };
+		if (historySummaryResponse.items.length === 0) error(404, '역사가 존재하지 않습니다.');
 
-	return { ok: true, value: { pageIdx, logArr: JSON.stringify(res_logs.value) } };
+		return {
+			pageIdx,
+			historySummaries: JSON.stringify(historySummaryResponse.items)
+		};
+	} catch (e: unknown) {
+		if (e instanceof WikiError) error(getHttpStatus(e.code) || 500, e.message);
+		if (e && typeof e === 'object' && 'status' in e) throw e;
+		error(500, (e as Error).message || '역사를 불러오는데 실패했습니다.');
+	}
 }

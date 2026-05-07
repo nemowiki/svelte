@@ -1,7 +1,12 @@
-import { getInfoByFullTitle, showDocByFullTitle, hideDocByFullTitle } from '@nemowiki/core';
+import {
+	readDocByFullTitle,
+	showDocByFullTitle,
+	hideDocByFullTitle,
+	WikiError
+} from '@nemowiki/core';
 import type { Actions } from '@sveltejs/kit';
 import { fail, redirect } from '@sveltejs/kit';
-import { canShow, canHide, encodeFullTitle } from '@nemowiki/core/client';
+import { encodeFullTitle } from '@nemowiki/core/client';
 
 export const stateActions = {
 	show: async ({ request, locals, params }) => {
@@ -11,13 +16,17 @@ export const stateActions = {
 		const data = await request.formData();
 		const comment = (data.get('comment') || '').toString();
 
-		const info = await getInfoByFullTitle(fullTitle);
+		try {
+			const doc = await readDocByFullTitle(fullTitle, locals.user);
+			if (!doc) return fail(400, { message: '문서가 존재하지 않습니다.' });
 
-		let res = canShow(info, locals.user.group);
-		if (!res.ok) return fail(400, { message: res.reason });
+			if (!doc.permissions.canShow) return fail(400, { message: '권한이 없습니다.' });
 
-		res = await showDocByFullTitle(fullTitle, locals.user, comment);
-		if (!res.ok) return fail(400, { message: res.reason });
+			await showDocByFullTitle(fullTitle, locals.user, comment);
+		} catch (e: unknown) {
+			if (e instanceof WikiError) return fail(400, { message: e.message });
+			throw e;
+		}
 
 		redirect(303, `/r/${encodeFullTitle(fullTitle)}`);
 	},
@@ -28,13 +37,17 @@ export const stateActions = {
 		const data = await request.formData();
 		const comment = (data.get('comment') || '').toString();
 
-		const info = await getInfoByFullTitle(fullTitle);
+		try {
+			const doc = await readDocByFullTitle(fullTitle, locals.user);
+			if (!doc) return fail(400, { message: '문서가 존재하지 않습니다.' });
 
-		let res = canHide(info, locals.user.group);
-		if (!res.ok) return fail(400, { message: res.reason });
+			if (!doc.permissions.canHide) return fail(400, { message: '권한이 없습니다.' });
 
-		res = await hideDocByFullTitle(fullTitle, locals.user, comment);
-		if (!res.ok) return fail(400, { message: res.reason });
+			await hideDocByFullTitle(fullTitle, locals.user, comment);
+		} catch (e: unknown) {
+			if (e instanceof WikiError) return fail(400, { message: e.message });
+			throw e;
+		}
 
 		redirect(303, `/r/${encodeFullTitle(fullTitle)}`);
 	}

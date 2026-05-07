@@ -1,38 +1,40 @@
-import { canCreate, canEdit } from '@nemowiki/core/client';
-import { getDocByFullTitle, getEmptyDocByFullTitle } from '@nemowiki/core';
-import type { WikiResponse } from '@nemowiki/core/types';
-import type { ServerLoadEvent } from '@sveltejs/kit';
+﻿import { canCreate, canEdit, canRecreate } from '@nemowiki/core/client';
+import { readDocByFullTitle, getEmptyDocByFullTitle, WikiError, getHttpStatus } from '@nemowiki/core';
+import { error, type ServerLoadEvent } from '@sveltejs/kit';
+import { DocStates, type RuleResult, type Doc, type DocCreate } from '@nemowiki/core/types';
 
-export async function writeLoad({
-	params,
-	locals
-}: ServerLoadEvent): Promise<WikiResponse<{ doc: string }>> {
+export async function writeLoad({ params, locals }: ServerLoadEvent): Promise<{ doc: string }> {
 	const fullTitle = params.fullTitle;
-	if (!fullTitle)
-		return {
-			ok: false,
-			reason: 'fullTitle is undefined'
-		};
+	if (!fullTitle) error(400, 'fullTitle is undefined');
 
-	let doc = await getDocByFullTitle(fullTitle, -1);
-	let res: WikiResponse<void>;
+	let existingDoc: Doc | null;
+	try {
+		existingDoc = await readDocByFullTitle(fullTitle, locals.user, { revision: -1 });
+	} catch (e: unknown) {
+		if (e instanceof WikiError) error(getHttpStatus(e.code) || 500, e.message);
+		error(500, (e as Error).message || '문서를 불러올 수 없습니다.');
+	}
+	let doc: Doc | DocCreate;
+	let res: RuleResult;
 
-	if (doc === null) {
+	if (existingDoc === null) {
 		// New document
-		res = canCreate(null, fullTitle, locals.user.group);
 		doc = getEmptyDocByFullTitle(fullTitle);
-	} else if (doc.state === 'deleted' || doc.state === 'hidden') {
-		res = canCreate(doc, fullTitle, locals.user.group);
+		res = canCreate(doc, locals.user);
 	} else {
-		res = canEdit(doc, locals.user.group);
+		if (existingDoc.state === DocStates.Deleted) {
+			res = canRecreate(existingDoc, locals.user);
+		} else {
+			res = canEdit(existingDoc, locals.user);
+		}
+		doc = existingDoc;
 	}
 
-	if (!res.ok) return res;
+	if (!res.ok) error(403, res.message || '권한이 없습니다.');
 
 	return {
-		ok: true,
-		value: {
-			doc: JSON.stringify(doc)
-		}
+		doc: JSON.stringify(doc)
 	};
 }
+
+

@@ -1,4 +1,4 @@
-import { getInfoByFullTitle, moveDocByFullTitle } from '@nemowiki/core';
+import { readDocByFullTitle, moveDocByFullTitle, WikiError } from '@nemowiki/core';
 import type { Actions } from '@sveltejs/kit';
 import { fail, redirect } from '@sveltejs/kit';
 import { canMove, encodeFullTitle } from '@nemowiki/core/client';
@@ -15,13 +15,18 @@ export const moveActions = {
 		const newFullTitle = (data.get('new-full-title') || '').toString();
 		const comment = (data.get('comment') || '').toString();
 
-		const info = await getInfoByFullTitle(fullTitle);
+		try {
+			const doc = await readDocByFullTitle(fullTitle, locals.user);
+			if (!doc) return fail(400, { message: '문서가 존재하지 않습니다.' });
 
-		let res = canMove(info, newFullTitle, locals.user.group);
-		if (!res.ok) return fail(400, { message: res.reason });
+			const res = canMove(doc, locals.user, newFullTitle);
+			if (!res.ok) return fail(400, { message: res.message || '권한이 없습니다.' });
 
-		res = await moveDocByFullTitle(fullTitle, newFullTitle, comment);
-		if (!res.ok) return fail(400, { message: res.reason });
+			await moveDocByFullTitle(fullTitle, locals.user, newFullTitle, comment);
+		} catch (e: unknown) {
+			if (e instanceof WikiError) return fail(400, { message: e.message });
+			throw e;
+		}
 
 		redirect(303, `/r/${encodeFullTitle(newFullTitle)}`);
 	}

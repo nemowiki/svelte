@@ -1,21 +1,25 @@
-import { fail, redirect } from '@sveltejs/kit';
-import { uploadFileByFullTitle } from '@nemowiki/core';
+import { fail, redirect, type ServerLoadEvent } from '@sveltejs/kit';
+import { uploadFileByFullTitle, WikiError } from '@nemowiki/core';
+import { DocPrefixes } from '@nemowiki/core/types';
 import { encodeFullTitle, canUploadFile } from '@nemowiki/core/client';
-import type { ServerLoadEvent } from '@sveltejs/kit';
 
 export const fileActions = {
 	default: async ({ request, locals }: ServerLoadEvent) => {
 		const data = await request.formData();
 		const markup = (data.get('markup') || '').toString();
-		const fullTitle = '파일:' + (data.get('title') || '').toString();
+		const fullTitle = DocPrefixes.File + ':' + (data.get('title') || '').toString();
 		const file = data.get('file') as File;
 		const comment = (data.get('comment') || '').toString();
 
-		const res_file = canUploadFile(fullTitle, file);
-		if (!res_file.ok) return fail(400, { message: res_file.reason });
+		const res_file = canUploadFile(fullTitle, locals.user, file);
+		if (!res_file.ok) return fail(400, { message: res_file.message || '권한이 없습니다.' });
 
-		const res_upload = await uploadFileByFullTitle(fullTitle, markup, file, locals.user, comment);
-		if (!res_upload.ok) return fail(400, { message: res_upload.reason });
+		try {
+			await uploadFileByFullTitle(fullTitle, markup, file, locals.user, comment);
+		} catch (e: unknown) {
+			if (e instanceof WikiError) return fail(400, { message: e.message });
+			throw e;
+		}
 
 		redirect(303, `/r/${encodeFullTitle(fullTitle)}`);
 	}

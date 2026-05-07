@@ -4,21 +4,22 @@ h3 {
 	margin-bottom: 0.5rem;
 }
 
-#apply-penalty-form-div {
+.apply-penalty-form-div {
 	justify-content: space-between;
 
-	#penalty-type-select {
+	.penalty-type-select {
 		width: 10%;
 		height: stretch;
-		font-weight: bold;
+		margin-right: 0.5rem;
 	}
 
-	#duration-input {
+	.duration-input {
 		width: 20%;
 		height: stretch;
+		margin-right: 0.5rem;
 	}
 
-	#reason-input {
+	.reason-input {
 		width: 60%;
 		height: stretch;
 	}

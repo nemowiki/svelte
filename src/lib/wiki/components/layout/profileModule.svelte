@@ -3,6 +3,7 @@
 	import { signOut } from '@auth/sveltekit/client';
 	import type { User } from '@nemowiki/core/types';
 	import { encodeFullTitle } from '@nemowiki/core/client';
+	import { Groups } from '@nemowiki/core/types';
 	import LogOut from '@lucide/svelte/icons/log-out';
 	import LogIn from '@lucide/svelte/icons/log-in';
 	import { goto } from '$app/navigation';
@@ -13,7 +14,7 @@
 {#snippet GuestProfile()}
 	<h2>비회원</h2>
 	<hr />
-	<button id="login-btn" class="container" onclick={() => goto('/signin')}
+	<button class="login-btn container" onclick={() => goto('/signin')}
 		><LogIn size="1rem" color="green" /><span>&nbsp;로그인</span></button
 	>
 {/snippet}
@@ -28,14 +29,14 @@
 		<p>기여 수: {user.contribCnt}</p>
 	</div>
 	<hr />
-	<button id="logout-btn" class="container" onclick={() => signOut()}
+	<button class="logout-btn container" onclick={() => signOut()}
 		><LogOut size="1rem" color="red" /><span>&nbsp;로그아웃</span></button
 	>
 {/snippet}
 
 <!-- <section class="container"> -->
 <section class="module">
-	{#if user.email === null}
+	{#if user.group === Groups.Guest}
 		{@render GuestProfile()}
 	{:else}
 		{@render UserProfile(user)}

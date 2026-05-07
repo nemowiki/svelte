@@ -1,17 +1,18 @@
 <script lang="ts">
-	import { page } from '$app/state';
-	import LogList from '$lib/wiki/components/common/logList.svelte';
-	import { encodeFullTitle } from '@nemowiki/core/client';
 	import { goto } from '$app/navigation';
+	import { page } from '$app/state';
+	import HistorySummaryList from '$lib/wiki/components/common/historySummaryList.svelte';
+	import { encodeFullTitle } from '@nemowiki/core/client';
+	import { DocActions } from '@nemowiki/core/types';
 
 	const fullTitle = $derived<string>(page.params.fullTitle);
 
-	let { logArr } = $props();
+	let { historySummaries } = $props();
 
 	let pageIdx = $state<number>(Number(page.url.searchParams.get('page')) || 1);
 	let loading = $state<boolean>(false);
 
-	async function loadMoreLogs(loadType: 'prev' | 'next') {
+	async function loadMoreHistorySummaries(loadType: 'prev' | 'next') {
 		loading = true;
 
 		if (loadType === 'prev') {
@@ -27,18 +28,23 @@
 </script>
 
 {#snippet PrevBtn()}
-	<button disabled={loading || pageIdx === 1} onclick={() => loadMoreLogs('prev')}>이전</button>
+	<button
+		disabled={loading || pageIdx === 1}
+		onclick={() => loadMoreHistorySummaries('prev')}>이전</button
+	>
 {/snippet}
 
 {#snippet NextBtn()}
 	<button
-		disabled={loading || (logArr.at(-1)?.revision === 1 && logArr.at(-1)?.action === 'create')}
-		onclick={() => loadMoreLogs('next')}>다음</button
+		disabled={loading ||
+			(historySummaries.at(-1)?.revision === 1 &&
+				historySummaries.at(-1)?.action === DocActions.Create)}
+		onclick={() => loadMoreHistorySummaries('next')}>다음</button
 	>
 {/snippet}
 
-<div id="history-list-div">
-	<LogList {logArr} pageType="hist" />
+<div>
+	<HistorySummaryList {historySummaries} pageType="history" />
 	{@render PrevBtn()}
 	{@render NextBtn()}
 </div>

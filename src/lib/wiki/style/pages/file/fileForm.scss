@@ -1,4 +1,4 @@
-#file-form-div {
+.file-form-div {
 	flex-direction: column;
 	align-items: flex-start;
 
@@ -7,7 +7,7 @@
 	}
 }
 
-#doc-markup {
+.doc-markup {
 	width: stretch;
 	height: 50vh;
 	font-size: 1rem;
@@ -15,9 +15,9 @@
 	resize: vertical;
 }
 
-#file-input,
-#comment-input,
-#title-input {
+.file-input,
+.comment-input,
+.title-input {
 	width: stretch;
 	font-size: 1rem;
 	padding: 0.5rem 0.75rem;

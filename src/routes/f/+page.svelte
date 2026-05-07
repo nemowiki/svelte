@@ -15,9 +15,5 @@
 
 <article>
 	<CommonHeader>파일 업로드</CommonHeader>
-	{#if !data.ok}
-		<p>{data.reason}</p>
-	{:else}
-		<FileForm initial_markup={data?.value?.boilerplate} />
-	{/if}
+	<FileForm initial_markup={data?.boilerplate} />
 </article>

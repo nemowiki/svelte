@@ -9,9 +9,9 @@
 
 	let { data } = $props();
 
-	let rev = $derived<number | null>(Number(page.url.searchParams.get('rev')||'-1') || -1);
+	let rev = $derived<number | null>(Number(page.url.searchParams.get('rev') || '-1') || -1);
 	let from = $derived<string | null>(page.url.searchParams.get('from'));
-	let doc = $derived<Doc | null>(JSON.parse(data?.value?.doc || 'null'));
+	let doc = $derived<Doc | null>(JSON.parse(data?.doc || 'null'));
 
 	let html = $derived<string>(doc?.html || '');
 </script>
@@ -21,12 +21,8 @@
 	{#if from}
 		<CommonInfo><a href="/r/{from}?redirect=no">{from}</a>에서 넘어옴.</CommonInfo>
 	{/if}
-	{#if !data.ok}
-		<p>{data.reason}</p>
-	{:else}
-		{#if rev !== -1}
-			<CommonWarn>이 문서는 <b>{rev}</b>번째 수정판임에 유의하세요.</CommonWarn>
-		{/if}
-		<HtmlContent content={html} />
+	{#if rev !== -1}
+		<CommonWarn>이 문서는 <b>{rev}</b>번째 수정판임에 유의하세요.</CommonWarn>
 	{/if}
+	<HtmlContent content={html} />
 </article>

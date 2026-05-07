@@ -4,14 +4,10 @@
 
 	let { data } = $props();
 
-	let html = $derived<string>(data?.value?.html || '');
+	let html = $derived<string>(data?.html || '');
 </script>
 
 <article>
 	<BacklinkHeader />
-	{#if !data.ok}
-		<p>{data.reason}</p>
-	{:else}
-		<HtmlContent content={html} />
-	{/if}
+	<HtmlContent content={html} />
 </article>

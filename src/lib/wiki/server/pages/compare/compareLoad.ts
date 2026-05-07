@@ -1,38 +1,37 @@
-import { compareDocByDoc, getInfoByFullTitle, getDocByFullTitle } from '@nemowiki/core';
-import { canRead } from '@nemowiki/core/client';
-import type { ServerLoadEvent } from '@sveltejs/kit';
-import type { WikiResponse } from '@nemowiki/core/types';
+﻿import { compareDocByDoc, readDocByFullTitle, WikiError, getHttpStatus } from '@nemowiki/core';
+import { error, type ServerLoadEvent } from '@sveltejs/kit';
 
 export async function compareLoad({
 	params,
 	url,
 	locals
-}: ServerLoadEvent): Promise<WikiResponse<{ diff: string; oldRev: number; newRev: number }>> {
+}: ServerLoadEvent): Promise<{ diff: string; oldRev: number; newRev: number }> {
 	const fullTitle = params.fullTitle;
-	if (!fullTitle) return { ok: false, reason: 'fullTitle is undefined' };
+	if (!fullTitle) error(400, 'fullTitle is undefined');
 
 	const oldRev = Number(url.searchParams.get('old'));
 	const newRev = Number(url.searchParams.get('new'));
 
-	if (oldRev < 0 || newRev <= 0) return { ok: false, reason: 'oldRev or newRev is invalid' };
+	if (oldRev < 0 || newRev <= 0) error(400, 'oldRev or newRev is invalid');
 
-	const info = await getInfoByFullTitle(fullTitle);
+	try {
+		const oldDoc = await readDocByFullTitle(fullTitle, locals.user, { revision: oldRev });
+		const newDoc = await readDocByFullTitle(fullTitle, locals.user, { revision: newRev });
 
-	const res_read = canRead(info, locals.user.group);
-	if (!res_read.ok) return res_read;
+		if (!oldDoc || !newDoc) error(404, '문서를 찾을 수 없습니다.');
 
-	const oldDoc = await getDocByFullTitle(fullTitle, oldRev);
-	const newDoc = await getDocByFullTitle(fullTitle, newRev);
+		const diff = compareDocByDoc(oldDoc, newDoc);
 
-	if (oldDoc?.state === 'new') oldDoc.markup = '';
-	if (newDoc?.state === 'new') newDoc.markup = '';
-
-	const res_compare = await compareDocByDoc(oldDoc, newDoc);
-	const value = {
-		diff: JSON.stringify(res_compare.value),
-		oldRev,
-		newRev
-	};
-
-	return { ok: true, value };
+		return {
+			diff: JSON.stringify(diff),
+			oldRev,
+			newRev
+		};
+	} catch (e: unknown) {
+		if (e instanceof WikiError) error(getHttpStatus(e.code) || 500, e.message);
+		if (e && typeof e === 'object' && 'status' in e) throw e;
+		error(500, (e as Error).message || '정보를 불러오는데 실패했습니다.');
+	}
 }
+
+

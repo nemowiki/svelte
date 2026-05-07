@@ -1,24 +1,22 @@
 <script lang="ts">
-	import { type Info } from '@nemowiki/core/types';
+	import type { Doc } from '@nemowiki/core/types';
 	import AuthorityHeader from '$lib/wiki/components/pages/authority/authorityHeader.svelte';
 	import AuthorityForm from '$lib/wiki/components/pages/authority/authorityForm.svelte';
 	import AuthorityList from '$lib/wiki/components/pages/authority/authorityList.svelte';
 
 	let { data } = $props();
 
-	let info = $derived<Info | null>(JSON.parse(data?.value?.info || 'null'));
+	let doc = $derived<Doc | null>(JSON.parse(data?.doc || 'null'));
 </script>
 
 <article>
 	<AuthorityHeader />
-	{#if !data.ok}
-		<p>{data.reason}</p>
-	{:else if info}
+	{#if doc}
 		<section>
-			<AuthorityList {info} />
+			<AuthorityList {doc} />
 		</section>
 		<section>
-			<AuthorityForm {info} />
+			<AuthorityForm {doc} />
 		</section>
 	{/if}
 </article>

@@ -1,7 +1,7 @@
-import { getInfoByFullTitle, deleteDocByFullTitle } from '@nemowiki/core';
+import { readDocByFullTitle, deleteDocByFullTitle, WikiError } from '@nemowiki/core';
 import type { Actions } from '@sveltejs/kit';
 import { fail, redirect } from '@sveltejs/kit';
-import { canDelete, encodeFullTitle } from '@nemowiki/core/client';
+import { encodeFullTitle } from '@nemowiki/core/client';
 
 export const deleteActions = {
 	default: async ({ request, locals, params }) => {
@@ -11,13 +11,17 @@ export const deleteActions = {
 		const data = await request.formData();
 		const comment = (data.get('comment') || '').toString();
 
-		const info = await getInfoByFullTitle(fullTitle);
+		try {
+			const doc = await readDocByFullTitle(fullTitle, locals.user);
+			if (!doc) return fail(400, { message: '문서가 존재하지 않습니다.' });
 
-		let res = canDelete(info, locals.user.group);
-		if (!res.ok) return fail(400, { message: res.reason });
+			if (!doc.permissions.canDelete) return fail(400, { message: '권한이 없습니다.' });
 
-		res = await deleteDocByFullTitle(fullTitle, locals.user, comment);
-		if (!res.ok) return fail(400, { message: res.reason });
+			await deleteDocByFullTitle(fullTitle, locals.user, comment);
+		} catch (e: unknown) {
+			if (e instanceof WikiError) return fail(400, { message: e.message });
+			throw e;
+		}
 
 		redirect(303, `/r/${encodeFullTitle(fullTitle)}`);
 	}

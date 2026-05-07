@@ -1,4 +1,4 @@
-import type { DocAction, Group } from '@nemowiki/core/types';
+import { type DocAction, type Group, DocActions, Groups } from '@nemowiki/core/types';
 
 export function parseDateTime(time: Date): string {
 	const t = new Date(time);
@@ -14,29 +14,20 @@ export function parseTimeOnly(time: Date): string {
 	}
 }
 
-// export function calcByte(s: string, b?: number, i?: number, c?: number): number {
-//     for (
-//         b = i = 0;
-//         (c = s.charCodeAt(i++));
-//         b += c >> 11 ? 3 : c >> 7 ? 2 : 1
-//     );
-//     return b;
-// }
+export const groups: Group[] = [Groups.Any, Groups.Guest, Groups.User, Groups.Manager, Groups.Dev];
 
-export const groupArr: Group[] = ['any', 'guest', 'user', 'dev', 'system', 'manager', 'blocked'];
-
-export const docActionArr: DocAction[] = [
-	'read',
-	'create',
-	'edit',
-	'move',
-	'delete',
-	'change_authority',
-	'change_state'
+export const docActions: DocAction[] = [
+	DocActions.Read,
+	DocActions.Create,
+	DocActions.Edit,
+	DocActions.Move,
+	DocActions.Delete,
+	DocActions.Grant,
+	DocActions.Toggle
 ];
 
-export const translatedDocActionArr: string[] = [
-	'열람',
+export const translatedDocActions: string[] = [
+	'읽기',
 	'생성',
 	'편집',
 	'이동',

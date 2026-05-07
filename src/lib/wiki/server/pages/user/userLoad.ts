@@ -1,34 +1,37 @@
-import type { ServerLoadEvent } from '@sveltejs/kit';
-import type { WikiResponse } from '@nemowiki/core/types';
-import { getDocLogsByUserName, getUserByName, refreshAndGetPenaltiesByName } from '@nemowiki/core';
+import { error, type ServerLoadEvent } from '@sveltejs/kit';
+import {
+	getHistorySummariesByUserId,
+	getUserByName,
+	refreshAndGetPenaltiesByName, WikiError, getHttpStatus
+} from '@nemowiki/core';
 
 export async function userLoad({
 	params,
 	url
-}: ServerLoadEvent): Promise<
-	WikiResponse<{ queriedUser: string; logArr: string; penaltyArr: string }>
-> {
+}: ServerLoadEvent): Promise<{ queriedUser: string; historySummaries: string; penalties: string }> {
 	const userName = params.userName;
-	if (!userName) {
-		return { ok: false, reason: 'userName is undefined' };
-	}
+	if (!userName) error(400, 'userName is undefined');
 
 	const pageIdx = Number(url.searchParams.get('page')) || 1;
 
-	const queriedUser = await getUserByName(userName);
-	if (!queriedUser) return { ok: false, reason: '사용자가 존재하지 않습니다.' };
+	try {
+		const queriedUser = await getUserByName(userName);
+		const penalties = await refreshAndGetPenaltiesByName(userName);
 
-	const res_penalty = await refreshAndGetPenaltiesByName(userName);
-	if (!res_penalty.ok) return res_penalty;
+		const limit = 50;
+		const skip = (pageIdx - 1) * limit;
+		const { items: historySummaries } = await getHistorySummariesByUserId(queriedUser._id, limit, skip);
 
-	const res_docLog = await getDocLogsByUserName(userName, pageIdx);
-	if (!res_docLog.ok) return res_docLog;
-
-	const value = {
-		queriedUser: JSON.stringify(queriedUser),
-		logArr: JSON.stringify(res_docLog.value),
-		penaltyArr: JSON.stringify(res_penalty.value)
-	};
-
-	return { ok: true, value };
+		return {
+			queriedUser: JSON.stringify(queriedUser),
+			historySummaries: JSON.stringify(historySummaries),
+			penalties: JSON.stringify(penalties)
+		};
+	} catch (e: unknown) {
+		if (e instanceof WikiError) error(getHttpStatus(e.code) || 500, e.message);
+		if (e && typeof e === 'object' && 'status' in e) throw e;
+		error(500, (e as Error).message || '사용자 정보를 불러오는데 실패했습니다.');
+	}
 }
+
+

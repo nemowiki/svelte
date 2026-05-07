@@ -1,7 +1,9 @@
-p {
-	white-space: pre-wrap;
-	padding: 1rem;
-	border: 0.1rem black solid;
+.compare-div {
+	p {
+		white-space: pre-wrap;
+		padding: 1rem;
+		border: 0.1rem black solid;
+	}
 }
 
 @mixin changed {

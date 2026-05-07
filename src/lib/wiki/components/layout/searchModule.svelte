@@ -7,14 +7,14 @@
 
 	let searchWord = $state<string>('');
 
-	let fullTitleArr = $derived<string[]>(JSON.parse(page.data.fullTitles));
+	let fullTitles = $derived<string[]>(JSON.parse(page.data.fullTitles));
 
-	let hangulSearcher = $derived(new HangulSearcher(fullTitleArr));
+	let hangulSearcher = $derived(new HangulSearcher(fullTitles));
 
-	let suggestionArr = $state<any[]>([]);
+	let suggestions = $state<string[]>([]);
 
 	function suggest(title: string): void {
-		suggestionArr = hangulSearcher.autoComplete(title);
+		suggestions = hangulSearcher.autoComplete(title);
 	}
 
 	function checkEnter(e: KeyboardEvent): void {
@@ -36,22 +36,22 @@
 			if (e.relatedTarget.classList.contains('suggestion-btn')) {
 				e.relatedTarget.click();
 			} else {
-				suggestionArr = [];
+				suggestions = [];
 			}
 		} else {
-			suggestionArr = [];
+			suggestions = [];
 		}
 	}
 
 	onNavigate(() => {
-		suggestionArr = [];
+		suggestions = [];
 		searchWord = '';
 	});
 </script>
 
 {#snippet SearchInput()}
 	<input
-		id="keyword-input"
+		class="keyword-input"
 		type="text"
 		onfocus={() => suggest('')}
 		onblur={onBlurSearchDiv}
@@ -64,7 +64,7 @@
 {/snippet}
 
 {#snippet SearchButton()}
-	<button id="search-btn" class="container" onclick={() => search(searchWord)}>
+	<button class="search-btn container" onclick={() => search(searchWord)}>
 		<Search size="1.25rem" />
 	</button>
 {/snippet}
@@ -79,11 +79,11 @@
 	>
 {/snippet}
 
-<div id="search-div" class="container">
+<div class="search-div container">
 	{@render SearchInput()}
 	{@render SearchButton()}
 
-	{#each suggestionArr as suggestion, i (suggestion)}
+	{#each suggestions as suggestion, i (suggestion)}
 		{#if i <= 8}
 			{@render SuggestionBtn(suggestion, i)}
 		{/if}

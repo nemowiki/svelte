@@ -1,12 +1,12 @@
 import type { ServerLoadEvent } from '@sveltejs/kit';
-import { getRecentWriteLogs } from '@nemowiki/core';
+import { getRecentHistorySummaries } from '@nemowiki/core';
 
 export async function layoutLoad({
 	locals
-}: ServerLoadEvent): Promise<{ logs: string; user: string; fullTitles: string }> {
-	const logs = await getRecentWriteLogs(20);
+}: ServerLoadEvent): Promise<{ historySummaries: string; user: string; fullTitles: string }> {
+	const historySummaryResponse = await getRecentHistorySummaries(20, 0);
 	return {
-		logs: JSON.stringify(logs),
+		historySummaries: JSON.stringify(historySummaryResponse.items),
 		user: JSON.stringify(locals.user),
 		fullTitles: JSON.stringify(locals.fullTitles)
 	};

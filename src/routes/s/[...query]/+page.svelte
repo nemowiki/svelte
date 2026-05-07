@@ -6,14 +6,10 @@
 
 	let { data } = $props();
 
-	let resultArr = $derived<Array<SearchResult>>(JSON.parse(data?.value?.result || '[]'));
+	let results = $derived<Array<SearchResult>>(JSON.parse(data?.results || '[]'));
 </script>
 
 <article>
 	<SearchHeader />
-	{#if !data.ok}
-		<p>{data.reason}</p>
-	{:else}
-		<SearchResults {resultArr} />
-	{/if}
+	<SearchResults {results} />
 </article>

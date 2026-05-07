@@ -8,10 +8,13 @@ button {
 	// font-weight: normal;
 }
 
-#new-doc-btn {
+.search-results-div {
+	display: flex;
+	flex-direction: column;
+}
+
+.new-doc-btn {
 	border: none;
-	// font-weight: bold;
-	// border-bottom: 0.2rem var(--color-primary-1) solid;
 	border-bottom: solid 0.1rem var(--color-info);
 	border-top: solid 0.1rem var(--color-info);
 	background-color: var(--color-info-back);

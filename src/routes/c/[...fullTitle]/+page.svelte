@@ -5,16 +5,12 @@
 
 	let { data } = $props();
 
-	let diff = $derived<Change[] | null>(JSON.parse(data?.value?.diff || 'null'));
-	let oldRev = $derived<number>(data?.value?.oldRev as number);
-	let newRev = $derived<number>(data?.value?.newRev as number);
+	let diff = $derived<Change[] | null>(JSON.parse(data?.diff || 'null'));
+	let oldRev = $derived<number>(data?.oldRev as number);
+	let newRev = $derived<number>(data?.newRev as number);
 </script>
 
 <article>
 	<CompareHeader {oldRev} {newRev} />
-	{#if !data.ok}
-		<p>{data.reason}</p>
-	{:else}
-		<CompareModule {diff} />
-	{/if}
+	<CompareModule {diff} />
 </article>

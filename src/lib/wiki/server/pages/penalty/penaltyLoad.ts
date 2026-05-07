@@ -1,25 +1,25 @@
-import type { ServerLoadEvent } from '@sveltejs/kit';
-import type { WikiResponse } from '@nemowiki/core/types';
-import { getUserByName, refreshAndGetPenaltiesByName } from '@nemowiki/core';
+﻿import { error, type ServerLoadEvent } from '@sveltejs/kit';
+import { getUserByName, refreshAndGetPenaltiesByName, WikiError, getHttpStatus } from '@nemowiki/core';
 
 export async function penaltyLoad({
 	params
-}: ServerLoadEvent): Promise<WikiResponse<{ queriedUser: string; penaltyArr: string }>> {
+}: ServerLoadEvent): Promise<{ queriedUser: string; penalties: string }> {
 	const userName = params.userName;
-	if (!userName) return { ok: false, reason: 'userName is undefined' };
+	if (!userName) error(400, 'userName is undefined');
 
-	const queriedUser = await getUserByName(userName);
-	if (!queriedUser) return { ok: false, reason: '사용자가 존재하지 않습니다.' };
+	try {
+		const queriedUser = await getUserByName(userName);
+		const penalties = await refreshAndGetPenaltiesByName(userName);
 
-	const res_penalty = await refreshAndGetPenaltiesByName(userName);
-
-	if (!res_penalty.ok) return res_penalty;
-
-	return {
-		ok: true,
-		value: {
+		return {
 			queriedUser: JSON.stringify(queriedUser),
-			penaltyArr: JSON.stringify(res_penalty.value)
-		}
-	};
+			penalties: JSON.stringify(penalties)
+		};
+	} catch (e: unknown) {
+		if (e instanceof WikiError) error(getHttpStatus(e.code) || 500, e.message);
+		if (e && typeof e === 'object' && 'status' in e) throw e;
+		error(500, (e as Error).message || '정보를 불러오는데 실패했습니다.');
+	}
 }
+
+

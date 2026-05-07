@@ -7,25 +7,25 @@
 </script>
 
 {#snippet FileInput()}
-	<input type="file" id="file-input" name="file" />
+	<input type="file" class="file-input" name="file" />
 {/snippet}
 
 {#snippet TitleInput()}
-	<input id="title-input" placeholder="파일 문서의 제목을 입력해 주세요." name="title" />
+	<input class="title-input" placeholder="파일 문서의 제목을 입력해 주세요." name="title" />
 {/snippet}
 
 {#snippet ContentTextarea()}
 	<!-- svelte-ignore a11y_autofocus -->
-	<textarea id="doc-markup" contenteditable="true" bind:value={markup} autofocus name="markup"
+	<textarea class="doc-markup" contenteditable="true" bind:value={markup} autofocus name="markup"
 	></textarea>
 {/snippet}
 
 {#snippet CommentInput()}
-	<input id="comment-input" placeholder="간단한 설명을 입력해 주세요." name="comment" />
+	<input class="comment-input" placeholder="간단한 설명을 입력해 주세요." name="comment" />
 {/snippet}
 
 <CommonForm formName="file-form" isFile>
-	<div id="file-form-div" class="container">
+	<div class="file-form-div container">
 		{@render FileInput()}
 		{@render TitleInput()}
 		{@render ContentTextarea()}

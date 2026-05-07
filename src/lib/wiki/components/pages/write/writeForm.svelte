@@ -1,24 +1,24 @@
 <script lang="ts">
 	import { addPopupListener, removePopupListener } from '$lib/wiki/utils/footnotePopup.js';
-	import type { Doc, WikiResponse } from '@nemowiki/core/types';
+	import type { Doc } from '@nemowiki/core/types';
 	import HtmlContent from '$lib/wiki/components/common/htmlContent.svelte';
 	import CommonForm from '$lib/wiki/components/common/commonForm.svelte';
 	import { beforeNavigate } from '$app/navigation';
 	import type { ActionResult } from '@sveltejs/kit';
 
-	let { doc }: { doc: Doc } = $props();
+	let { doc }: { doc: Doc | null } = $props();
 
 	let markup = $state<string>(doc?.markup || '');
 	let previewDoc = $derived<Doc>({
-		...doc,
+		...(doc as Doc),
 		markup
 	});
-	let previewResult = $state<ActionResult<WikiResponse<string>> | null>(null);
+	let previewResult = $state<ActionResult<{ html: string }> | null>(null);
 	let saveResult = $state<ActionResult | null>(null);
 
 	$effect(() => {
 		removePopupListener();
-		previewResult;
+		void previewResult;
 		addPopupListener();
 	});
 
@@ -32,13 +32,18 @@
 
 {#snippet ContentTextarea()}
 	<!-- svelte-ignore a11y_autofocus -->
-	<textarea id="content-textarea" contenteditable="true" bind:value={markup} autofocus name="markup"
+	<textarea
+		class="content-textarea"
+		contenteditable="true"
+		bind:value={markup}
+		autofocus
+		name="markup"
 	></textarea>
 {/snippet}
 
 {#snippet CommentInput()}
 	<input
-		id="comment-input"
+		class="comment-input"
 		placeholder="편집한 내용에 대해 간단한 설명을 입력해 주세요."
 		name="comment"
 		autocomplete="off"
@@ -53,7 +58,7 @@
 
 {#snippet SaveForm()}
 	<CommonForm actionName="save" formName="save-form" bind:formResult={saveResult}>
-		<div id="save-form-div" class="container">
+		<div class="save-form-div container">
 			{@render ContentTextarea()}
 			{@render CommentInput()}
 		</div>
@@ -61,20 +66,20 @@
 {/snippet}
 
 {#snippet BtnDiv()}
-	<div id="btn-div" class="container">
+	<div class="btn-div container">
 		<button form="preview-form" type="submit">미리보기</button>
 		<button form="save-form" type="submit">저장하기</button>
 	</div>
 {/snippet}
 
 {#snippet PreviewHtml()}
-	{#if previewResult && previewResult.type === 'success' && previewResult.data?.ok}
+	{#if previewResult && previewResult.type === 'success' && previewResult.data?.html}
 		<hr />
-		<HtmlContent content={previewResult.data.value} />
+		<HtmlContent content={previewResult.data.html} />
 	{/if}
 {/snippet}
 
-<div id="write-form-div">
+<div>
 	{@render SaveForm()}
 	{@render PreviewForm()}
 	{@render BtnDiv()}

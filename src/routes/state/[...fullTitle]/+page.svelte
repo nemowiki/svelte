@@ -7,9 +7,5 @@
 
 <article>
 	<StateHeader />
-	{#if !data.ok}
-		<p>{data.reason}</p>
-	{:else}
-		<StateForm info={JSON.parse(data.value.info)} />
-	{/if}
+	<StateForm doc={JSON.parse(data.doc)} />
 </article>

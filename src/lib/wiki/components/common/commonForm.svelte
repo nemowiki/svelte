@@ -32,7 +32,7 @@
 	}
 </script>
 
-<div id="common-form-div">
+<div>
 	<form
 		method="POST"
 		{...formName ? { id: formName } : {}}
@@ -40,7 +40,7 @@
 		{...isFile ? { enctype: 'multipart/form-data' } : {}}
 		use:enhance={formHandle}
 	>
-		<fieldset disabled={loading} id="common-form-content">
+		<fieldset disabled={loading}>
 			{@render children()}
 		</fieldset>
 	</form>

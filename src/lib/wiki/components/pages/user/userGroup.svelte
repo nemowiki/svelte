@@ -2,7 +2,7 @@
 	let { queriedUser } = $props();
 </script>
 
-<div id="user-group-div">
+<div>
 	<h3>권한</h3>
 	<p>권한 등급: {queriedUser.group}</p>
 </div>

@@ -7,7 +7,7 @@
 	// }
 </script>
 
-<div id="compare-div">
+<div class="compare-div">
 	{#if diff === null}
 		<p>존재하지 않는 문서입니다.</p>
 	{:else}

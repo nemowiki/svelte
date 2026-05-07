@@ -1,33 +1,34 @@
 <script lang="ts">
 	import CommonForm from '$lib/wiki/components/common/commonForm.svelte';
-	import { type Info } from '@nemowiki/core/types';
+	import type { Doc } from '@nemowiki/core/types';
+	import { DocStates } from '@nemowiki/core/types';
 
-	let { info }: { info: Info } = $props();
+	let { doc }: { doc: Doc } = $props();
 
-	let state = $derived(info.state);
+	let state = $derived(doc.state);
 </script>
 
 {#snippet CommentInput()}
 	<input
-		id="comment-input"
+		class="comment-input"
 		placeholder="문서 상태를 변경하는 이유를 입력해 주세요."
 		name="comment"
 		autocomplete="off"
 	/>
 {/snippet}
 
-{#if state === 'deleted'}
+{#if state === DocStates.Deleted}
 	<h3>숨김</h3>
 	<CommonForm formName="hide-form" actionName="hide">
-		<div id="hide-form-div" class="container">
+		<div class="hide-form-div container">
 			{@render CommentInput()}
 			<button form="hide-form" type="submit">변경</button>
 		</div>
 	</CommonForm>
-{:else if state === 'hidden'}
+{:else if state === DocStates.Hidden}
 	<h3>숨김 해제</h3>
 	<CommonForm formName="show-form" actionName="show">
-		<div id="show-form-div" class="container">
+		<div class="show-form-div container">
 			{@render CommentInput()}
 			<button form="show-form" type="submit">변경</button>
 		</div>

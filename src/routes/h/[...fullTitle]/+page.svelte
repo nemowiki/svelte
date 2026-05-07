@@ -1,18 +1,16 @@
 <script lang="ts">
-	import type { DocLogDoc } from '@nemowiki/core/types';
+	import type { HistorySummary } from '@nemowiki/core/types';
 	import HistoryList from '$lib/wiki/components/pages/history/historyList.svelte';
 	import HistoryHeader from '$lib/wiki/components/pages/history/historyHeader.svelte';
 
 	let { data } = $props();
 
-	let logArr = $derived<DocLogDoc[]>(JSON.parse(data?.value?.logArr || '[]'));
+	let historySummaries = $derived<HistorySummary[]>(
+		JSON.parse(data?.historySummaries || '[]')
+	);
 </script>
 
 <article>
 	<HistoryHeader />
-	{#if !data.ok}
-		<p>{data.reason}</p>
-	{:else}
-		<HistoryList {logArr} />
-	{/if}
+	<HistoryList {historySummaries} />
 </article>
