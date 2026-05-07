@@ -19,6 +19,13 @@
 	<a href="/r/{encodeFullTitle(fullTitle)}">{fullTitle}</a>
 </CommonHeader>
 
-<style lang="scss">
-	@use '../../../style/common/docHeader.scss';
+<style>
+	a {
+		color: black;
+	}
+	a:hover {
+		text-decoration: underline;
+		text-decoration-thickness: 0.12rem;
+		text-underline-offset: 0.4rem;
+	}
 </style>

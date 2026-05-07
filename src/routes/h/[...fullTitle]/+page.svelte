@@ -1,16 +1,11 @@
 <script lang="ts">
-	import type { HistorySummary } from '@nemowiki/core/types';
-	import HistoryList from '$lib/wiki/components/pages/history/historyList.svelte';
-	import HistoryHeader from '$lib/wiki/components/pages/history/historyHeader.svelte';
+	import type { PaginatedResponse, HistorySummary } from '@nemowiki/core/types';
+	import HistoryPageTemplate from '$lib/wiki/components/templates/historyPageTemplate.svelte';
 
 	let { data } = $props();
-
-	let historySummaries = $derived<HistorySummary[]>(
-		JSON.parse(data?.historySummaries || '[]')
+	let historySummaries = $derived<PaginatedResponse<HistorySummary>>(
+		JSON.parse(data?.historySummaries || '{}')
 	);
 </script>
 
-<article>
-	<HistoryHeader />
-	<HistoryList {historySummaries} />
-</article>
+<HistoryPageTemplate {historySummaries} />

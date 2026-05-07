@@ -13,6 +13,10 @@
 	</button>
 </div>
 
-<style lang="scss">
-	@use '../../style/layout/uploadModule.scss';
+<style>
+	.upload-btn {
+		border: none;
+		font-size: 1.25rem;
+		padding: 0.25rem;
+	}
 </style>

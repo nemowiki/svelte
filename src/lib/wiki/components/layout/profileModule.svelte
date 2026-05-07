@@ -43,6 +43,35 @@
 	{/if}
 </section>
 
-<style lang="scss">
-	@use '../../style/layout/profileModule.scss';
+<style>
+	hr {
+		margin: 0.25rem 0;
+		border: gray 0.05em solid;
+	}
+	section {
+		margin-left: 0;
+		padding: 1rem;
+		flex-direction: column;
+		font-weight: bold;
+	}
+	section p:first-child {
+		text-align: center;
+		margin-top: 0.5rem;
+	}
+	section p:last-child {
+		text-align: center;
+		margin-bottom: 0.5rem;
+	}
+	h2 {
+		text-align: center;
+		font-size: 1.25rem;
+		margin-bottom: 0.5rem;
+	}
+	.login-btn,
+	.logout-btn {
+		border: none;
+		padding: 0.25rem;
+		margin-top: 0.5rem;
+		width: stretch;
+	}
 </style>

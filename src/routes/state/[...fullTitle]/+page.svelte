@@ -1,11 +1,8 @@
 <script lang="ts">
-	import StateHeader from '$lib/wiki/components/pages/state/stateHeader.svelte';
-	import StateForm from '$lib/wiki/components/pages/state/stateForm.svelte';
+	import StatePageTemplate from '$lib/wiki/components/templates/statePageTemplate.svelte';
 
 	let { data } = $props();
+	let doc = $derived(JSON.parse(data?.doc || 'null'));
 </script>
 
-<article>
-	<StateHeader />
-	<StateForm doc={JSON.parse(data.doc)} />
-</article>
+<StatePageTemplate {doc} />

@@ -54,6 +54,34 @@
 	{/if}
 </section>
 
-<style lang="scss">
-	@use '../../style/layout/recentModule.scss';
+<style>
+	section {
+		margin-left: 0;
+		padding: 1rem;
+	}
+	section div {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0 0.25rem;
+	}
+	section div a {
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+	}
+	section p {
+		text-align: center;
+		font-weight: bold;
+	}
+	hr {
+		margin: 0.25rem 0;
+		border: gray 0.05em solid;
+	}
+	h2 {
+		text-align: center;
+		font-size: 1.25rem;
+		margin-top: 0.5rem;
+		margin-bottom: 1rem;
+	}
 </style>

@@ -6,6 +6,16 @@
 	<p><span>[주의]</span> {@render children()}</p>
 {/if}
 
-<style lang="scss">
-	@use '../../style/common/commonWarn.scss';
+<style>
+	p {
+		background-color: var(--color-warn-back);
+		border-bottom: solid 0.1rem var(--color-warn);
+		border-top: solid 0.1rem var(--color-warn);
+		margin: 0.5rem 0;
+		padding: 0.25rem 0.5rem;
+	}
+	p span {
+		color: var(--color-warn);
+		font-weight: bold;
+	}
 </style>

@@ -27,6 +27,29 @@
 	{@render BtnNav()}
 </header>
 
-<style lang="scss">
-	@use '../../style/common/commonHeader.scss';
+<style>
+	header {
+		display: flex;
+		align-items: flex-start;
+		padding: 1rem;
+		justify-content: space-between;
+		min-width: 100%;
+	}
+	.title-div {
+		width: 60%;
+		position: relative;
+	}
+	.doc-title {
+		font-size: 2.5rem;
+	}
+	.doc-description {
+		position: relative;
+		top: -0.25rem;
+	}
+	nav {
+		display: flex;
+		gap: 0.25rem;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+	}
 </style>

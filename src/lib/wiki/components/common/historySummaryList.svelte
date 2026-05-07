@@ -71,8 +71,8 @@
 	{#if isContentAction(historySummary.action)}
 		<span>
 			(<a
-				href="/c/{encodeFullTitle(historySummary.fullTitle)}?old={historySummary.revision - 1}&new={historySummary.revision}"
-				>비교</a
+				href="/c/{encodeFullTitle(historySummary.fullTitle)}?old={historySummary.revision -
+					1}&new={historySummary.revision}">비교</a
 			>|{@render HistorySummaryDeltaSpan(historySummary.diffSize)})
 		</span>
 	{/if}
@@ -116,5 +116,17 @@
 {/each}
 
 <style lang="scss">
-	@use '../../style/common/logList.scss';
+	.log-div {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.comment-div {
+		justify-content: center !important;
+		color: grey;
+	}
+
+	.doc-action-span {
+		font-weight: bold;
+	}
 </style>

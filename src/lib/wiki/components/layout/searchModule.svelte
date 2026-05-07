@@ -90,6 +90,48 @@
 	{/each}
 </div>
 
-<style lang="scss">
-	@use '../../style/layout/searchModule.scss';
+<style>
+	.search-div {
+		position: relative;
+		width: fit-content;
+		z-index: 999;
+	}
+	.keyword-input {
+		font-size: 1rem;
+		height: 2.5rem;
+		padding: 0.5rem 0.75rem;
+		border: solid 0.1rem gray;
+		font-weight: bold;
+		text-align: left;
+		width: 15rem;
+		border-right: none;
+	}
+	.keyword-input:focus {
+		outline: none;
+	}
+	.search-btn {
+		font-size: 1rem;
+		height: 2.5rem;
+		padding: 0.5rem 0.75rem;
+		border: solid 0.1rem gray;
+		font-weight: bold;
+		text-align: left;
+		border-left: none;
+		width: fit-content;
+	}
+	.suggestion-btn {
+		font-size: 1rem;
+		height: 2.5rem;
+		padding: 0.5rem 0.75rem;
+		border: solid 0.1rem gray;
+		font-weight: bold;
+		text-align: left;
+		position: absolute;
+		left: 0;
+		width: stretch;
+		border-top: none;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+	}
 </style>

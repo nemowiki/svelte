@@ -14,6 +14,16 @@
 
 <button class="{pageName}-btn" onclick={gotoPage}>{btnName}</button>
 
-<style lang="scss">
-	@use '../../style/common/commonBtn.scss';
+<style>
+	button {
+		padding: 0.25rem 0.75rem;
+		border: solid gray 0.05rem;
+		background-color: white;
+		font-size: 1rem;
+		font-weight: bold;
+	}
+	button:hover {
+		cursor: pointer;
+		background-color: var(--color-gray-2);
+	}
 </style>

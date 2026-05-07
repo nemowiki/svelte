@@ -1,15 +1,9 @@
 <script lang="ts">
 	import type { SearchResult } from '@nemowiki/core/types';
-
-	import SearchHeader from '$lib/wiki/components/pages/search/searchHeader.svelte';
-	import SearchResults from '$lib/wiki/components/pages/search/searchResults.svelte';
+	import SearchPageTemplate from '$lib/wiki/components/templates/searchPageTemplate.svelte';
 
 	let { data } = $props();
-
-	let results = $derived<Array<SearchResult>>(JSON.parse(data?.results || '[]'));
+	let results = $derived<SearchResult[]>(JSON.parse(data?.results || '[]'));
 </script>
 
-<article>
-	<SearchHeader />
-	<SearchResults {results} />
-</article>
+<SearchPageTemplate {results} />

@@ -19,6 +19,13 @@
 	<a href="/u/{encodeFullTitle(page.params.userName)}">{fullTitle}</a>
 </CommonHeader>
 
-<style lang="scss">
-	@use '../../../style/common/userHeader.scss';
+<style>
+	a {
+		color: black;
+	}
+	a:hover {
+		text-decoration: underline;
+		text-decoration-thickness: 0.12rem;
+		text-underline-offset: 0.4rem;
+	}
 </style>
