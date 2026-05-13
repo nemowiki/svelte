@@ -14,6 +14,7 @@ export const load = async ({ params, locals, url }) => {
 			revision: rev,
 			redirect: url.searchParams.get('redirect') || undefined
 		});
+
 		if (!doc) error(404, '문서를 찾을 수 없습니다.');
 
 		if (doc.redirectedFrom) {

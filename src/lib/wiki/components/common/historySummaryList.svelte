@@ -1,9 +1,8 @@
 <script lang="ts">
-	import DOMPurify from 'isomorphic-dompurify';
 	import { docActions, parseDateTime, translatedDocActions } from '$lib/wiki/utils/general.js';
 	import { encodeFullTitle } from '@nemowiki/core/client';
-	import { DocActions, DocStates } from '@nemowiki/core/types';
-	import { type DocAction, type HistorySummary } from '@nemowiki/core/types';
+	import { DocActions, DocStates, type DocAction, type HistorySummary } from '@nemowiki/core/types';
+	import DOMPurify from 'isomorphic-dompurify';
 
 	let {
 		historySummaries,
@@ -16,7 +15,7 @@
 			return `${meta.prevTitle} -> ${meta.nextTitle}`;
 		} else if (historySummary.action === DocActions.Grant) {
 			const meta = historySummary.meta;
-			return `${meta.targetAction} 권한 변경`;
+			return `${meta.acl.action} 권한 변경`;
 		} else if (historySummary.action === DocActions.Toggle) {
 			const meta = historySummary.meta;
 			return meta.nextState === DocStates.Hidden ? '숨김' : '숨김 해제';

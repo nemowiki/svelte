@@ -1,7 +1,7 @@
-import { getHttpStatus, readDocByFullTitle, WikiError, grantByFullTitle } from '@nemowiki/core';
-import { error, fail, redirect, type Actions } from '@sveltejs/kit';
+import { getHttpStatus, grantByFullTitle, readDocByFullTitle, WikiError } from '@nemowiki/core';
 import { canGrant, encodeFullTitle } from '@nemowiki/core/client';
 import type { DocAction } from '@nemowiki/core/types';
+import { error, fail, redirect, type Actions } from '@sveltejs/kit';
 
 export const load = async ({ params, locals }) => {
 	const fullTitle = params.fullTitle;
@@ -28,13 +28,8 @@ export const actions = {
 
 		const data = await request.formData();
 		const docAction = (data.get('doc-action') || '').toString() as DocAction;
-		const groupPrompt = (data.get('group') || '').toString();
+		const groupId = (data.get('group') || '').toString();
 		const comment = (data.get('comment') || '').toString();
-
-		const newGroups = groupPrompt
-			.trim()
-			.split(/ *, */)
-			.filter((g) => g !== '');
 
 		try {
 			const doc = await readDocByFullTitle(fullTitle, locals.user);
@@ -43,7 +38,7 @@ export const actions = {
 			const res = canGrant(doc, locals.user);
 			if (!res.ok) return fail(400, { message: res.message || '권한이 없습니다.' });
 
-			await grantByFullTitle(fullTitle, docAction, newGroups, locals.user, comment);
+			await grantByFullTitle(fullTitle, docAction, 'added', groupId, locals.user, comment);
 		} catch (e: unknown) {
 			if (e instanceof WikiError) return fail(400, { message: e.message });
 			throw e;

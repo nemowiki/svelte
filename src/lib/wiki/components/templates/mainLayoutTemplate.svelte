@@ -11,7 +11,7 @@
 <HeaderModule />
 
 <div class="layout-container">
-	<main class="content-area">
+	<main class="content-area module">
 		{@render children()}
 	</main>
 

@@ -27,17 +27,17 @@
 {/snippet}
 
 {#if doc.permissions.canGrant}
-	<CommonForm formName="authority-form">
-		<div class="authority-form-div container">
+	<CommonForm formName="acl-form">
+		<div class="acl-form-div container">
 			{@render DocActionSelect()}
 			{@render GroupInput()}
-			<button form="authority-form" type="submit">적용</button>
+			<button form="acl-form" type="submit">적용</button>
 		</div>
 	</CommonForm>
 {/if}
 
 <style>
-	.authority-form-div {
+	.acl-form-div {
 		margin-top: 1rem;
 		justify-content: space-between;
 	}

@@ -1,14 +1,12 @@
 <script lang="ts">
-	import '$lib/wiki/style/main.css';
-	import { injectAnalytics } from '@vercel/analytics/sveltekit';
-	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
 	import { afterNavigate } from '$app/navigation';
+	import MainLayoutTemplate from '$lib/wiki/components/templates/mainLayoutTemplate.svelte';
+	import '$lib/wiki/style/main.css';
 	import { addPopupListener } from '$lib/wiki/utils/footnotePopup.js';
 	import { onMount } from 'svelte';
-	import MainLayoutTemplate from '$lib/wiki/components/templates/mainLayoutTemplate.svelte';
 
-	injectAnalytics();
-	injectSpeedInsights();
+	// injectAnalytics();
+	// injectSpeedInsights();
 
 	let { children } = $props();
 

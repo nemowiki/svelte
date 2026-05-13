@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { goto, onNavigate } from '$app/navigation';
 	import { page } from '$app/state';
-	import HangulSearcher from 'hangul-searcher';
-	import { encodeFullTitle } from '@nemowiki/core/client';
 	import Search from '@lucide/svelte/icons/search';
+	import { encodeFullTitle } from '@nemowiki/core/client';
+	import HangulSearcher from 'hangul-searcher';
 
 	let searchWord = $state<string>('');
 
-	let fullTitles = $derived<string[]>(JSON.parse(page.data.fullTitles));
+	let fullTitles = $derived<string[]>(page.data.fullTitles);
 
 	let hangulSearcher = $derived(new HangulSearcher(fullTitles));
 

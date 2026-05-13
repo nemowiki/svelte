@@ -1,5 +1,5 @@
 <script lang="ts">
-	import AuthorityBtn from '$lib/wiki/components/common/btns/authorityBtn.svelte';
+	import AclBtn from '$lib/wiki/components/common/btns/aclBtn.svelte';
 	import BacklinkBtn from '$lib/wiki/components/common/btns/backlinkBtn.svelte';
 	import ReadBtn from '$lib/wiki/components/common/btns/readBtn.svelte';
 	import WriteBtn from '$lib/wiki/components/common/btns/writeBtn.svelte';
@@ -12,7 +12,7 @@
 	<ReadBtn />
 	<WriteBtn />
 	<BacklinkBtn />
-	<AuthorityBtn />
+	<AclBtn />
 {/snippet}
 
 <DocHeader {description} Btns={Buttons} />

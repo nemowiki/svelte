@@ -1,12 +1,12 @@
 <script lang="ts">
-	import AuthorityBtn from '$lib/wiki/components/common/btns/authorityBtn.svelte';
+	import AclBtn from '$lib/wiki/components/common/btns/aclBtn.svelte';
 	import DocHeader from '$lib/wiki/components/common/headers/docHeader.svelte';
 
 	const description = '(문서 상태 변경)';
 </script>
 
 {#snippet Buttons()}
-	<AuthorityBtn />
+	<AclBtn />
 {/snippet}
 
 <DocHeader {description} Btns={Buttons} />

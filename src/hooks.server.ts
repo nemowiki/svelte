@@ -1,11 +1,11 @@
-import * as Sentry from '@sentry/sveltekit';
 import { dev } from '$app/environment';
 import { WikiError } from '@nemowiki/core';
+import * as Sentry from '@sentry/sveltekit';
 import type { Handle, HandleServerError, ServerInit } from '@sveltejs/kit';
 import { redirect } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
-import { WIKI_MONGO_URI, AWS_BUCKET_NAME, AWS_ID, AWS_SECRET } from '$env/static/private';
+import { AWS_BUCKET_NAME, AWS_ID, AWS_SECRET, WIKI_MONGO_URI } from '$env/static/private';
 import { PUBLIC_REQUIRE_LOGIN } from '$env/static/public';
 
 import { handle as authenticationHandle } from './auth.js';
@@ -13,13 +13,13 @@ import { handle as authenticationHandle } from './auth.js';
 import {
 	activateWiki,
 	backupWiki,
+	getAllFullTitles,
 	getUserByIdOrNull,
-	signupUserByIdAndName,
-	getAllFullTitles
+	signupUserByIdAndName
 } from '@nemowiki/core';
 
-import { Groups, UserStates, DocPrefixes, type User } from '@nemowiki/core/types';
 import { encodeFullTitle } from '@nemowiki/core/client';
+import { DocPrefixes, Groups, UserStates, type User } from '@nemowiki/core/types';
 
 Sentry.init({
 	dsn: 'https://b7fb355f8d1fe0bb052585161dce4a1e@o4509551707160576.ingest.us.sentry.io/4509551708012544',
