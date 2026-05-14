@@ -1,11 +1,11 @@
 <script lang="ts">
-	import type { Doc } from '@nemowiki/core/types';
 	import { docActions } from '$lib/wiki/utils/general.js';
+	import type { AclDetails } from '@nemowiki/core/types';
 	import AclActionBlock from './aclActionBlock.svelte';
 
-	let { doc }: { doc: Doc } = $props();
+	let { aclDetails }: { aclDetails: AclDetails } = $props();
 </script>
 
 {#each docActions as docAction (docAction)}
-	<AclActionBlock {docAction} {doc} />
+	<AclActionBlock {docAction} acl={aclDetails.effective} />
 {/each}

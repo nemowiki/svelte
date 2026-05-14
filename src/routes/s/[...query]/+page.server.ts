@@ -1,18 +1,19 @@
-import { redirect, error } from '@sveltejs/kit';
+import { redirect } from '@sveltejs/kit';
 import { searchDoc } from '@nemowiki/core';
 import { encodeFullTitle } from '@nemowiki/core/client';
+import { withLoadErrorHandling } from '$lib/wiki/utils/errorHandling.js';
 
-export const load = async ({ params }) => {
+export const load = withLoadErrorHandling(async ({ params }) => {
 	const query = params.query;
-	if (!query) error(400, 'query is undefined');
+	if (!query) throw new Error('query is undefined');
 
 	const searchResponse = await searchDoc(query);
 
 	if (searchResponse.status === 'exact') {
-		redirect(303, `/r/${encodeFullTitle(searchResponse.result[0] as string)}`);
+		redirect(303, `/r/${encodeFullTitle(searchResponse.result)}`);
 	} else {
 		return {
-			results: JSON.stringify(searchResponse.result)
+			results: searchResponse.result
 		};
 	}
-};
+});

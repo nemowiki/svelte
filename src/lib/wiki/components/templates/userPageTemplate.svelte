@@ -7,10 +7,13 @@
 
 	let {
 		user,
-		historySummaries,
+		paginatedHistorySummaries,
 		penalties
-	}: { user: User; historySummaries: PaginatedResponse<HistorySummary>; penalties: Penalty[] } =
-		$props();
+	}: {
+		user: User;
+		paginatedHistorySummaries: PaginatedResponse<HistorySummary>;
+		penalties: Penalty[];
+	} = $props();
 </script>
 
 <article class="user-page-template">
@@ -21,7 +24,7 @@
 	</section>
 
 	<section>
-		<UserContributionBlock userName={user.name} {historySummaries} />
+		<UserContributionBlock userName={user.name} {paginatedHistorySummaries} />
 	</section>
 
 	<section>

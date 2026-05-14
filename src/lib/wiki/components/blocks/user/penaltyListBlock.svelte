@@ -28,7 +28,7 @@
 	</span>
 {/snippet}
 
-{#snippet PenaltyExpirySpan(expiresAt: Date | null)}
+{#snippet PenaltyExpirySpan(expiresAt: string | null)}
 	{#if expiresAt === null}
 		<span style="color: red"><b>(무기한)</b></span>
 	{:else}

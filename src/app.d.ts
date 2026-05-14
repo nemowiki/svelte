@@ -1,5 +1,5 @@
 // See https://svelte.dev/docs/kit/types#app.d.ts
-import type { User, HistorySummary } from '@nemowiki/core/types';
+import type { HistorySummary, User } from '@nemowiki/core/types';
 import type { RequestEvent } from '@sveltejs/kit';
 
 // for information about these interfaces
@@ -8,7 +8,7 @@ declare global {
 		interface Locals {
 			user: User;
 			auth: RequestEvent['locals']['auth'];
-			historySummaries: HistorySummary[];
+			recentHistorySummaries: HistorySummary[];
 			fullTitles: string[];
 		}
 		// interface PageData {}

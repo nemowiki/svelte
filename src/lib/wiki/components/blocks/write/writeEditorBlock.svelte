@@ -6,11 +6,11 @@
 	import HtmlContent from '$lib/wiki/components/common/htmlContent.svelte';
 	import { addPopupListener, removePopupListener } from '$lib/wiki/utils/footnotePopup.js';
 
-	let { doc }: { doc: Doc | null } = $props();
+	let { doc }: { doc: Doc } = $props();
 
-	let markup = $state<string>(doc?.markup || '');
+	let markup = $state<string>(doc.markup);
 	let previewDoc = $derived<Doc>({
-		...(doc as Doc),
+		...doc,
 		markup
 	});
 	let previewResult = $state<ActionResult<{ html: string }> | null>(null);

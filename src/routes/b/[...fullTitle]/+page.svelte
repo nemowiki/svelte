@@ -2,7 +2,7 @@
 	import BacklinkPageTemplate from '$lib/wiki/components/templates/backlinkPageTemplate.svelte';
 
 	let { data } = $props();
-	let html = $derived<string>(data?.html || '');
+	let html = $derived<string>(data.html);
 </script>
 
 <BacklinkPageTemplate {html} />

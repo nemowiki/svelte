@@ -3,10 +3,10 @@
 	import WriteHeaderBlock from '$lib/wiki/components/blocks/write/writeHeaderBlock.svelte';
 	import type { Doc } from '@nemowiki/core/types';
 
-	let { doc }: { doc: Doc | null } = $props();
+	let { doc }: { doc: Doc } = $props();
 </script>
 
 <article>
-	<WriteHeaderBlock revision={doc?.revision || 0} />
+	<WriteHeaderBlock revision={doc.revision} />
 	<WriteEditorBlock {doc} />
 </article>

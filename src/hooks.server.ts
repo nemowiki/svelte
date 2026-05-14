@@ -1,4 +1,3 @@
-import { dev } from '$app/environment';
 import { WikiError } from '@nemowiki/core';
 import * as Sentry from '@sentry/sveltekit';
 import type { Handle, HandleServerError, ServerInit } from '@sveltejs/kit';
@@ -138,9 +137,8 @@ export const handleError: HandleServerError = Sentry.handleErrorWithSentry(
 			event.url.pathname;
 
 		let message = '알 수 없는 에러가 발생했습니다.';
-		if (error instanceof WikiError) {
-			message = error.message;
-		} else if (dev && error instanceof Error) {
+
+		if (error instanceof WikiError || error instanceof Error) {
 			message = error.message;
 		}
 

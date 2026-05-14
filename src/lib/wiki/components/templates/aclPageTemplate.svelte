@@ -2,17 +2,17 @@
 	import AclFormBlock from '$lib/wiki/components/blocks/acl/aclFormBlock.svelte';
 	import AclHeaderBlock from '$lib/wiki/components/blocks/acl/aclHeaderBlock.svelte';
 	import AclListBlock from '$lib/wiki/components/blocks/acl/aclListBlock.svelte';
-	import type { Doc } from '@nemowiki/core/types';
+	import type { AclDetails, Doc } from '@nemowiki/core/types';
 
-	let { doc }: { doc: Doc | null } = $props();
+	let { doc, aclDetails }: { doc: Doc | null; aclDetails: AclDetails } = $props();
 </script>
 
 <article>
 	<AclHeaderBlock />
+	<section>
+		<AclListBlock {aclDetails} />
+	</section>
 	{#if doc}
-		<section>
-			<AclListBlock {doc} />
-		</section>
 		<section>
 			<AclFormBlock {doc} />
 		</section>

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import CommonBtn from '../commonBtn.svelte';
 	import { page } from '$app/state';
-	const userName = $derived(JSON.parse(page.data.user).name);
+	const userName = $derived(page.data.user.name);
 </script>
 
 {#if userName === page.params.userName}

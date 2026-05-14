@@ -6,11 +6,11 @@
 
 	let {
 		userName,
-		historySummaries,
+		paginatedHistorySummaries,
 		variant = 'list'
 	}: {
 		userName: string;
-		historySummaries: PaginatedResponse<HistorySummary>;
+		paginatedHistorySummaries: PaginatedResponse<HistorySummary>;
 		variant?: 'list' | 'card';
 	} = $props();
 
@@ -21,24 +21,24 @@
 
 {#snippet PrevPageBtn()}
 	<button
-		disabled={!historySummaries.hasPrev}
-		onclick={() => gotoPage(historySummaries.currentPage - 1)}>이전</button
+		disabled={!paginatedHistorySummaries.hasPrev}
+		onclick={() => gotoPage(paginatedHistorySummaries.currentPage - 1)}>이전</button
 	>
 {/snippet}
 
 {#snippet NextPageBtn()}
 	<button
-		disabled={!historySummaries.hasNext}
-		onclick={() => gotoPage(historySummaries.currentPage + 1)}>다음</button
+		disabled={!paginatedHistorySummaries.hasNext}
+		onclick={() => gotoPage(paginatedHistorySummaries.currentPage + 1)}>다음</button
 	>
 {/snippet}
 
 <div class:user-contribution-card={variant === 'card'}>
 	<h3>기여 내역</h3>
-	{#if historySummaries.items.length === 0}
+	{#if paginatedHistorySummaries.items.length === 0}
 		<p>기여 내역이 없습니다.</p>
 	{:else}
-		<HistorySummaryList historySummaries={historySummaries.items} pageType="user" />
+		<HistorySummaryList historySummaries={paginatedHistorySummaries.items} pageType="user" />
 		{@render PrevPageBtn()}
 		{@render NextPageBtn()}
 	{/if}

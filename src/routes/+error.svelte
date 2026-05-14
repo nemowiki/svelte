@@ -7,7 +7,7 @@
 	);
 </script>
 
-<CommonHeader>{`오류:${fullTitle}`}</CommonHeader>
+<CommonHeader>{`[오류] ${fullTitle}`}</CommonHeader>
 
 <article>
 	<p>{page.error?.message || ''}</p>

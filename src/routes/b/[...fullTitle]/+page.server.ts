@@ -1,13 +1,13 @@
 import { createBacklinkHtmlByFullTitle } from '@nemowiki/core';
-import { error } from '@sveltejs/kit';
+import { withLoadErrorHandling } from '$lib/wiki/utils/errorHandling.js';
 
-export const load = async ({ params }) => {
+export const load = withLoadErrorHandling(async ({ params }) => {
 	const fullTitle = params.fullTitle;
-	if (!fullTitle) error(400, 'fullTitle is undefined');
+	if (!fullTitle) throw new Error('fullTitle is undefined');
 
 	let html = await createBacklinkHtmlByFullTitle(fullTitle);
 
 	if (!html) html = '역링크가 존재하지 않습니다.';
 
 	return { html };
-};
+});

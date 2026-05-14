@@ -7,7 +7,7 @@
 	import { Groups } from '@nemowiki/core/types';
 
 	let recentChangedHistorySummaries: HistorySummary[] = $derived.by(() => {
-		return removeDeletedOrHidden(removeDuplication(JSON.parse(page.data.recentHistorySummaries)));
+		return removeDeletedOrHidden(removeDuplication(page.data.recentHistorySummaries));
 	});
 
 	function removeDeletedOrHidden(historySummaries: HistorySummary[]): HistorySummary[] {
@@ -43,7 +43,7 @@
 <section class="module">
 	<h2>최근 수정</h2>
 	<hr />
-	{#if JSON.parse(page.data.user).group === Groups.Guest && PUBLIC_REQUIRE_LOGIN === 'true'}
+	{#if page.data.user.group === Groups.Guest && PUBLIC_REQUIRE_LOGIN === 'true'}
 		<p>로그인 필요</p>
 	{:else}
 		{#each recentChangedHistorySummaries as historySummary, i (i)}

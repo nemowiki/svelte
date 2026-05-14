@@ -77,7 +77,7 @@
 	{/if}
 {/snippet}
 
-{#snippet HistorySummaryDate(time: Date)}
+{#snippet HistorySummaryDate(time: string)}
 	<span> {parseDateTime(time)}</span>
 {/snippet}
 

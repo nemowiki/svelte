@@ -4,12 +4,12 @@
 
 	let { data } = $props();
 
-	const user = $derived<User>(JSON.parse(data?.queriedUser || 'null'));
-	const historySummaries = $derived<PaginatedResponse<HistorySummary>>(
-		JSON.parse(data?.historySummaries || '{}')
+	const user = $derived<User>(data.queriedUser);
+	const paginatedHistorySummaries = $derived<PaginatedResponse<HistorySummary>>(
+		data.paginatedHistorySummaries
 	);
 
-	const penalties = $derived<Penalty[]>(JSON.parse(data?.penalties || '[]'));
+	const penalties = $derived<Penalty[]>(data.penalties);
 </script>
 
-<UserPageTemplate {user} {historySummaries} {penalties} />
+<UserPageTemplate {user} {paginatedHistorySummaries} {penalties} />

@@ -3,7 +3,7 @@
 	import { Groups } from '@nemowiki/core/types';
 	import CommonBtn from '../commonBtn.svelte';
 
-	const userGroup = $derived(JSON.parse(page.data.user).group);
+	const userGroup = $derived(page.data.user.group);
 </script>
 
 {#if [Groups.Dev, Groups.Manager].includes(userGroup)}

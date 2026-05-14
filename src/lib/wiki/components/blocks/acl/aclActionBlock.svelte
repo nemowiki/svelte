@@ -1,16 +1,16 @@
 <script lang="ts">
 	import { docActions, translatedDocActions } from '$lib/wiki/utils/general.js';
-	import type { Doc, DocAction } from '@nemowiki/core/types';
+	import type { AclEntry, DocAction } from '@nemowiki/core/types';
 
-	let { docAction, doc }: { docAction: DocAction; doc: Doc } = $props();
+	let { docAction, acl }: { docAction: DocAction; acl: AclEntry[] } = $props();
 </script>
 
 <div class="action-div">
 	<div>
 		<span class="action-span">[{translatedDocActions[docActions.indexOf(docAction)]}]</span>
 		<span>
-			{#if doc.acl.some((entry) => entry.action === docAction)}
-				{doc.acl
+			{#if acl.some((entry) => entry.action === docAction)}
+				{acl
 					.filter((entry) => entry.action === docAction)
 					.map((entry) => `${entry.origin}:${entry.type}:${entry.id}`)
 					.join(', ')}

@@ -3,7 +3,7 @@
 	import SearchPageTemplate from '$lib/wiki/components/templates/searchPageTemplate.svelte';
 
 	let { data } = $props();
-	let results = $derived<SearchResult[]>(JSON.parse(data?.results || '[]'));
+	let results = $derived<SearchResult[]>(data.results);
 </script>
 
 <SearchPageTemplate {results} />

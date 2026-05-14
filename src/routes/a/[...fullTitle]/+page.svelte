@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { Doc } from '@nemowiki/core/types';
 	import AclPageTemplate from '$lib/wiki/components/templates/aclPageTemplate.svelte';
 
 	let { data } = $props();
 
-	let doc = $derived<Doc | null>(JSON.parse(data?.doc || 'null'));
+	let doc = $derived(data.doc);
+	let aclDetails = $derived(data.aclDetails);
 </script>
 
-<AclPageTemplate {doc} />
+<AclPageTemplate {aclDetails} {doc} />

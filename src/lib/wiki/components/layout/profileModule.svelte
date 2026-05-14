@@ -8,7 +8,7 @@
 	import LogIn from '@lucide/svelte/icons/log-in';
 	import { goto } from '$app/navigation';
 
-	let user: User = $derived(JSON.parse(page.data.user));
+	let user: User = $derived(page.data.user);
 </script>
 
 {#snippet GuestProfile()}

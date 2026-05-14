@@ -1,6 +1,6 @@
 <script lang="ts">
-	import FilePageTemplate from '$lib/wiki/components/templates/filePageTemplate.svelte';
 	import { goto } from '$app/navigation';
+	import FilePageTemplate from '$lib/wiki/components/templates/filePageTemplate.svelte';
 	import { onMount } from 'svelte';
 
 	let { data } = $props();
@@ -10,4 +10,4 @@
 	});
 </script>
 
-<FilePageTemplate boilerplate={data?.boilerplate || ''} />
+<FilePageTemplate boilerplate={data.boilerplate} />

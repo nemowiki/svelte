@@ -1,11 +1,11 @@
 import { type DocAction, type Group, DocActions, Groups } from '@nemowiki/core/types';
 
-export function parseDateTime(time: Date): string {
+export function parseDateTime(time: string): string {
 	const t = new Date(time);
 	return `${t.getFullYear()}/${t.getMonth() + 1}/${t.getDate()} ${t.getHours()}:${t.getMinutes()}`;
 }
 
-export function parseTimeOnly(time: Date): string {
+export function parseTimeOnly(time: string): string {
 	const t = new Date(time);
 	if (t.getMinutes() < 10) {
 		return `${t.getHours()}:0${t.getMinutes()}`;
