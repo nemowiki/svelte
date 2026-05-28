@@ -26,11 +26,12 @@ export const actions = {
 		if (!fullTitle) throw new Error('fullTitle is undefined');
 
 		const data = await request.formData();
+		const change = (data.get('change') ?? '').toString();
 		const docAction = (data.get('doc-action') ?? '').toString();
-		const groupId = (data.get('group') ?? '').toString();
+		const id = (data.get('id') ?? '').toString();
 		const comment = (data.get('comment') ?? '').toString();
 
-		await grantByFullTitle(fullTitle, docAction, 'added', groupId, locals.user, comment);
+		await grantByFullTitle(fullTitle, docAction, change, id, locals.user, comment);
 
 		redirect(303, `/a/${encodeFullTitle(fullTitle)}`);
 	})

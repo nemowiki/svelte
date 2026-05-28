@@ -33,7 +33,12 @@ export const actions = {
 
 		const doc = await readDocByFullTitle(fullTitle, locals.user);
 
-		if (doc === null || doc.revision === 0 || doc.state === DocStates.Deleted || doc.state === DocStates.Hidden) {
+		if (
+			doc === null ||
+			doc.revision === 0 ||
+			doc.state === DocStates.Deleted ||
+			doc.state === DocStates.Hidden
+		) {
 			await createDocByFullTitle(fullTitle, locals.user, markup, comment);
 		} else {
 			await editDocByFullTitle(fullTitle, locals.user, markup, comment);

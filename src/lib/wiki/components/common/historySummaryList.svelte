@@ -12,7 +12,7 @@
 	function getSystemLog(historySummary: HistorySummary): string {
 		if (historySummary.action === DocActions.Move) {
 			const meta = historySummary.meta;
-			return `${meta.prevTitle} -> ${meta.nextTitle}`;
+			return `${meta.prevTitle} → ${meta.nextTitle}`;
 		} else if (historySummary.action === DocActions.Grant) {
 			const meta = historySummary.meta;
 			return `${meta.acl.action} 권한 변경`;
@@ -99,12 +99,12 @@
 	<div class="comment-div">
 		{#if comment !== '' && systemLog !== ''}
 			<!-- eslint-disable svelte/no-at-html-tags -->
-			<p>(<b>{systemLog}</b> | {@html DOMPurify.sanitize(comment)})</p>
+			<p>↳(<b>{systemLog}</b> | {@html DOMPurify.sanitize(comment)})</p>
 		{:else if comment !== '' && systemLog === ''}
 			<!-- eslint-disable svelte/no-at-html-tags -->
-			<p>({@html DOMPurify.sanitize(comment)})</p>
+			<p>↳({@html DOMPurify.sanitize(comment)})</p>
 		{:else if systemLog !== ''}
-			<p>(<b>{systemLog}</b>)</p>
+			<p>↳(<b>{systemLog}</b>)</p>
 		{/if}
 	</div>
 {/snippet}

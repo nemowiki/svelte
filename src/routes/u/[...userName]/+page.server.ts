@@ -14,7 +14,7 @@ export const load = withLoadErrorHandling(async ({ params, url }) => {
 	const queriedUser = await getUserByName(userName);
 	const penalties = await refreshAndGetPenaltiesByName(userName);
 
-	const limit = 50;
+	const limit = 10;
 	const skip = (pageIdx - 1) * limit;
 	const paginatedHistorySummaries = await getHistorySummariesByUserId(queriedUser._id, limit, skip);
 

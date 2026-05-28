@@ -1,6 +1,6 @@
 import { readDocByFullTitle, moveDocByFullTitle, WikiError } from '@nemowiki/core';
 import { redirect } from '@sveltejs/kit';
-import { encodeFullTitle, ErrorCodes } from '@nemowiki/core/client';
+import { DocStates, encodeFullTitle, ErrorCodes } from '@nemowiki/core/client';
 import { withActionErrorHandling, withLoadErrorHandling } from '$lib/wiki/utils/errorHandling.js';
 
 export const load = withLoadErrorHandling(async ({ params, locals }) => {
@@ -8,7 +8,8 @@ export const load = withLoadErrorHandling(async ({ params, locals }) => {
 	if (!fullTitle) throw new Error('fullTitle is undefined');
 
 	const doc = await readDocByFullTitle(fullTitle, locals.user);
-	if (!doc) throw new WikiError(ErrorCodes.DOC_NOT_FOUND, '문서가 존재하지 않습니다.');
+	if (!doc || doc.state === DocStates.Deleted)
+		throw new WikiError(ErrorCodes.DOC_NOT_FOUND, '문서가 존재하지 않습니다.');
 
 	if (!doc.permissions.canMove)
 		throw new WikiError(ErrorCodes.AUTH_NO_PERMISSION, '권한이 없습니다.');

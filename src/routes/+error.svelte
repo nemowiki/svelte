@@ -11,4 +11,5 @@
 
 <article>
 	<p>{page.error?.message || ''}</p>
+	<button onclick={() => window.history.back()}>돌아가기</button>
 </article>

@@ -4,7 +4,13 @@ import type { Handle, HandleServerError, ServerInit } from '@sveltejs/kit';
 import { redirect } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
-import { AWS_BUCKET_NAME, AWS_ID, AWS_SECRET, WIKI_MONGO_URI } from '$env/static/private';
+import {
+	AWS_BUCKET_NAME,
+	AWS_BUCKET_REGION,
+	AWS_ID,
+	AWS_SECRET,
+	WIKI_MONGO_URI
+} from '$env/static/private';
 import { PUBLIC_REQUIRE_LOGIN } from '$env/static/public';
 
 import { handle as authenticationHandle } from './auth.js';
@@ -87,7 +93,7 @@ function checkEnv() {
 export const init: ServerInit = async () => {
 	checkEnv();
 
-	await activateWiki(WIKI_MONGO_URI, AWS_BUCKET_NAME, AWS_ID, AWS_SECRET);
+	await activateWiki(WIKI_MONGO_URI, AWS_BUCKET_NAME, AWS_BUCKET_REGION, AWS_ID, AWS_SECRET);
 
 	console.log('[Wiki Is Ready]');
 };

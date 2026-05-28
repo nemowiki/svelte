@@ -36,11 +36,15 @@
 	>
 {/snippet}
 
-<div>
-	<HistorySummaryList historySummaries={paginatedHistorySummaries.items} pageType="history" />
-	{@render PrevBtn()}
-	{@render NextBtn()}
-</div>
+{#if paginatedHistorySummaries.items.length === 0}
+	<p>역사가 존재하지 않습니다.</p>
+{:else}
+	<div>
+		<HistorySummaryList historySummaries={paginatedHistorySummaries.items} pageType="history" />
+		{@render PrevBtn()}
+		{@render NextBtn()}
+	</div>
+{/if}
 
 <style>
 	button {
