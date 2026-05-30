@@ -2,7 +2,7 @@
 	import SearchModule from './searchModule.svelte';
 	import UploadModule from './uploadModule.svelte';
 	import EllipsisVertical from '@lucide/svelte/icons/ellipsis-vertical';
-	import { encodeFullTitle } from '@nemowiki/core';
+	import { encodeFullTitle } from '@nemowiki/core/client';
 	import { DocPrefixes } from '@nemowiki/core/types';
 </script>
 

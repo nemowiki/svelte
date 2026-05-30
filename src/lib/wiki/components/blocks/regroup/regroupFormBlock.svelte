@@ -6,7 +6,9 @@
 {#snippet NewGroupSelect()}
 	<select class="new-group-select" name="new-group">
 		{#each Object.values(Groups) as group, idx (idx)}
-			<option value={group}>{group}</option>
+			{#if group !== Groups.Any && group !== Groups.Guest}
+				<option value={group}>{group}</option>
+			{/if}
 		{/each}
 	</select>
 {/snippet}
