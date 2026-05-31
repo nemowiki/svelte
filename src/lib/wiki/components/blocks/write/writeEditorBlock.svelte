@@ -33,7 +33,7 @@
 {#snippet ContentTextarea()}
 	<!-- svelte-ignore a11y_autofocus -->
 	<textarea
-		class="content-textarea"
+		class="content-textarea editor-area"
 		contenteditable="true"
 		bind:value={markup}
 		autofocus
@@ -58,7 +58,7 @@
 
 {#snippet SaveForm()}
 	<CommonForm actionName="save" formName="save-form" bind:formResult={saveResult}>
-		<div class="save-form-div container">
+		<div class="save-form-div editor-box">
 			{@render ContentTextarea()}
 			{@render CommentInput()}
 		</div>
@@ -66,9 +66,9 @@
 {/snippet}
 
 {#snippet ButtonBar()}
-	<div class="btn-div container">
+	<div class="btn-div editor-actions">
 		<button form="preview-form" type="submit">미리보기</button>
-		<button form="save-form" type="submit">저장하기</button>
+		<button form="save-form" type="submit" class="primary-btn">저장하기</button>
 	</div>
 {/snippet}
 
@@ -88,29 +88,15 @@
 
 <style lang="scss">
 	.content-textarea {
-		width: stretch;
-		height: 50vh;
-		font-size: 1rem;
-		padding: 0.75rem;
-		resize: vertical;
-	}
-
-	.save-form-div {
-		flex-direction: column;
+		font-family: 'NanumGothic', sans-serif;
 	}
 
 	.comment-input {
-		width: stretch;
-		margin-top: 0.5rem;
-	}
-
-	.btn-div {
-		margin-top: 0.5rem;
-		justify-content: space-between;
+		width: 100%;
 	}
 
 	hr {
 		margin: 2rem 0;
-		border: black 0.05rem solid;
+		border-top: 0.1rem solid var(--color-line);
 	}
 </style>

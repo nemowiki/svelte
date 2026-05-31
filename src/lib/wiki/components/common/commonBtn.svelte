@@ -2,8 +2,13 @@
 	import { goto } from '$app/navigation';
 	import { encodeFullTitle } from '@nemowiki/core/client';
 	import { page } from '$app/state';
+	import type { Component } from 'svelte';
 
-	let { pageName, btnName }: { pageName: string; btnName: string } = $props();
+	let {
+		pageName,
+		btnName,
+		Icon
+	}: { pageName: string; btnName: string; Icon?: Component<{ size?: string | number }> } = $props();
 
 	let slug = $derived(page.params.fullTitle || page.params.userName || page.params.query);
 
@@ -12,18 +17,9 @@
 	}
 </script>
 
-<button class="{pageName}-btn" onclick={gotoPage}>{btnName}</button>
-
-<style>
-	button {
-		padding: 0.25rem 0.75rem;
-		border: solid gray 0.05rem;
-		background-color: white;
-		font-size: 1rem;
-		font-weight: bold;
-	}
-	button:hover {
-		cursor: pointer;
-		background-color: var(--color-gray-2);
-	}
-</style>
+<button class="icon-btn" onclick={gotoPage}>
+	{#if Icon}
+		<Icon size="0.9rem" />
+	{/if}
+	{btnName}
+</button>

@@ -4,16 +4,26 @@
 	import MoveBtn from '$lib/wiki/components/common/btns/moveBtn.svelte';
 	import ReadBtn from '$lib/wiki/components/common/btns/readBtn.svelte';
 	import DocHeader from '$lib/wiki/components/common/headers/docHeader.svelte';
+	import type { Doc } from '@nemowiki/core/types';
 
-	let { revision }: { revision: number } = $props();
-	const description = $derived(`${revision + 1}번째 수정판`);
+	let {
+		doc
+	}: {
+		doc: Doc;
+	} = $props();
+
+	const description = $derived(`${doc.revision + 1}번째 수정`);
 </script>
 
 {#snippet Buttons()}
 	<ReadBtn />
 	<GrammarBtn />
-	<MoveBtn />
-	<DeleteBtn />
+	{#if doc.permissions.canMove}
+		<MoveBtn />
+	{/if}
+	{#if doc.permissions.canDelete}
+		<DeleteBtn />
+	{/if}
 {/snippet}
 
 <DocHeader {description} Btns={Buttons} />

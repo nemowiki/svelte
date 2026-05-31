@@ -1,9 +1,6 @@
 <script lang="ts">
+	import UserPen from '@lucide/svelte/icons/user-pen';
 	import CommonBtn from '../commonBtn.svelte';
-	import { page } from '$app/state';
-	const userName = $derived(page.data.user.name);
 </script>
 
-{#if userName === page.params.userName}
-	<CommonBtn pageName="rename" btnName="이름 변경" />
-{/if}
+<CommonBtn pageName="rename" btnName="이름 변경" Icon={UserPen} />

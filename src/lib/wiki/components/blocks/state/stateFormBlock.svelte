@@ -18,7 +18,7 @@
 {#if state === DocStates.Deleted}
 	<h3>숨김</h3>
 	<CommonForm formName="hide-form" actionName="hide">
-		<div class="hide-form-div container">
+		<div class="hide-form-div">
 			{@render CommentInput()}
 			<button form="hide-form" type="submit">변경</button>
 		</div>
@@ -26,7 +26,7 @@
 {:else if state === DocStates.Hidden}
 	<h3>숨김 해제</h3>
 	<CommonForm formName="show-form" actionName="show">
-		<div class="show-form-div container">
+		<div class="show-form-div">
 			{@render CommentInput()}
 			<button form="show-form" type="submit">변경</button>
 		</div>
@@ -36,15 +36,15 @@
 {/if}
 
 <style>
-	h3 {
-		margin-bottom: 0.5rem;
-	}
-	.comment-input {
-		width: 90%;
-		height: stretch;
-	}
 	.hide-form-div,
 	.show-form-div {
-		justify-content: space-between;
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+	}
+
+	.comment-input {
+		flex: 1;
+		min-width: 0;
 	}
 </style>

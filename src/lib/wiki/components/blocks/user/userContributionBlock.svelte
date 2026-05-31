@@ -2,20 +2,20 @@
 	import { goto } from '$app/navigation';
 	import { encodeFullTitle } from '@nemowiki/core/client';
 	import HistorySummaryList from '$lib/wiki/components/common/historySummaryList.svelte';
-	import type { HistorySummary, PaginatedResponse } from '@nemowiki/core/types';
+	import type { HistorySummary, PaginatedResponse, User } from '@nemowiki/core/types';
 
 	let {
-		userName,
+		user,
 		paginatedHistorySummaries,
 		variant = 'list'
 	}: {
-		userName: string;
+		user: User;
 		paginatedHistorySummaries: PaginatedResponse<HistorySummary>;
 		variant?: 'list' | 'card';
 	} = $props();
 
 	function gotoPage(page: number): void {
-		goto(`/u/${encodeFullTitle(userName)}?page=${page}`);
+		goto(`/u/${encodeFullTitle(user.name)}?page=${page}`);
 	}
 </script>
 
@@ -39,18 +39,17 @@
 		<p>기여 내역이 없습니다.</p>
 	{:else}
 		<HistorySummaryList historySummaries={paginatedHistorySummaries.items} pageType="user" />
-		{@render PrevPageBtn()}
-		{@render NextPageBtn()}
+		<div class="pager">
+			{@render PrevPageBtn()}
+			{@render NextPageBtn()}
+		</div>
 	{/if}
 </div>
 
 <style>
-	h3 {
-		font-size: 2rem;
-		margin-top: 2rem;
-		margin-bottom: 0.5rem;
-	}
-	button {
-		margin-top: 0.5rem;
+	.pager {
+		display: flex;
+		gap: 0.6rem;
+		margin-top: 1rem;
 	}
 </style>

@@ -7,6 +7,10 @@
 </script>
 
 <article>
-	<WriteHeaderBlock revision={doc.revision} />
-	<WriteEditorBlock {doc} />
+	<WriteHeaderBlock {doc} />
+	{#if doc.permissions.canEdit}
+		<WriteEditorBlock {doc} />
+	{:else}
+		<p class="no-permission">편집 권한이 없습니다.</p>
+	{/if}
 </article>

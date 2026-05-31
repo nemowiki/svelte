@@ -14,20 +14,16 @@
 {/snippet}
 
 <CommonForm formName="regroup-form">
-	<div class="regroup-form-div container">
+	<div class="form-row">
 		{@render NewGroupSelect()}
 		<button form="regroup-form" type="submit">변경</button>
 	</div>
 </CommonForm>
 
 <style>
-	.regroup-form-div {
-		justify-content: flex-start;
-	}
 	.new-group-select {
-		width: 15%;
-		height: stretch;
-		font-weight: bold;
-		margin-right: 0.5rem;
+		flex-shrink: 0;
+		width: auto;
+		min-width: 8rem;
 	}
 </style>

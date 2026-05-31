@@ -53,5 +53,7 @@
 <style lang="scss">
 	fieldset {
 		border: none;
+		padding: 0;
+		min-width: 0;
 	}
 </style>

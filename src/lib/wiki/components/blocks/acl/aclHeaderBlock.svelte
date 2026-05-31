@@ -4,15 +4,26 @@
 	import StateBtn from '$lib/wiki/components/common/btns/stateBtn.svelte';
 	import WriteBtn from '$lib/wiki/components/common/btns/writeBtn.svelte';
 	import DocHeader from '$lib/wiki/components/common/headers/docHeader.svelte';
+	import type { Doc } from '@nemowiki/core/types';
+
+	let {
+		doc
+	}: {
+		doc: Doc | null;
+	} = $props();
 
 	const description = '(권한 목록)';
 </script>
 
 {#snippet Buttons()}
-	<WriteBtn />
+	{#if doc?.permissions.canEdit}
+		<WriteBtn />
+	{/if}
 	<HistoryBtn />
 	<BacklinkBtn />
-	<StateBtn />
+	{#if doc?.permissions.canHide || doc?.permissions.canShow}
+		<StateBtn />
+	{/if}
 {/snippet}
 
 <DocHeader {description} Btns={Buttons} />

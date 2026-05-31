@@ -20,16 +20,27 @@
 		</span>
 	</div>
 </div>
-<hr />
 
 <style>
 	.action-span {
-		font-weight: bold;
+		font-weight: 700;
+		color: var(--color-primary-1);
 	}
 	.action-div {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		margin: 0.5rem;
+		gap: 1rem;
+		padding: 0.4rem 0;
+		border-bottom: 0.1rem solid var(--color-gray-2);
+		font-size: var(--font-sm);
+		&:last-of-type {
+			border-bottom: none;
+		}
+	}
+	.action-div span:last-child {
+		color: var(--color-sub);
+		word-break: break-all;
+		text-align: right;
 	}
 </style>

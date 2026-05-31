@@ -9,7 +9,16 @@
 
 <CommonHeader>{`[오류] ${fullTitle}`}</CommonHeader>
 
-<article>
-	<p>{page.error?.message || ''}</p>
+<article class="error-article">
+	<p class="msg err"><span>[오류]</span> {page.error?.message || ''}</p>
 	<button onclick={() => window.history.back()}>돌아가기</button>
 </article>
+
+<style>
+	.error-article {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		padding: 0.4rem 0;
+	}
+</style>

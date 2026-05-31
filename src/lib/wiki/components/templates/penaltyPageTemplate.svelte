@@ -5,12 +5,36 @@
 	import PenaltyRemoveFormBlock from '$lib/wiki/components/blocks/penalty/penaltyRemoveFormBlock.svelte';
 	import type { Penalty } from '@nemowiki/core/types';
 
-	let { penalties }: { penalties: Penalty[] } = $props();
+	let {
+		canRename,
+		canRegroup,
+		canManagePenalty,
+		canApplyPenalty,
+		penalties
+	}: {
+		canRename: boolean;
+		canRegroup: boolean;
+		canManagePenalty: boolean;
+		canApplyPenalty: boolean;
+		penalties: Penalty[];
+	} = $props();
 </script>
 
 <article>
-	<PenaltyHeaderBlock />
-	<PenaltyListBlock {penalties} />
-	<PenaltyRemoveFormBlock {penalties} />
-	<PenaltyApplyFormBlock />
+	<PenaltyHeaderBlock {canRename} {canRegroup} />
+	<section>
+		<PenaltyListBlock {penalties} />
+	</section>
+	{#if canManagePenalty && penalties.length > 0}
+		<hr class="section-divider" />
+		<section>
+			<PenaltyRemoveFormBlock {penalties} />
+		</section>
+	{/if}
+	{#if canApplyPenalty}
+		<hr class="section-divider" />
+		<section>
+			<PenaltyApplyFormBlock />
+		</section>
+	{/if}
 </article>

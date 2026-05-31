@@ -8,6 +8,7 @@ import { DocStates } from '@nemowiki/core/types';
 import { redirect } from '@sveltejs/kit';
 import { encodeFullTitle, ErrorCodes } from '@nemowiki/core/client';
 import { withActionErrorHandling, withLoadErrorHandling } from '$lib/wiki/utils/errorHandling.js';
+import { requireText } from '$lib/wiki/utils/formValidation.js';
 
 export const load = withLoadErrorHandling(async ({ params, locals }) => {
 	const fullTitle = params.fullTitle;
@@ -34,7 +35,7 @@ export const actions = {
 		if (!fullTitle) throw new Error('fullTitle is undefined');
 
 		const data = await request.formData();
-		const comment = (data.get('comment') ?? '').toString();
+		const comment = requireText(data.get('comment'), '상태 변경 사유를 입력해 주세요.');
 
 		await showDocByFullTitle(fullTitle, locals.user, comment);
 
@@ -45,7 +46,7 @@ export const actions = {
 		if (!fullTitle) throw new Error('fullTitle is undefined');
 
 		const data = await request.formData();
-		const comment = (data.get('comment') ?? '').toString();
+		const comment = requireText(data.get('comment'), '상태 변경 사유를 입력해 주세요.');
 
 		await hideDocByFullTitle(fullTitle, locals.user, comment);
 

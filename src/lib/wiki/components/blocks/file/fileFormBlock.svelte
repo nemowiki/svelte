@@ -16,7 +16,12 @@
 
 {#snippet ContentTextarea()}
 	<!-- svelte-ignore a11y_autofocus -->
-	<textarea class="doc-markup" contenteditable="true" bind:value={markup} autofocus name="markup"
+	<textarea
+		class="doc-markup editor-area"
+		contenteditable="true"
+		bind:value={markup}
+		autofocus
+		name="markup"
 	></textarea>
 {/snippet}
 
@@ -25,35 +30,17 @@
 {/snippet}
 
 <CommonForm formName="file-form" isFile>
-	<div class="file-form-div container">
+	<div class="form-col editor-box">
 		{@render FileInput()}
 		{@render TitleInput()}
 		{@render ContentTextarea()}
 		{@render CommentInput()}
-		<button form="file-form" type="submit">업로드</button>
+		<button form="file-form" type="submit" class="primary-btn">업로드</button>
 	</div>
 </CommonForm>
 
 <style>
-	.file-form-div {
-		flex-direction: column;
-		align-items: flex-start;
-	}
-	.file-form-div > * {
-		margin-bottom: 0.5rem;
-	}
 	.doc-markup {
-		width: stretch;
-		height: 50vh;
-		font-size: 1rem;
-		padding: 0.75rem 1rem;
-		resize: vertical;
-	}
-	.file-input,
-	.comment-input,
-	.title-input {
-		width: stretch;
-		font-size: 1rem;
-		padding: 0.5rem 0.75rem;
+		font-family: 'NanumGothic', sans-serif;
 	}
 </style>

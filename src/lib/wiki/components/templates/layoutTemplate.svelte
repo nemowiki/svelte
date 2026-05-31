@@ -10,45 +10,15 @@
 
 <HeaderModule />
 
-<div class="layout-wrapper">
-	<main class="wiki-main">
+<div class="layout">
+	<main class="module">
 		{@render children()}
 	</main>
 
-	<aside class="wiki-aside">
+	<aside class="side">
 		<ProfileModule />
 		<RecentModule />
 	</aside>
 </div>
 
 <FooterModule />
-
-<style lang="scss">
-	.layout-wrapper {
-		display: flex;
-		justify-content: center;
-		flex: 1;
-		gap: 1rem;
-	}
-
-	.wiki-main {
-		padding: 1rem 2rem;
-		max-width: 50rem;
-		width: 100%;
-	}
-
-	.wiki-aside {
-		width: 250px;
-	}
-
-	@media (max-width: 1024px) {
-		.layout-wrapper {
-			flex-direction: column;
-			align-items: center;
-		}
-		.wiki-aside {
-			width: 100%;
-			padding: 0 2rem;
-		}
-	}
-</style>

@@ -12,6 +12,6 @@
 {#if rev !== -1 && fullTitle !== null}
 	<CommonWarn
 		>이 문서는 <b>{rev}</b>번째 수정판이니 주의하세요.
-		<a href="/r/{fullTitle}">(최신판으로 이동)</a></CommonWarn
+		<a href="/r/{fullTitle}?redirect=no">(최신판으로 이동)</a></CommonWarn
 	>
 {/if}

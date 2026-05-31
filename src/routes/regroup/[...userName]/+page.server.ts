@@ -1,7 +1,8 @@
 import { canChangeGroup, encodeFullTitle } from '@nemowiki/core/client';
-import { fail, redirect } from '@sveltejs/kit';
+import { redirect } from '@sveltejs/kit';
 import { getUserByName, WikiError, changeUserGroupByName } from '@nemowiki/core';
 import { withActionErrorHandling, withLoadErrorHandling } from '$lib/wiki/utils/errorHandling.js';
+import { requireText } from '$lib/wiki/utils/formValidation.js';
 
 export const load = withLoadErrorHandling(async ({ params, locals }) => {
 	const userName = params.userName;
@@ -18,9 +19,7 @@ export const actions = {
 		if (!queriedUserName) throw new Error('queriedUserName is undefined');
 
 		const data = await request.formData();
-		const newGroup = (data.get('new-group') ?? '').toString();
-
-		if (!newGroup) return fail(400, { message: '그룹을 선택해주세요.' });
+		const newGroup = requireText(data.get('new-group'), '그룹을 선택해 주세요.');
 
 		await changeUserGroupByName(queriedUserName, newGroup, locals.user);
 

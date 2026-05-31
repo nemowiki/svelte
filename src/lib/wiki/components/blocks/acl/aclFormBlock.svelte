@@ -35,7 +35,7 @@
 
 {#if doc.permissions.canGrant}
 	<CommonForm formName="acl-form">
-		<div class="acl-form-div container">
+		<div class="acl-form-div">
 			{@render ChangeSelect()}
 			{@render DocActionSelect()}
 			{@render IdInput()}
@@ -46,18 +46,21 @@
 
 <style>
 	.acl-form-div {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
 		margin-top: 1rem;
-		justify-content: space-between;
 	}
-	.doc-action-select,
-	.change-select {
-		width: 10%;
-		height: stretch;
-		font-weight: bold;
-		margin-right: 0.5rem;
+
+	.change-select,
+	.doc-action-select {
+		flex-shrink: 0;
+		width: auto;
+		min-width: 5rem;
 	}
+
 	.id-input {
-		height: stretch;
-		width: 65%;
+		flex: 1;
+		min-width: 0;
 	}
 </style>

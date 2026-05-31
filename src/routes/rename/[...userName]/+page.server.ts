@@ -1,7 +1,8 @@
 import { canChangeName, encodeFullTitle } from '@nemowiki/core/client';
-import { fail, redirect } from '@sveltejs/kit';
+import { redirect } from '@sveltejs/kit';
 import { getUserByName, WikiError, changeUserNameByName } from '@nemowiki/core';
 import { withActionErrorHandling, withLoadErrorHandling } from '$lib/wiki/utils/errorHandling.js';
+import { requireText } from '$lib/wiki/utils/formValidation.js';
 
 export const load = withLoadErrorHandling(async ({ params, locals }) => {
 	const userName = params.userName;
@@ -16,8 +17,7 @@ export const load = withLoadErrorHandling(async ({ params, locals }) => {
 export const actions = {
 	default: withActionErrorHandling(async ({ request, locals }) => {
 		const data = await request.formData();
-		const newName = (data.get('new-name') ?? '').toString();
-		if (!newName) return fail(400, { message: '새로운 이름을 입력해주세요.' });
+		const newName = requireText(data.get('new-name'), '새 이름을 입력해 주세요.');
 
 		await changeUserNameByName(locals.user.name, newName, locals.user);
 

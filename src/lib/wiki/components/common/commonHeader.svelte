@@ -30,26 +30,39 @@
 <style>
 	header {
 		display: flex;
-		align-items: flex-start;
-		padding: 1rem;
+		align-items: flex-end;
 		justify-content: space-between;
-		min-width: 100%;
+		gap: 1rem;
+		padding: 1.6rem 0 1rem;
+		margin-bottom: 1.2rem;
+		border-bottom: 0.1rem solid var(--color-line);
 	}
+
 	.title-div {
-		width: 60%;
-		position: relative;
+		min-width: 0;
+		flex: 1;
 	}
+
 	.doc-title {
-		font-size: 2.5rem;
+		font-size: var(--font-xl);
+		line-height: 1.1;
+		font-weight: 700;
+		letter-spacing: -0.04rem;
+		word-break: break-all;
 	}
+
 	.doc-description {
-		position: relative;
-		top: -0.25rem;
+		display: block;
+		margin-top: 0.2rem;
+		color: var(--color-gray-4);
+		font-size: var(--font-sm);
 	}
+
 	nav {
 		display: flex;
-		gap: 0.25rem;
+		gap: 0.4rem;
 		flex-wrap: wrap;
 		justify-content: flex-end;
+		flex-shrink: 0;
 	}
 </style>

@@ -7,6 +7,7 @@ import {
 } from '@nemowiki/core';
 import { encodeFullTitle } from '@nemowiki/core/client';
 import { redirect } from '@sveltejs/kit';
+import { requireText } from '$lib/wiki/utils/formValidation.js';
 
 export const load = withLoadErrorHandling(async ({ params, locals }) => {
 	const fullTitle = params.fullTitle;
@@ -26,9 +27,9 @@ export const actions = {
 		if (!fullTitle) throw new Error('fullTitle is undefined');
 
 		const data = await request.formData();
-		const change = (data.get('change') ?? '').toString();
-		const docAction = (data.get('doc-action') ?? '').toString();
-		const id = (data.get('id') ?? '').toString();
+		const change = requireText(data.get('change'), '변경 방향을 선택해 주세요.');
+		const docAction = requireText(data.get('doc-action'), '문서 작업을 선택해 주세요.');
+		const id = requireText(data.get('id'), '대상 권한을 입력해 주세요.');
 		const comment = (data.get('comment') ?? '').toString();
 
 		await grantByFullTitle(fullTitle, docAction, change, id, locals.user, comment);

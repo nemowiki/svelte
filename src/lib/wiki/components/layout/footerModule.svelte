@@ -4,19 +4,15 @@
 
 <style>
 	footer {
-		background-color: white;
-		border-top: 0.15rem solid black;
-		bottom: 0rem;
 		display: flex;
-		justify-content: flex-end;
-		margin-top: 1rem;
-		position: relative;
-		right: 0rem;
-		width: stretch;
+		justify-content: center;
+		padding: 1.2rem 7%;
+		background-color: rgba(255, 254, 255, 0.8);
+		border-top: 0.1rem solid var(--color-line);
 	}
-	footer p {
-		color: gray;
-		font-size: 0.75rem;
-		margin: 0.5rem;
+	p {
+		color: var(--color-gray-4);
+		font-size: var(--font-sm);
+		letter-spacing: 0.02rem;
 	}
 </style>

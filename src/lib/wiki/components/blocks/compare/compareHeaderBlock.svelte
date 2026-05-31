@@ -4,15 +4,26 @@
 	import ReadBtn from '$lib/wiki/components/common/btns/readBtn.svelte';
 	import WriteBtn from '$lib/wiki/components/common/btns/writeBtn.svelte';
 	import DocHeader from '$lib/wiki/components/common/headers/docHeader.svelte';
+	import type { Doc } from '@nemowiki/core/types';
 
-	let { oldRev, newRev }: { oldRev: number; newRev: number } = $props();
+	let {
+		doc,
+		oldRev,
+		newRev
+	}: {
+		doc: Doc | null;
+		oldRev: number;
+		newRev: number;
+	} = $props();
 
-	const description = `(역사 비교 ${oldRev}·${newRev}번째 수정판)`;
+	const description = `(비교 ${oldRev}쌍${newRev}번째 수정)`;
 </script>
 
 {#snippet Buttons()}
 	<ReadBtn />
-	<WriteBtn />
+	{#if doc?.permissions.canEdit}
+		<WriteBtn />
+	{/if}
 	<HistoryBtn />
 	<BacklinkBtn />
 {/snippet}

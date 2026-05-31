@@ -1,4 +1,6 @@
 <script lang="ts">
+	import BookText from '@lucide/svelte/icons/book-text';
+
 	function showGrammar(): void {
 		alert(`\\ 문법 취소
 **굵게**
@@ -9,28 +11,14 @@ __밑줄__
 ((각주))
 # 제목
 ---- 구분선
-:(순서 없는 목록
-)(두 번째 항목):
+:(순서 없는 목록)
+)(번호 있는 목록):
 :{순서 있는 목록
-}{두 번째 항목}:
-:[표(0,0)][칸(0,1)
-][칸(1,0)][칸(1,1)]:
-더 자세한 문법은 "위키:문법" 문서를 참고하세요.`);
+}{번호 목록}:
+:[행0,0][행0,1)
+][행1,0][행1,1)]:
+자세한 문법은 "위키:문법" 문서를 참고하세요.`);
 	}
 </script>
 
-<button onclick={showGrammar}>문법</button>
-
-<style lang="scss">
-	button {
-		padding: 0.25rem 0.75rem;
-		border: solid gray 0.05rem;
-		background-color: white;
-		font-size: 1rem;
-		font-weight: bold;
-	}
-	button:hover {
-		cursor: pointer;
-		background-color: var(--color-gray-2);
-	}
-</style>
+<button class="icon-btn" onclick={showGrammar}><BookText size="0.9rem" />문법</button>

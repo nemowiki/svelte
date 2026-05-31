@@ -13,9 +13,9 @@
 
 {#snippet PenaltyTypeSpan(type: PenaltyType)}
 	{#if type === 'block'}
-		<span style="color: red"><b>[차단]</b></span>
+		<span class="type-block"><b>[차단]</b></span>
 	{:else if type === 'warn'}
-		<span style="color: darkorange"><b>[경고]</b></span>
+		<span class="type-warn"><b>[경고]</b></span>
 	{:else}
 		<span>기타</span>
 	{/if}
@@ -30,7 +30,7 @@
 
 {#snippet PenaltyExpirySpan(expiresAt: string | null)}
 	{#if expiresAt === null}
-		<span style="color: red"><b>(무기한)</b></span>
+		<span class="expiry-perm"><b>(무기한)</b></span>
 	{:else}
 		{parseDateTime(expiresAt)}까지
 	{/if}
@@ -51,14 +51,23 @@
 </div>
 
 <style>
-	h3 {
-		font-size: 2rem;
-		margin-top: 2rem;
-		margin-bottom: 0.5rem;
-	}
 	.penalty-div {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		gap: 1rem;
+		padding: 0.4rem 0;
+		border-bottom: 0.1rem solid var(--color-gray-2);
+		font-size: var(--font-sm);
+		&:last-child {
+			border-bottom: none;
+		}
+	}
+	.type-block,
+	.expiry-perm {
+		color: var(--color-error);
+	}
+	.type-warn {
+		color: var(--color-warn);
 	}
 </style>

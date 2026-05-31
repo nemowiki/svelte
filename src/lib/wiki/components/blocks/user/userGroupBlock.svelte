@@ -6,13 +6,19 @@
 
 <div>
 	<h3>권한</h3>
-	<p>권한 등급: {group}</p>
+	<p class="group-label">권한 등급: <strong>{group}</strong></p>
 </div>
 
 <style>
-	h3 {
-		font-size: 2rem;
-		margin-top: 2rem;
-		margin-bottom: 0.5rem;
+	.group-label {
+		color: var(--color-sub);
+		font-size: var(--font-sm);
+		padding: 0.2rem 0;
+	}
+	strong {
+		padding: 0.1rem 0.6rem;
+		border-radius: 2rem;
+		background-color: var(--color-primary-3);
+		color: var(--color-primary-1);
 	}
 </style>

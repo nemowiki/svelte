@@ -1,5 +1,5 @@
 import { withLoadErrorHandling } from '$lib/wiki/utils/errorHandling.js';
-import { getHistorySummariesByFullTitle } from '@nemowiki/core';
+import { getHistorySummariesByFullTitle, readDocByFullTitle } from '@nemowiki/core';
 
 export const load = withLoadErrorHandling(async ({ url, params, locals }) => {
 	const fullTitle = params.fullTitle;
@@ -15,8 +15,10 @@ export const load = withLoadErrorHandling(async ({ url, params, locals }) => {
 		limit,
 		skip
 	);
+	const doc = await readDocByFullTitle(fullTitle, locals.user);
 
 	return {
+		doc,
 		paginatedHistorySummaries
 	};
 });

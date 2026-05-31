@@ -2,6 +2,7 @@ import { readDocByFullTitle, moveDocByFullTitle, WikiError } from '@nemowiki/cor
 import { redirect } from '@sveltejs/kit';
 import { DocStates, encodeFullTitle, ErrorCodes } from '@nemowiki/core/client';
 import { withActionErrorHandling, withLoadErrorHandling } from '$lib/wiki/utils/errorHandling.js';
+import { requireText } from '$lib/wiki/utils/formValidation.js';
 
 export const load = withLoadErrorHandling(async ({ params, locals }) => {
 	const fullTitle = params.fullTitle;
@@ -13,6 +14,8 @@ export const load = withLoadErrorHandling(async ({ params, locals }) => {
 
 	if (!doc.permissions.canMove)
 		throw new WikiError(ErrorCodes.AUTH_NO_PERMISSION, '권한이 없습니다.');
+
+	return { doc };
 });
 
 export const actions = {
@@ -21,8 +24,8 @@ export const actions = {
 		if (!fullTitle) throw new Error('fullTitle is undefined');
 
 		const data = await request.formData();
-		const newFullTitle = (data.get('new-full-title') ?? '').toString();
-		const comment = (data.get('comment') ?? '').toString();
+		const newFullTitle = requireText(data.get('new-full-title'), '새 문서 제목을 입력해 주세요.');
+		const comment = requireText(data.get('comment'), '이동 사유를 입력해 주세요.');
 
 		await moveDocByFullTitle(fullTitle, locals.user, newFullTitle, comment);
 

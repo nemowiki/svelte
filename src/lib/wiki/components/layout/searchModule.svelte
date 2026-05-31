@@ -53,6 +53,7 @@
 	<input
 		class="keyword-input"
 		type="text"
+		placeholder="문서 검색"
 		onfocus={() => suggest('')}
 		onblur={onBlurSearchDiv}
 		oninput={() => suggest(searchWord)}
@@ -73,7 +74,7 @@
 	<button
 		onclick={() => readDoc(suggestion)}
 		class="suggestion-btn"
-		style="top: {(i + 1) * 2.5}rem"
+		style="top: {(i + 1) * 2.4}rem"
 	>
 		{suggestion}</button
 	>
@@ -93,45 +94,74 @@
 <style>
 	.search-div {
 		position: relative;
-		width: fit-content;
+		display: flex;
+		align-items: center;
+		width: 26rem;
 		z-index: 999;
+		border: 0.1rem solid var(--color-line);
+		border-radius: 2rem;
+		background-color: rgba(255, 255, 255, 0.88);
+		box-shadow: 0 0.4rem 1.2rem var(--color-shadow);
 	}
+
 	.keyword-input {
-		font-size: 1rem;
-		height: 2.5rem;
-		padding: 0.5rem 0.75rem;
-		border: solid 0.1rem gray;
-		font-weight: bold;
-		text-align: left;
-		width: 15rem;
-		border-right: none;
+		height: 2.4rem;
+		padding: 0.2rem 1rem;
+		border: none;
+		border-radius: 0;
+		background-color: transparent;
+		width: 100%;
 	}
+
 	.keyword-input:focus {
-		outline: none;
+		box-shadow: none;
 	}
+
 	.search-btn {
-		font-size: 1rem;
-		height: 2.5rem;
-		padding: 0.5rem 0.75rem;
-		border: solid 0.1rem gray;
-		font-weight: bold;
-		text-align: left;
-		border-left: none;
-		width: fit-content;
+		height: 2.4rem;
+		padding: 0.2rem 1rem;
+		border: none;
+		border-radius: 0;
+		color: var(--color-primary-1);
+		background-color: transparent;
 	}
+
+	.search-btn:hover {
+		background-color: var(--color-primary-3);
+		color: var(--color-primary-1);
+	}
+
 	.suggestion-btn {
-		font-size: 1rem;
-		height: 2.5rem;
-		padding: 0.5rem 0.75rem;
-		border: solid 0.1rem gray;
-		font-weight: bold;
+		height: 2.4rem;
+		padding: 0.2rem 1rem;
+		border: 0.1rem solid var(--color-line);
 		text-align: left;
 		position: absolute;
 		left: 0;
-		width: stretch;
-		border-top: none;
+		width: 100%;
+		border-top: 0.1rem solid var(--color-line);
+		border-radius: 0;
 		white-space: nowrap;
 		text-overflow: ellipsis;
 		overflow: hidden;
+		box-shadow: 0 0.8rem 1.6rem var(--color-shadow);
+		background-color: var(--color-panel);
+		color: var(--color-text);
+		font-weight: 400;
+		z-index: 1000;
+	}
+
+	.suggestion-btn:first-of-type {
+		border-top: 0.1rem solid var(--color-line);
+	}
+
+	.suggestion-btn:last-child {
+		border-radius: 0 0 1rem 1rem;
+	}
+
+	.suggestion-btn:hover {
+		background-color: var(--color-panel-soft);
+		color: var(--color-primary-1);
+		border-color: var(--color-primary-2);
 	}
 </style>

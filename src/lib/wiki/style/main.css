@@ -38,21 +38,36 @@
 } */
 
 :root {
-	--color-primary-1: rgb(100, 50, 250);
-	--color-primary-2: rgb(50, 100, 200);
-	--color-primary-3: rgb(100, 200, 250);
-	--color-error: rgb(255, 50, 50);
-	--color-error-back: rgb(255, 240, 240);
-	--color-error-hover: rgb(255, 220, 220);
-	--color-warn: rgb(255, 200, 50);
-	--color-warn-back: rgb(255, 245, 220);
-	--color-success: rgb(50, 255, 50);
-	--color-success-back: rgb(245, 255, 245);
-	--color-info: rgb(40, 220, 240);
-	--color-info-back: rgb(245, 255, 255);
-	--color-info-hover: rgb(230, 255, 255);
-	--color-gray-1: rgb(250, 250, 250);
-	--color-gray-2: rgb(245, 245, 245);
-	--color-gray-3: rgb(230, 230, 230);
-	--color-gray-4: rgb(220, 220, 220);
+	--color-primary-1: rgb(100, 60, 190);
+	--color-primary-2: rgb(130, 96, 218);
+	--color-primary-3: rgb(234, 226, 255);
+	--color-error: rgb(180, 50, 50);
+	--color-error-back: rgb(255, 236, 234);
+	--color-error-hover: rgb(248, 218, 214);
+	--color-warn: rgb(170, 108, 28);
+	--color-warn-back: rgb(255, 244, 222);
+	--color-success: rgb(40, 126, 80);
+	--color-success-back: rgb(230, 248, 238);
+	--color-info: rgb(82, 88, 196);
+	--color-info-back: rgb(238, 240, 255);
+	--color-info-hover: rgb(222, 226, 255);
+	--color-gray-1: rgb(254, 252, 255);
+	--color-gray-2: rgb(248, 244, 255);
+	--color-gray-3: rgb(228, 220, 244);
+	--color-gray-4: rgb(174, 162, 200);
+	--color-text: rgb(32, 28, 44);
+	--color-sub: rgb(88, 80, 110);
+	--color-line: rgb(214, 204, 236);
+	--color-panel: rgb(255, 254, 255);
+	--color-panel-soft: rgb(250, 246, 255);
+	--color-shadow: rgba(60, 40, 100, 0.1);
+	--color-focus: rgba(100, 60, 190, 0.2);
+	--font-sm: 0.8rem;
+	--font-md: 1rem;
+	--font-lg: 1.2rem;
+	--font-xl: 2.4rem;
+	--color-google-red: rgb(234, 67, 53);
+	--color-google-blue: rgb(66, 133, 244);
+	--color-google-yellow: rgb(251, 188, 5);
+	--color-google-green: rgb(52, 168, 83);
 }

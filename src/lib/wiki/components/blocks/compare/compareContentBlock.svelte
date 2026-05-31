@@ -25,16 +25,25 @@
 <style>
 	.compare-div p {
 		white-space: pre-wrap;
-		padding: 1rem;
-		border: 0.1rem black solid;
+		padding: 1.2rem;
+		border: 0.1rem solid var(--color-line);
+		border-radius: 0.8rem;
+		background-color: var(--color-panel);
+		line-height: 1.8;
+		font-size: var(--font-sm);
+		word-break: break-all;
 	}
 	.added {
-		background-color: rgba(0, 255, 0, 0.2);
-		color: darkgreen;
+		background-color: var(--color-success-back);
+		color: var(--color-success);
+		border-radius: 0.2rem;
+		padding: 0 0.2rem;
 	}
 	.removed {
-		text-decoration-line: line-through;
-		background-color: rgba(255, 0, 0, 0.2);
-		color: maroon;
+		text-decoration: line-through;
+		background-color: var(--color-error-back);
+		color: var(--color-error);
+		border-radius: 0.2rem;
+		padding: 0 0.2rem;
 	}
 </style>

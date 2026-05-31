@@ -2,6 +2,7 @@ import { withActionErrorHandling, withLoadErrorHandling } from '$lib/wiki/utils/
 import { deleteDocByFullTitle, readDocByFullTitle, WikiError } from '@nemowiki/core';
 import { DocStates, encodeFullTitle, ErrorCodes } from '@nemowiki/core/client';
 import { redirect } from '@sveltejs/kit';
+import { requireText } from '$lib/wiki/utils/formValidation.js';
 
 export const load = withLoadErrorHandling(async ({ params, locals }) => {
 	const fullTitle = params.fullTitle;
@@ -13,6 +14,8 @@ export const load = withLoadErrorHandling(async ({ params, locals }) => {
 
 	if (!doc.permissions.canDelete)
 		throw new WikiError(ErrorCodes.AUTH_NO_PERMISSION, '권한이 없습니다.');
+
+	return { doc };
 });
 
 export const actions = {
@@ -21,7 +24,7 @@ export const actions = {
 		if (!fullTitle) throw new Error('fullTitle is undefined');
 
 		const data = await request.formData();
-		const comment = (data.get('comment') ?? '').toString();
+		const comment = requireText(data.get('comment'), '삭제 사유를 입력해 주세요.');
 
 		await deleteDocByFullTitle(fullTitle, locals.user, comment);
 

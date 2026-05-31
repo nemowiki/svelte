@@ -17,10 +17,12 @@ export const load = withLoadErrorHandling(async ({ params, url, locals }) => {
 
 	const oldDoc = await readDocByFullTitle(fullTitle, locals.user, { revision: oldRev });
 	const newDoc = await readDocByFullTitle(fullTitle, locals.user, { revision: newRev });
+	const doc = await readDocByFullTitle(fullTitle, locals.user);
 
 	const diff = compareDocByDoc(oldDoc, newDoc);
 
 	return {
+		doc,
 		diff,
 		oldRev,
 		newRev

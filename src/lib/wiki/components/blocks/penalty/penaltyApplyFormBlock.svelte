@@ -30,7 +30,7 @@
 
 <h3>제재 적용</h3>
 <CommonForm formName="apply-penalty-form" actionName="apply">
-	<div class="apply-penalty-form-div container">
+	<div class="form-row">
 		{@render PenaltyTypeSelect()}
 		{@render DurationInput()}
 		{@render ReasonInput()}
@@ -39,26 +39,19 @@
 </CommonForm>
 
 <style>
-	h3 {
-		font-size: 2rem;
-		margin-top: 2rem;
-		margin-bottom: 0.5rem;
-	}
-	.apply-penalty-form-div {
-		justify-content: space-between;
-	}
 	.penalty-type-select {
-		width: 10%;
-		height: stretch;
-		margin-right: 0.5rem;
+		flex-shrink: 0;
+		width: auto;
+		min-width: 5rem;
 	}
+
 	.duration-input {
-		width: 20%;
-		height: stretch;
-		margin-right: 0.5rem;
+		flex-shrink: 0;
+		width: 8rem;
 	}
+
 	.reason-input {
-		width: 60%;
-		height: stretch;
+		flex: 1;
+		min-width: 0;
 	}
 </style>

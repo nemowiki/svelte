@@ -21,11 +21,10 @@
 
 <style>
 	a {
-		color: black;
+		color: var(--color-text);
 	}
 	a:hover {
-		text-decoration: underline;
-		text-decoration-thickness: 0.12rem;
-		text-underline-offset: 0.4rem;
+		color: var(--color-primary-1);
+		text-decoration: none;
 	}
 </style>

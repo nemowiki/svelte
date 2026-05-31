@@ -8,7 +8,7 @@
 </script>
 
 <article>
-	<ReadHeaderBlock revision={doc?.revision ?? 0} />
+	<ReadHeaderBlock {doc} />
 	<ReadNoticeBlock {from} {rev} fullTitle={doc?.fullTitle ?? null} />
 	<ReadContentBlock html={doc?.html ?? '문서가 존재하지 않습니다.'} />
 </article>

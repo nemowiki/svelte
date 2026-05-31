@@ -1,36 +1,75 @@
 <script lang="ts">
 	import SearchModule from './searchModule.svelte';
 	import UploadModule from './uploadModule.svelte';
-	import EllipsisVertical from '@lucide/svelte/icons/ellipsis-vertical';
 	import { encodeFullTitle } from '@nemowiki/core/client';
 	import { DocPrefixes } from '@nemowiki/core/types';
 </script>
 
-<header class="container">
-	<h1><a href="/r/{encodeFullTitle(DocPrefixes.Wiki + ':대문')}"><span>WIKI</span></a></h1>
-	<EllipsisVertical size="1.5rem" style="margin: 0 1rem" />
-	<SearchModule />
-	<EllipsisVertical size="1.5rem" style="margin: 0 1rem" />
-	<UploadModule />
+<header>
+	<h1><a href="/r/{encodeFullTitle(DocPrefixes.Wiki + ':대문')}">Wiki</a></h1>
+	<div>
+		<SearchModule />
+	</div>
+	<nav>
+		<UploadModule />
+	</nav>
 </header>
 
 <style>
 	header {
-		position: relative;
-		padding: 0.5rem;
-		right: 0rem;
-		width: stretch;
-		background-color: white;
-		top: 0rem;
-		border-bottom: 0.15rem solid black;
-		margin-bottom: 1rem;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		width: 100%;
+		padding: 0.6rem 6%;
+		background-color: rgba(255, 254, 255, 0.92);
+		backdrop-filter: blur(1rem);
+		border-bottom: 0.1rem solid var(--color-line);
+		box-shadow: 0 0.2rem 1rem var(--color-shadow);
 	}
-	header a {
-		font-size: 1.6rem;
-		margin-top: 0.4rem;
-		margin-left: 0.6rem;
+
+	h1 {
+		flex: 0 0 9.6rem;
 	}
-	header a:hover {
+
+	header > div {
+		display: flex;
+		justify-content: center;
+		flex: 1;
+		min-width: 0;
+	}
+
+	nav {
+		display: flex;
+		justify-content: flex-end;
+		flex: 0 0 9.6rem;
+		align-items: center;
+	}
+
+	a {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.8rem;
+		color: var(--color-primary-1);
+		font-size: var(--font-lg);
+		letter-spacing: 0.04rem;
+	}
+
+	a::before {
+		content: '';
+		width: 1.2rem;
+		height: 0.2rem;
+		border-radius: 2rem;
+		background: linear-gradient(90deg, var(--color-primary-2), var(--color-primary-1));
+		flex-shrink: 0;
+	}
+
+	a:hover {
 		text-decoration: none;
+		color: var(--color-primary-2);
 	}
 </style>

@@ -7,26 +7,31 @@
 
 	let {
 		user,
+		canRename,
+		canRegroup,
+		canPenalty,
 		paginatedHistorySummaries,
 		penalties
 	}: {
 		user: User;
+		canRename: boolean;
+		canRegroup: boolean;
+		canPenalty: boolean;
 		paginatedHistorySummaries: PaginatedResponse<HistorySummary>;
 		penalties: Penalty[];
 	} = $props();
 </script>
 
-<article class="user-page-template">
-	<UserHeaderBlock />
-
+<article>
+	<UserHeaderBlock {canRename} {canRegroup} {canPenalty} />
 	<section>
 		<UserGroupBlock group={user.group} />
 	</section>
-
+	<hr class="section-divider" />
 	<section>
-		<UserContributionBlock userName={user.name} {paginatedHistorySummaries} />
+		<UserContributionBlock {user} {paginatedHistorySummaries} />
 	</section>
-
+	<hr class="section-divider" />
 	<section>
 		<PenaltyListBlock {penalties} />
 	</section>

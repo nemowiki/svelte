@@ -4,16 +4,26 @@
 	import HistoryBtn from '$lib/wiki/components/common/btns/historyBtn.svelte';
 	import WriteBtn from '$lib/wiki/components/common/btns/writeBtn.svelte';
 	import DocHeader from '$lib/wiki/components/common/headers/docHeader.svelte';
+	import type { Doc } from '@nemowiki/core/types';
 
-	let { revision }: { revision: number } = $props();
-	const description = $derived(`${revision}번째 수정판`);
+	let {
+		doc
+	}: {
+		doc: Doc | null;
+	} = $props();
+
+	const description = $derived(`${doc?.revision ?? 0}번째 수정본`);
 </script>
 
 {#snippet Buttons()}
-	<WriteBtn />
+	{#if doc?.permissions.canEdit}
+		<WriteBtn />
+	{/if}
 	<HistoryBtn />
 	<BacklinkBtn />
-	<AclBtn />
+	{#if doc?.permissions.canGrant}
+		<AclBtn />
+	{/if}
 {/snippet}
 
 <DocHeader {description} Btns={Buttons} />

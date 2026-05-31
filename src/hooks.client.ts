@@ -1,9 +1,14 @@
 import * as Sentry from '@sentry/sveltekit';
 import { handleErrorWithSentry /*replayIntegration*/ } from '@sentry/sveltekit';
+import { getSentryDsn } from '$lib/wiki/utils/sentry.js';
 
 export function init() {
+	const dsn = getSentryDsn();
+
+	if (!dsn) return;
+
 	Sentry.init({
-		dsn: 'https://b7fb355f8d1fe0bb052585161dce4a1e@o4509551707160576.ingest.us.sentry.io/4509551708012544',
+		dsn,
 
 		tracesSampleRate: 1.0,
 

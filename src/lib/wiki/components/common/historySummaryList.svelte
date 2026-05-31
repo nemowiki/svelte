@@ -58,9 +58,9 @@
 
 {#snippet HistorySummaryDeltaSpan(delta: number)}
 	{#if delta > 0}
-		<span style="color: green">+{delta}</span>
+		<span class="pos">+{delta}</span>
 	{:else if delta < 0}
-		<span style="color: red">{delta}</span>
+		<span class="neg">{delta}</span>
 	{:else}
 		<span>{delta}</span>
 	{/if}
@@ -83,15 +83,17 @@
 
 {#snippet HistorySummaryDiv(historySummary: HistorySummary)}
 	<div class="log-div">
-		<span>
+		<span class="log-main">
 			{@render HistorySummaryAction(historySummary.action as DocAction)}
 			{@render HistorySummaryTitle(historySummary)}
 			{@render HistorySummaryDelta(historySummary)}
 		</span>
 		{#if pageType === 'history'}
-			<a href="/u/{encodeFullTitle(historySummary.userName)}">{historySummary.userName}</a>
+			<a class="log-user" href="/u/{encodeFullTitle(historySummary.userName)}"
+				>{historySummary.userName}</a
+			>
 		{/if}
-		{@render HistorySummaryDate(historySummary.createdAt)}
+		<span class="log-date">{@render HistorySummaryDate(historySummary.createdAt)}</span>
 	</div>
 {/snippet}
 
@@ -118,14 +120,52 @@
 	.log-div {
 		display: flex;
 		justify-content: space-between;
+		align-items: baseline;
+		gap: 0.8rem;
+		padding: 0.4rem 0.2rem;
+		border-bottom: 0.1rem solid var(--color-gray-2);
+		border-radius: 0.6rem;
+		font-size: var(--font-sm);
+		flex-wrap: wrap;
+		&:hover {
+			background-color: var(--color-panel-soft);
+		}
+		&:last-of-type {
+			border-bottom: none;
+		}
+	}
+
+	.log-main {
+		min-width: 0;
+		flex: 1;
+	}
+
+	.log-user,
+	.log-date {
+		white-space: nowrap;
+	}
+
+	.log-date {
+		color: var(--color-gray-4);
 	}
 
 	.comment-div {
-		justify-content: center !important;
-		color: grey;
+		color: var(--color-sub);
+		font-size: var(--font-sm);
+		padding: 0.1rem 0.2rem 0.4rem 1rem;
 	}
 
 	.doc-action-span {
-		font-weight: bold;
+		font-weight: 700;
+		color: var(--color-primary-1);
+	}
+
+	.pos {
+		color: var(--color-success);
+		font-weight: 700;
+	}
+	.neg {
+		color: var(--color-error);
+		font-weight: 700;
 	}
 </style>

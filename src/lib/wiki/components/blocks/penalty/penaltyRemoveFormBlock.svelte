@@ -27,7 +27,7 @@
 	<p>취소할 경고 및 차단 사항이 없습니다.</p>
 {:else}
 	<CommonForm formName="remove-penalty-form" actionName="remove">
-		<div class="remove-penalty-form-div container">
+		<div class="form-row">
 			{@render PenaltyIdSelect()}
 			{@render ReasonInput()}
 			<button form="remove-penalty-form" type="submit">확인</button>
@@ -36,21 +36,14 @@
 {/if}
 
 <style>
-	h3 {
-		font-size: 2rem;
-		margin-top: 2rem;
-		margin-bottom: 0.5rem;
-	}
-	.remove-penalty-form-div {
-		justify-content: space-between;
-	}
 	.penalty-id-select {
-		width: 10%;
-		height: stretch;
-		margin-right: 0.5rem;
+		flex-shrink: 0;
+		width: auto;
+		min-width: 4rem;
 	}
+
 	.reason-input {
-		width: 80%;
-		height: stretch;
+		flex: 1;
+		min-width: 0;
 	}
 </style>

@@ -41,13 +41,21 @@
 {:else}
 	<div>
 		<HistorySummaryList historySummaries={paginatedHistorySummaries.items} pageType="history" />
-		{@render PrevBtn()}
-		{@render NextBtn()}
+		<div class="pager">
+			{@render PrevBtn()}
+			{@render NextBtn()}
+		</div>
 	</div>
 {/if}
 
 <style>
-	button {
-		margin-top: 0.5rem;
+	div {
+		padding-top: 0.4rem;
+	}
+
+	.pager {
+		display: flex;
+		gap: 0.6rem;
+		margin-top: 1rem;
 	}
 </style>

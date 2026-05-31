@@ -1,39 +1,22 @@
 * {
-	// font-family: 'NanumBarunpen';
-	font-family: 'NanumGothic', '맑은고딕';
+	font-family: 'NanumGothic', sans-serif;
 	padding: 0;
 	margin: 0;
-	line-height: 1.4;
+	line-height: 1.5;
 	box-sizing: border-box;
 }
 
 html {
-	font-size: 16px;
-	background-color: var(--color-gray-2);
+	font-size: 100%;
+	color: var(--color-text);
+	background:
+		radial-gradient(ellipse at 0% 0%, var(--color-primary-3) 0, transparent 40%),
+		linear-gradient(160deg, var(--color-gray-1) 0%, var(--color-gray-2) 100%);
+	background-attachment: fixed;
 	height: 100%;
-	// letter-spacing: 0.0rem;
-}
-
-@media (max-width: 1200px) {
-	html {
-		font-size: 14px;
-	}
-}
-
-@media (max-width: 800px) {
-	html {
-		font-size: 12px;
-	}
-}
-
-@media (max-width: 600px) {
-	html {
-		font-size: 10px;
-	}
 }
 
 body {
-	background-color: var(--color-gray-2);
 	height: 100%;
 
 	& > div {
@@ -44,20 +27,21 @@ body {
 }
 
 a {
-	text-decoration-line: none;
+	text-decoration: none;
 	color: var(--color-primary-1);
+	font-weight: 700;
+	transition: color 0.2s;
 }
 
 a:hover {
-	cursor: pointer;
+	color: var(--color-primary-2);
 	text-decoration: underline;
 	text-underline-offset: 0.2rem;
-	text-decoration-thickness: 0.05rem;
+	text-decoration-thickness: 0.1rem;
 }
 
 s {
-	color: gray;
-	text-decoration-thickness: 0.05rem;
+	color: var(--color-sub);
 }
 
 s:hover {
@@ -66,39 +50,97 @@ s:hover {
 
 u {
 	text-underline-offset: 0.2rem;
-	text-decoration-thickness: 0.05rem;
+	text-decoration-thickness: 0.1rem;
 }
 
 table {
 	border-collapse: collapse;
+	width: 100%;
 }
 
 th,
 td {
-	border: solid gray 0.05rem;
-	background-color: var(--color-gray-2);
+	border: 0.1rem solid var(--color-line);
+	background-color: var(--color-panel);
+	padding: 0.4rem 0.8rem;
+}
+
+th {
+	background-color: var(--color-panel-soft);
+	color: var(--color-primary-1);
+	font-weight: 700;
 }
 
 button,
 label.button {
-	padding: 0.25rem 0.75rem;
-	border: solid gray 0.05rem;
-	background-color: white;
-	font-size: 1rem;
-	font-weight: bold;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	padding: 0.4rem 0.8rem;
+	border: 0.1rem solid var(--color-line);
+	border-radius: 0.4rem;
+	background-color: var(--color-panel);
+	color: var(--color-sub);
+	font-size: var(--font-sm);
+	font-weight: 700;
+	cursor: pointer;
+	transition:
+		background-color 0.2s,
+		border-color 0.2s,
+		color 0.2s;
 }
 
 button:hover,
 label.button:hover {
-	cursor: pointer;
-	background-color: var(--color-gray-2);
+	background-color: var(--color-primary-3);
+	border-color: var(--color-primary-2);
+	color: var(--color-primary-1);
+}
+
+button:disabled,
+label.button:disabled {
+	opacity: 0.4;
+	cursor: not-allowed;
+}
+
+button:focus-visible,
+label.button:focus-visible,
+textarea:focus-visible,
+input:focus-visible,
+select:focus-visible {
+	outline: 0.2rem solid var(--color-focus);
+	outline-offset: 0.2rem;
 }
 
 textarea,
 input,
 select {
-	font-size: 0.85rem;
+	font-size: var(--font-md);
 	background-color: white;
-	padding: 0.25rem 0.5rem;
-	border: 0.05rem solid gray;
+	color: var(--color-text);
+	padding: 0.4rem 0.8rem;
+	border: 0.1rem solid var(--color-line);
+	border-radius: 0.4rem;
+	transition:
+		border-color 0.2s,
+		box-shadow 0.2s;
+}
+
+textarea:focus,
+input:focus,
+select:focus {
+	outline: none;
+	border-color: var(--color-primary-2);
+	box-shadow: 0 0 0 0.2rem var(--color-focus);
+}
+
+textarea::placeholder,
+input::placeholder {
+	color: var(--color-gray-4);
+}
+
+hr {
+	border: none;
+	border-top: 0.1rem solid var(--color-line);
+	margin: 0.4rem 0;
 }

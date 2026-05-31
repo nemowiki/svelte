@@ -12,19 +12,8 @@
 {/snippet}
 
 <CommonForm formName="rename-form">
-	<div class="rename-form-div container">
+	<div class="form-row">
 		{@render NewNameInput()}
 		<button form="rename-form" type="submit">변경</button>
 	</div>
 </CommonForm>
-
-<style>
-	.rename-form-div {
-		justify-content: flex-start;
-	}
-	.new-name-input {
-		width: 50%;
-		height: stretch;
-		margin-right: 0.5rem;
-	}
-</style>

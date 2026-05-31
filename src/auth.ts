@@ -1,12 +1,12 @@
 import { SvelteKitAuth } from '@auth/sveltekit';
 import Google from '@auth/sveltekit/providers/google';
-import { GOOGLE_ID, GOOGLE_SECRET, AUTH_SECRET } from '$env/static/private';
+import { serverEnv } from '$lib/server/env.js';
 
 export const { handle, signIn, signOut } = SvelteKitAuth({
 	providers: [
 		Google({
-			clientId: GOOGLE_ID,
-			clientSecret: GOOGLE_SECRET
+			clientId: serverEnv.googleId,
+			clientSecret: serverEnv.googleSecret
 			// authorization: {
 			//     params: {
 			//         prompt: 'consent',
@@ -16,7 +16,7 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
 			// },
 		})
 	],
-	secret: AUTH_SECRET,
+	secret: serverEnv.authSecret,
 	trustHost: true // For Vercel
 	// pages: {
 	//     signIn: '/u/',

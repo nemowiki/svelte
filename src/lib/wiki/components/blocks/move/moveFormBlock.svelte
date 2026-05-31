@@ -24,27 +24,31 @@
 {/snippet}
 
 <CommonForm formName="move-form">
-	<div class="move-form-div container">
+	<div class="move-form-div">
 		{@render NewFullTitleInput()}
 		{@render CommentInput()}
-		<button form="move-form" type="submit">이동</button>
+		<button form="move-form" type="submit" class="primary-btn">이동</button>
 	</div>
 </CommonForm>
 
 <style>
 	.move-form-div {
+		display: flex;
 		flex-direction: column;
-		align-items: flex-start;
+		gap: 0.6rem;
 	}
+
 	.move-form-div label {
-		margin-top: 1rem;
-		margin-bottom: 0.5rem;
+		margin-top: 0.8rem;
 	}
+
 	.move-form-div button {
-		margin-top: 1rem;
+		align-self: flex-start;
+		margin-top: 0.4rem;
 	}
+
 	.comment-input,
 	.new-full-title-input {
-		width: stretch;
+		width: 100%;
 	}
 </style>

@@ -22,66 +22,66 @@
 		return historySummaries.filter((historySummary) => {
 			if (seenFullTitles.has(historySummary.fullTitle)) {
 				return false;
-			} else {
-				seenFullTitles.add(historySummary.fullTitle);
-				return true;
 			}
+
+			seenFullTitles.add(historySummary.fullTitle);
+			return true;
 		});
 	}
 </script>
 
 {#snippet RecentLog(historySummary: HistorySummary)}
-	<div>
+	<div class="list-row">
 		<a title={historySummary.fullTitle} href="/r/{encodeFullTitle(historySummary.fullTitle)}">
 			{historySummary.fullTitle}
 		</a>
 		<span>{parseTimeOnly(historySummary.createdAt)}</span>
 	</div>
-	<hr />
 {/snippet}
 
 <section class="module">
 	<h2>최근 수정</h2>
-	<hr />
 	{#if page.data.user.group === Groups.Guest && PUBLIC_REQUIRE_LOGIN === 'true'}
-		<p>로그인 필요</p>
+		<p>로그인이 필요합니다.</p>
 	{:else}
-		{#each recentChangedHistorySummaries as historySummary, i (i)}
-			{#if i <= 10}
-				{@render RecentLog(historySummary)}
-			{/if}
-		{/each}
+		<div class="list-col">
+			{#each recentChangedHistorySummaries as historySummary, i (i)}
+				{#if i <= 10}
+					{@render RecentLog(historySummary)}
+				{/if}
+			{/each}
+		</div>
 	{/if}
 </section>
 
 <style>
-	section {
-		margin-left: 0;
-		padding: 1rem;
-	}
-	section div {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: 0 0.25rem;
-	}
-	section div a {
+	a {
+		flex: 1;
+		min-width: 0;
 		white-space: nowrap;
 		text-overflow: ellipsis;
 		overflow: hidden;
+		font-size: var(--font-sm);
+		color: var(--color-text);
+		font-weight: 400;
 	}
-	section p {
+
+	a:hover {
+		color: var(--color-primary-1);
+		text-decoration: none;
+	}
+
+	span {
+		color: var(--color-gray-4);
+		font-size: var(--font-sm);
+		white-space: nowrap;
+		flex-shrink: 0;
+	}
+
+	p {
 		text-align: center;
-		font-weight: bold;
-	}
-	hr {
-		margin: 0.25rem 0;
-		border: gray 0.05em solid;
-	}
-	h2 {
-		text-align: center;
-		font-size: 1.25rem;
-		margin-top: 0.5rem;
-		margin-bottom: 1rem;
+		color: var(--color-gray-4);
+		font-size: var(--font-sm);
+		padding: 0.4rem 0;
 	}
 </style>

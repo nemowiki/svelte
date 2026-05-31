@@ -7,6 +7,10 @@
 </script>
 
 <article>
-	<StateHeaderBlock />
-	<StateFormBlock {doc} />
+	<StateHeaderBlock {doc} />
+	{#if doc.permissions.canHide || doc.permissions.canShow}
+		<StateFormBlock {doc} />
+	{:else}
+		<p class="no-permission">문서 상태를 변경할 권한이 없습니다.</p>
+	{/if}
 </article>

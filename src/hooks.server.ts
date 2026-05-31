@@ -1,158 +1,118 @@
-import { WikiError } from '@nemowiki/core';
 import * as Sentry from '@sentry/sveltekit';
-import type { Handle, HandleServerError, ServerInit } from '@sveltejs/kit';
-import { redirect } from '@sveltejs/kit';
-import { sequence } from '@sveltejs/kit/hooks';
-
-import {
-	AWS_BUCKET_NAME,
-	AWS_BUCKET_REGION,
-	AWS_ID,
-	AWS_SECRET,
-	WIKI_MONGO_URI
-} from '$env/static/private';
-import { PUBLIC_REQUIRE_LOGIN } from '$env/static/public';
-
+import { handleErrorWithSentry } from '@sentry/sveltekit';
 import { handle as authenticationHandle } from './auth.js';
-
-import {
-	activateWiki,
-	backupWiki,
-	getAllFullTitles,
-	getUserByIdOrNull,
-	signupUserByIdAndName
-} from '@nemowiki/core';
-
+import { serverEnv } from '$lib/server/env.js';
+import { activateServerWiki } from '$lib/server/wiki.js';
+import { getSentryDsn } from '$lib/wiki/utils/sentry.js';
+import { getAllFullTitles, getUserByIdOrNull } from '@nemowiki/core';
 import { encodeFullTitle } from '@nemowiki/core/client';
 import { DocPrefixes, Groups, UserStates, type User } from '@nemowiki/core/types';
+import { redirect, type Handle, type ServerInit } from '@sveltejs/kit';
+import { sequence } from '@sveltejs/kit/hooks';
 
-Sentry.init({
-	dsn: 'https://b7fb355f8d1fe0bb052585161dce4a1e@o4509551707160576.ingest.us.sentry.io/4509551708012544',
-	tracesSampleRate: 1
-});
+const HOME_PATH = `/r/${encodeFullTitle(`${DocPrefixes.Wiki}:대문`)}`;
 
-let fullTitles: string[] = [];
+const guestUser: User = {
+	_id: '',
+	name: '',
+	state: UserStates.Active,
+	contribCnt: 0,
+	group: Groups.Guest
+};
 
-const ttl_backup = 1000 * 60 * 60 * 24 * 7; // 7일
-let last_backup = Date.now();
-const ttl_refresh = 1000 * 60 * 5; // 5분
-let last_refresh = 0;
+const readOnlyPrefixes = ['/r', '/h', '/b', '/c', '/u', '/s', '/api/files'];
+const alwaysAllowedPrefixes = ['/auth', '/_app', '/fonts'];
+const alwaysAllowedPaths = new Set(['/signin', '/blocked', '/favicon.png', '/favicon.ico']);
 
-async function checkTTL() {
-	const now = Date.now();
-
-	if (now - last_backup > ttl_backup) {
-		await backupWiki();
-		last_backup = now;
-	}
-
-	if (now - last_refresh > ttl_refresh) {
-		fullTitles = await getAllFullTitles();
-		last_refresh = now;
-	}
+function isPathUnderPrefix(pathname: string, prefix: string): boolean {
+	return pathname === prefix || pathname.startsWith(`${prefix}/`);
 }
 
-async function getUser(id: string | null) {
-	if (!id)
-		return {
-			_id: Groups.Guest,
-			name: Groups.Guest,
-			group: Groups.Guest,
-			state: UserStates.Active,
-			contribCnt: 0
-		} as User;
-
-	let user: User | null = await getUserByIdOrNull(id);
-	if (user === null) {
-		user = await signupUserByIdAndName(id, id.split('@')[0]);
-	}
-	return user;
+function isReadOnlyPath(pathname: string): boolean {
+	return readOnlyPrefixes.some((prefix) => isPathUnderPrefix(pathname, prefix));
 }
 
-function checkEnv() {
-	if (PUBLIC_REQUIRE_LOGIN === undefined) {
-		throw new Error('Please set "PUBLIC_REQUIRE_LOGIN" in the .env file!');
-	}
-	if (PUBLIC_REQUIRE_LOGIN !== 'true' && PUBLIC_REQUIRE_LOGIN !== 'false') {
-		throw new Error('"PUBLIC_REQUIRE_LOGIN" must be "true" or "false"!');
-	}
-	if (WIKI_MONGO_URI === undefined) {
-		throw new Error('Please set "WIKI_MONGO_URI" in the .env file!');
-	}
-	if (AWS_BUCKET_NAME === undefined) {
-		throw new Error('Please set "AWS_BUCKET_NAME" in the .env file!');
-	}
-	if (AWS_ID === undefined) {
-		throw new Error('Please set "AWS_ID" in the .env file!');
-	}
-	if (AWS_SECRET === undefined) {
-		throw new Error('Please set "AWS_SECRET" in the .env file!');
-	}
+function isAlwaysAllowedPath(pathname: string): boolean {
+	return (
+		alwaysAllowedPaths.has(pathname) ||
+		alwaysAllowedPrefixes.some((prefix) => isPathUnderPrefix(pathname, prefix))
+	);
+}
+
+function redirectTo(path: string): never {
+	throw redirect(303, path);
 }
 
 export const init: ServerInit = async () => {
-	checkEnv();
+	const sentryDsn = getSentryDsn();
 
-	await activateWiki(WIKI_MONGO_URI, AWS_BUCKET_NAME, AWS_BUCKET_REGION, AWS_ID, AWS_SECRET);
+	if (sentryDsn) {
+		Sentry.init({
+			dsn: sentryDsn,
+			tracesSampleRate: 1.0
+			// replaysSessionSampleRate: 0.1,
+			// replaysOnErrorSampleRate: 1.0
+		});
+	}
 
-	console.log('[Wiki Is Ready]');
+	await activateServerWiki();
 };
 
-const authorizationHandle: Handle = async ({ event, resolve }) => {
+export const handle: Handle = sequence(authenticationHandle, async ({ event, resolve }) => {
 	const session = await event.locals.auth();
+	const sessionUser = session?.user as
+		| {
+				id?: string;
+				email?: string;
+				name?: string;
+		  }
+		| undefined;
+	const userId = sessionUser?.id ?? sessionUser?.email ?? sessionUser?.name ?? null;
+	const user = userId ? await getUserByIdOrNull(userId) : null;
 
-	if (session?.user?.email || PUBLIC_REQUIRE_LOGIN === 'false') {
-		// Authorized
-		if (event.url.pathname.startsWith('/signin') && session?.user?.email)
-			redirect(302, '/r/' + encodeFullTitle(DocPrefixes.Wiki + ':대문'));
+	event.locals.user = user ?? guestUser;
+	event.locals.fullTitles = await getAllFullTitles();
 
-		if (!event.params.fullTitle && !event.params.userName && !event.params.query) {
-			if (!event.url.pathname.startsWith('/signin') && !event.url.pathname.startsWith('/f'))
-				redirect(302, '/r/' + encodeFullTitle(DocPrefixes.Wiki + ':대문'));
-		}
+	const pathname = event.url.pathname;
+	const isGuestUser = event.locals.user.group === Groups.Guest;
+	const isBlockedUser =
+		event.locals.user.group !== Groups.Guest && event.locals.user.state === UserStates.Blocked;
 
-		event.params.fullTitle = (event.params.fullTitle || '').trim();
-		event.params.userName = (event.params.userName || '').trim();
-		event.params.query = (event.params.query || '').trim();
+	if (pathname === '/') {
+		if (isBlockedUser) redirectTo('/blocked');
+		if (isGuestUser && serverEnv.requireLogin) redirectTo('/signin');
+		redirectTo(HOME_PATH);
+	}
 
-		await checkTTL();
-
-		event.locals.user = await getUser(session?.user?.email || null);
-		// event.locals.logs = logs;
-		event.locals.fullTitles = fullTitles;
-
+	if (pathname === '/signin') {
+		if (isBlockedUser) redirectTo('/blocked');
+		if (!isGuestUser) redirectTo(HOME_PATH);
 		return await resolve(event);
-	} else {
-		// Unauthorized
-		if (event.url.pathname.startsWith('/signin')) {
-			event.locals.fullTitles = [];
-			event.locals.user = await getUser(null);
-			return await resolve(event);
-		} else {
-			redirect(303, '/signin');
-		}
 	}
-};
 
-export const handleError: HandleServerError = Sentry.handleErrorWithSentry(
-	async ({ error, event }) => {
-		const fullTitle =
-			event.params.fullTitle ||
-			'사용자:' + event.params.userName ||
-			'검색:' + event.params.query ||
-			event.url.pathname;
+	if (pathname === '/blocked') {
+		if (isBlockedUser) return await resolve(event);
+		if (isGuestUser && serverEnv.requireLogin) redirectTo('/signin');
+		redirectTo(HOME_PATH);
+	}
 
-		let message = '알 수 없는 에러가 발생했습니다.';
+	if (isBlockedUser && !isReadOnlyPath(pathname)) {
+		if (isAlwaysAllowedPath(pathname)) return await resolve(event);
+		redirectTo('/blocked');
+	}
 
-		if (error instanceof WikiError || error instanceof Error) {
-			message = error.message;
+	if (isGuestUser) {
+		if (serverEnv.requireLogin) {
+			if (isAlwaysAllowedPath(pathname)) return await resolve(event);
+			redirectTo('/signin');
 		}
 
-		return {
-			message,
-			fullTitle
-		};
+		if (!isReadOnlyPath(pathname) && !isAlwaysAllowedPath(pathname)) {
+			redirectTo('/signin');
+		}
 	}
-);
 
-export const handle = sequence(Sentry.sentryHandle(), authenticationHandle, authorizationHandle);
+	return await resolve(event);
+});
+
+export const handleError = handleErrorWithSentry();

@@ -8,11 +8,14 @@
 </script>
 
 <article>
-	<AclHeaderBlock />
+	{#if doc}
+		<AclHeaderBlock {doc} />
+	{/if}
 	<section>
 		<AclListBlock {aclDetails} />
 	</section>
 	{#if doc}
+		<hr class="section-divider" />
 		<section>
 			<AclFormBlock {doc} />
 		</section>
