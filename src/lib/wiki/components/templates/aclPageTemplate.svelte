@@ -4,7 +4,7 @@
 	import AclListBlock from '$lib/wiki/components/blocks/acl/aclListBlock.svelte';
 	import type { AclDetails, Doc } from '@nemowiki/core/types';
 
-	let { doc, aclDetails }: { doc: Doc | null; aclDetails: AclDetails } = $props();
+	let { doc, aclDetails }: { doc: Doc; aclDetails: AclDetails } = $props();
 </script>
 
 <article>
@@ -14,7 +14,7 @@
 	<section>
 		<AclListBlock {aclDetails} />
 	</section>
-	{#if doc}
+	{#if doc.revision !== 0}
 		<hr class="section-divider" />
 		<section>
 			<AclFormBlock {doc} />

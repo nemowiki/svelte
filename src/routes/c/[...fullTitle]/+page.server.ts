@@ -18,6 +18,8 @@ export const load = withLoadErrorHandling(async ({ params, url, locals }) => {
 	const oldDoc = await readDocByFullTitle(fullTitle, locals.user, { revision: oldRev });
 	const newDoc = await readDocByFullTitle(fullTitle, locals.user, { revision: newRev });
 	const doc = await readDocByFullTitle(fullTitle, locals.user);
+	if (doc && !doc.permissions.canRead)
+		throw new WikiError(ErrorCodes.AUTH_NO_PERMISSION, '권한이 없습니다.');
 
 	const diff = compareDocByDoc(oldDoc, newDoc);
 

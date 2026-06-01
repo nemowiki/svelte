@@ -9,19 +9,19 @@
 	let {
 		doc
 	}: {
-		doc: Doc | null;
+		doc: Doc;
 	} = $props();
 
 	const description = '(권한 목록)';
 </script>
 
 {#snippet Buttons()}
-	{#if doc?.permissions.canEdit}
+	{#if doc.permissions.canEdit}
 		<WriteBtn />
 	{/if}
 	<HistoryBtn />
 	<BacklinkBtn />
-	{#if doc?.permissions.canHide || doc?.permissions.canShow}
+	{#if doc.permissions.canToggle}
 		<StateBtn />
 	{/if}
 {/snippet}

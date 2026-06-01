@@ -20,7 +20,9 @@
 	{#if doc?.permissions.canEdit}
 		<WriteBtn />
 	{/if}
-	<HistoryBtn />
+	{#if doc?.permissions.canRead}
+		<HistoryBtn />
+	{/if}
 	{#if doc?.permissions.canGrant}
 		<AclBtn />
 	{/if}

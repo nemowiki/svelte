@@ -4,7 +4,6 @@ import {
 	showDocByFullTitle,
 	hideDocByFullTitle
 } from '@nemowiki/core';
-import { DocStates } from '@nemowiki/core/types';
 import { redirect } from '@sveltejs/kit';
 import { encodeFullTitle, ErrorCodes } from '@nemowiki/core/client';
 import { withActionErrorHandling, withLoadErrorHandling } from '$lib/wiki/utils/errorHandling.js';
@@ -17,14 +16,8 @@ export const load = withLoadErrorHandling(async ({ params, locals }) => {
 	const doc = await readDocByFullTitle(fullTitle, locals.user);
 	if (!doc) throw new WikiError(ErrorCodes.DOC_NOT_FOUND, '문서가 존재하지 않습니다.');
 
-	let hasPermission = false;
-	if (doc.state === DocStates.Hidden) {
-		hasPermission = doc.permissions.canShow;
-	} else {
-		hasPermission = doc.permissions.canHide;
-	}
-
-	if (!hasPermission) throw new WikiError(ErrorCodes.AUTH_NO_PERMISSION, '권한이 없습니다.');
+	if (!doc.permissions.canToggle)
+		throw new WikiError(ErrorCodes.AUTH_NO_PERMISSION, '권한이 없습니다.');
 
 	return { doc };
 });

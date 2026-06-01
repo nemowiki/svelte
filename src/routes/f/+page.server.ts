@@ -17,8 +17,10 @@ export const actions = {
 		const data = await request.formData();
 
 		const markup = (data.get('markup') ?? '').toString();
+
 		const title = requireText(data.get('title'), '파일 제목을 입력해 주세요.');
 		const fullTitle = DocPrefixes.File + ':' + title;
+
 		const comment = (data.get('comment') ?? '').toString();
 		const file = data.get('file');
 

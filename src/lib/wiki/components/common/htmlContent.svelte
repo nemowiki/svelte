@@ -10,8 +10,8 @@
 </script>
 
 <!-- eslint-disable svelte/no-at-html-tags -->
-<article class="kmu">{@html html}</article>
+<article class="nemomark">{@html html}</article>
 
 <style lang="scss">
-	@use '../../style/kmu.scss';
+	@use '../../style/nemomark.scss';
 </style>

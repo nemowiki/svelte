@@ -2,8 +2,17 @@
 	import CommonInfo from '$lib/wiki/components/common/commonInfo.svelte';
 	import CommonWarn from '$lib/wiki/components/common/commonWarn.svelte';
 
-	let { fullTitle, from, rev }: { fullTitle: string | null; from?: string; rev: number } = $props();
+	let {
+		fullTitle,
+		from,
+		rev,
+		isHidden = false
+	}: { fullTitle: string | null; from?: string; rev: number; isHidden?: boolean } = $props();
 </script>
+
+{#if isHidden}
+	<CommonWarn>숨겨진 문서입니다.</CommonWarn>
+{/if}
 
 {#if from}
 	<CommonInfo><a href="/r/{from}?redirect=no">{from}</a>에서 넘어옴</CommonInfo>

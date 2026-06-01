@@ -11,10 +11,13 @@ export const GET: RequestHandler = async ({ params, locals, url }) => {
 		error(400, 'Bad Request');
 	}
 
+	let filePath: string;
+
 	try {
-		const filePath = await getFilePathByTitle(fileTitle, locals.user, rev);
-		redirect(302, filePath);
+		filePath = await getFilePathByTitle(fileTitle, locals.user, rev);
 	} catch {
 		error(404, 'Not Found');
 	}
+
+	redirect(302, filePath);
 };

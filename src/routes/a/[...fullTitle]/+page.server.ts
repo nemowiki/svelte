@@ -1,11 +1,12 @@
 import { withActionErrorHandling, withLoadErrorHandling } from '$lib/wiki/utils/errorHandling.js';
 import {
-	getDocTypeByFullTitle,
+	getEmptyDocByFullTitle,
 	grantByFullTitle,
 	readDocByFullTitle,
-	resolveAcl
+	resolveAcl,
+	WikiError
 } from '@nemowiki/core';
-import { encodeFullTitle } from '@nemowiki/core/client';
+import { encodeFullTitle, ErrorCodes } from '@nemowiki/core/client';
 import { redirect } from '@sveltejs/kit';
 import { requireText } from '$lib/wiki/utils/formValidation.js';
 
@@ -13,10 +14,13 @@ export const load = withLoadErrorHandling(async ({ params, locals }) => {
 	const fullTitle = params.fullTitle;
 	if (!fullTitle) throw new Error('fullTitle is undefined');
 
-	const doc = await readDocByFullTitle(fullTitle, locals.user);
-	const aclDetails = doc
-		? resolveAcl(doc.acl, doc.type)
-		: resolveAcl([], getDocTypeByFullTitle(fullTitle));
+	let doc = await readDocByFullTitle(fullTitle, locals.user);
+
+	if (!doc) doc = getEmptyDocByFullTitle(fullTitle, locals.user);
+	else if (!doc.permissions.canRead)
+		throw new WikiError(ErrorCodes.AUTH_NO_PERMISSION, '권한이 없습니다.');
+
+	const aclDetails = resolveAcl(doc.acl, doc.type);
 
 	return { aclDetails, doc };
 });

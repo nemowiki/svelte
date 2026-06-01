@@ -19,7 +19,9 @@
 	{#if doc?.permissions.canEdit}
 		<WriteBtn />
 	{/if}
-	<HistoryBtn />
+	{#if doc?.permissions.canRead}
+		<HistoryBtn />
+	{/if}
 	<BacklinkBtn />
 	{#if doc?.permissions.canGrant}
 		<AclBtn />

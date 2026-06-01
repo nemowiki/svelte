@@ -17,7 +17,7 @@ export const load = withLoadErrorHandling(async ({ params, locals }) => {
 
 	let doc = await readDocByFullTitle(fullTitle, locals.user);
 
-	if (!doc) doc = getEmptyDocByFullTitle(fullTitle);
+	if (!doc) doc = getEmptyDocByFullTitle(fullTitle, locals.user);
 
 	return { doc };
 });

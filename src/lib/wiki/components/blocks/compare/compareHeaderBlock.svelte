@@ -16,7 +16,7 @@
 		newRev: number;
 	} = $props();
 
-	const description = `(비교 ${oldRev}쌍${newRev}번째 수정)`;
+	const description = `(비교 ${oldRev}&${newRev}번째 수정본)`;
 </script>
 
 {#snippet Buttons()}

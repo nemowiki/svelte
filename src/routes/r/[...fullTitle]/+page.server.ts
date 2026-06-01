@@ -1,6 +1,6 @@
 import { redirect } from '@sveltejs/kit';
-import { readDocByFullTitle } from '@nemowiki/core';
-import { DocStates, DocTypes, encodeFullTitle } from '@nemowiki/core/client';
+import { getEmptyDocByFullTitle, readDocByFullTitle } from '@nemowiki/core';
+import { encodeFullTitle } from '@nemowiki/core/client';
 import modifyHtmlByExistenceOfLinks from '$lib/wiki/utils/modifyHtml.js';
 import { withLoadErrorHandling } from '$lib/wiki/utils/errorHandling.js';
 
@@ -18,10 +18,7 @@ export const load = withLoadErrorHandling(async ({ params, locals, url }) => {
 		from
 	});
 
-	if (!doc) return { rev, from: from ?? '', doc: null };
-
-	if (doc.state === DocStates.Deleted && doc.type !== DocTypes.Category && rev === -1)
-		return { rev, from: from ?? '', doc: { ...doc, html: '삭제된 문서입니다.' } };
+	if (!doc) return { rev, from: from ?? '', doc: getEmptyDocByFullTitle(fullTitle, locals.user) };
 
 	if (doc.redirectTo) {
 		redirect(303, `/r/${encodeFullTitle(doc.redirectTo)}?from=${encodeFullTitle(doc.fullTitle)}`);

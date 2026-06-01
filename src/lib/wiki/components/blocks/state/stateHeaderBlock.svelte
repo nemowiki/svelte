@@ -13,7 +13,7 @@
 </script>
 
 {#snippet Buttons()}
-	{#if doc?.permissions.canHide || doc?.permissions.canShow}
+	{#if doc?.permissions.canToggle}
 		<AclBtn />
 	{/if}
 {/snippet}

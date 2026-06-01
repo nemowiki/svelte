@@ -8,7 +8,7 @@
 
 <article>
 	<StateHeaderBlock {doc} />
-	{#if doc.permissions.canHide || doc.permissions.canShow}
+	{#if doc.permissions.canToggle}
 		<StateFormBlock {doc} />
 	{:else}
 		<p class="no-permission">문서 상태를 변경할 권한이 없습니다.</p>
